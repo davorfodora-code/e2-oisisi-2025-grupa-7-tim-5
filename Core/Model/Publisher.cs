@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
-public class Class1
+public class Publisher : ISerializable
 {
-	public Class1()
+	public Publisher()
 	{
-		private string publisher_id, name;
-		Author boss;
-		List<Author> authors = new List<Author>();
-		List<Book> books = new List<Book>();
-	}
+
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public Author Manager { get; set; }
+        public list<Author> Authors { get; set; }
+        public list<Book> Books { get; set; }
+
+    }
 }

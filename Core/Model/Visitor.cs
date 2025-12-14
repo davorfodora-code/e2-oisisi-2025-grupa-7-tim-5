@@ -1,13 +1,27 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
-public class Class1
+public class Visitor : ISerializable
 {
-	public Class1()
+    public enum Status_type {P, B}
+
+
+	public Visitor()
 	{
-		private string name, lastname, date_of_birth, address, contact_phone, email, membership_number, membership_year, status;
-		private double average;
-		List<Book> bought_books_list = new List<Book>();
-		List<Book> wish_list_books = new List<Book>();
+
+    public string Name { get; set; }
+    public string Last_name { get; set; }
+    public string Date_of_birth { get; set; }
+    public Address Address { get; set; }
+    public string Contact_phone { get; set; }
+    public string Email { get; set; }
+    public string Membership_number { get; set; }
+    public string Membership_year { get; set; }
+    public string Status { get; set; }
+    public double Average_review { get; set; }
+    public list<Purchase> Purchases { get; set; }
+    public list<Book> Wishlist { get; set; }
+
 
 }
 }

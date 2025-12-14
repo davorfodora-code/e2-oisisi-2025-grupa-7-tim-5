@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
-public class Class1
+public class Purchase : ISerializable
 {
-	public Class1()
+	public Purchase()
 	{
-		Visitor visitor;
-		Book book;
-		Author boss;
-		private string date_of_purchase;
-		List<Author> authors = new List<Author>();
-		List<Book> books = new List<Book>();
+
+        public Visitor Visitor { get; set; }
+        public Book Book { get; set; }
+        public string Date_of_purchase { get; set; }
+        public int Review { get; set; }
+        public string Comment { get; set; }
 	}
 }
