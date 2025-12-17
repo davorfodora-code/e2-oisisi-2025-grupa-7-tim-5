@@ -27,13 +27,13 @@ public class Address : ISerializable
 
     public Address(string street,string number,string  city,string state,string country)
 {
-    this.street = street;
-    this.number = number;
-    this.city = city;
-    this.state = state;
-    this.country = country;
+        this.street = street;
+        this.number = number;
+        this.city = city;
+        this.state = state;
+        this.country = country;
 
-}
+    }
 public override string ToString()
 {
     StringBuilder sb = new StringBuilder();

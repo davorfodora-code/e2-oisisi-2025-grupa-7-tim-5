@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
-public class Book : iSerializable
+public class Book : ISerializable
 {
 	public string isbn { get; set; }
 	public string name { get; set; }
@@ -53,4 +53,13 @@ public override string ToString()
     return sb.ToString();
 }
 
+    public string[] ToCSV()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FromCSV(string[] values)
+    {
+        throw new NotImplementedException();
+    }
 }
