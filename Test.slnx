@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../e2-oisisi-2025-grupa-7-tim-5/.gitignore" />
+    <File Path="../e2-oisisi-2025-grupa-7-tim-5/README.md" />
+  </Folder>
+  <Project Path="ConsoleClient/ConsoleClient.csproj" />
+  <Project Path="Core/Core.csproj" />
+</Solution>
