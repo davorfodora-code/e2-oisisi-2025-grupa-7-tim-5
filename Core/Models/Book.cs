@@ -2,50 +2,71 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Book : ISerializable
 {
-	public string isbn { get; set; }
-	public string name { get; set; }
-	public string genre { get; set; }
-	public string publication_year { get; set; }
-	public double price { get; set; }
-	public int number_of_pages { get; set; }
-	public List<Author> authors { get; set; }
-	public Publisher publisher { get; set; }
-	public List<Visitor> visitor_bought_book { get; set; }
-	public List<Visitor> visitor_wish_list { get; set; }
+	public string Isbn { get; set; }
+	public string Name { get; set; }
+	public string Genre { get; set; }
+	public string Publication_year { get; set; }
+	public double Price { get; set; }
+	public int Number_of_pages { get; set; }
+	public List<Author> Authors { get; set; }
+	public Publisher Publisher { get; set; }
+	public List<Visitor> Visitor_bought_book { get; set; }
+	public List<Visitor> Visitor_wish_list { get; set; }
 
 	public Book()
 	{
 		
-		 visitor_bought_book = new List<Visitor>();
-		 visitor_wish_list = new List<Visitor>();
+		 Visitor_bought_book = new List<Visitor>();
+		 Visitor_wish_list = new List<Visitor>();
 	}
 public Book(string isbn, string name, string genre, string publication_year,double price, int number_of_pages,Publisher publisher,List<Visitor> visitor_bought_book,List<Visitor> visitor_wish_list)
 {
-	isbn = isbn;
-	name = name;
-	genre = genre;
-	publication_year = publication_year;
-	price = price;
-	number_of_pages = number_of_pages;
-	publisher = publisher;	
-	visitor_bought_book= visitor_bought_book;
-	visitor_wish_list= visitor_wish_list;
+	this.Isbn = isbn;
+	this.Name = name;
+	this.Genre = genre;
+	this.Publication_year = publication_year;
+	this.Price = price;
+	this.Number_of_pages = number_of_pages;
+	this.Publisher = publisher;	
+	this.Visitor_bought_book= visitor_bought_book;
+	this.Visitor_wish_list= visitor_wish_list;
 
 }
+	public void FromCSV(string[] values)
+	{
 
-public override string ToString()
+		Isbn = values[0];
+		Name = values[1];
+		Genre = values[2];
+		Publication_year = values[3];
+		Price = double.Parse(values[4]);
+    }
+
+    public string[] ToCSV()
+    {
+        string[] values =
+        {
+           Isbn, Name, Genre, Publication_year,
+		   Price.ToString()
+        };
+        return values;
+    }
+
+    public override string ToString()
 {
     StringBuilder sb = new StringBuilder();
 
-    sb.Append("ISBN: " + isbn + ", ");
-    sb.Append("NAZIV: " + name + ", ");
-    sb.Append("ŽANR: " + genre + ", ");
-    sb.Append("GODINA: " + publication_year + ", ");
-    sb.Append("CENA: " + price + ", ");
-    sb.Append("BROJ STRANA: " + number_of_pages + ", ");
+    sb.Append("ISBN: " + Isbn + ", ");
+    sb.Append("NAZIV: " + Name + ", ");
+    sb.Append("ŽANR: " + Genre + ", ");
+    sb.Append("GODINA: " + Publication_year + ", ");
+    sb.Append("CENA: " + Price + ", ");
+    sb.Append("BROJ STRANA: " + Number_of_pages + ", ");
 
    //fali
     
@@ -53,13 +74,5 @@ public override string ToString()
     return sb.ToString();
 }
 
-    public string[] ToCSV()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void FromCSV(string[] values)
-    {
-        throw new NotImplementedException();
-    }
+   
 }

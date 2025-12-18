@@ -2,46 +2,57 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Address : ISerializable
 {
 
-    public string street { set; get; }
-    public string number { set; get; }
-    public string city { set; get; }
-    public string state { set; get; }
-    public string country { set; get; }
+    public string Street { set; get; }
+    public string Number { set; get; }
+    public string City { set; get; }
+    public string State { set; get; }
+    public string Country { set; get; }
     public Address()
     {
         
     }
-    public string[] ToCSV()
-    {
-        throw new NotImplementedException();
-    }
-
     public void FromCSV(string[] values)
     {
-        throw new NotImplementedException();
+
+        Street = values[0];
+        Number = values[1];
+        City = values[2];
+        State = values[3];
+        Country = values[4];
+    }
+
+    public string[] ToCSV()
+    {
+        string[] values =
+        {
+           Street, Number, City, State, Country
+        };
+        return values;
     }
 
     public Address(string street,string number,string  city,string state,string country)
 {
-        this.street = street;
-        this.number = number;
-        this.city = city;
-        this.state = state;
-        this.country = country;
+        this.Street = street;
+        this.Number = number;
+        this.City = city;
+        this.State = state;
+        this.Country = country;
 
     }
 public override string ToString()
 {
     StringBuilder sb = new StringBuilder();
-    sb.Append("ULICA " + street + " ");
-    sb.Append("BROJ " + number + ", ");
-    sb.Append("GRAD " + city + ", ");
-    sb.Append("OPSTINA " + state + ", ");
-    sb.Append("DRZAVA " + country);
+    sb.Append("ULICA " + Street + " ");
+    sb.Append("BROJ " + Number + ", ");
+    sb.Append("GRAD " + City + ", ");
+    sb.Append("OPSTINA " + State + ", ");
+    sb.Append("DRZAVA " + Country);
     return sb.ToString();
 }
 
