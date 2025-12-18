@@ -1,8 +1,9 @@
 <Solution>
   <Folder Name="/Solution Items/">
-    <File Path="../e2-oisisi-2025-grupa-7-tim-5/.gitignore" />
-    <File Path="../e2-oisisi-2025-grupa-7-tim-5/README.md" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
   </Folder>
   <Project Path="ConsoleClient/ConsoleClient.csproj" />
   <Project Path="Core/Core.csproj" />
+  <Project Path="WpfClient/WpfClient.csproj" Id="8b2b893b-c766-4f86-83a3-555912051d51" />
 </Solution>
