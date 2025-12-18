@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 public class Publisher : ISerializable
 {
@@ -14,22 +15,43 @@ public class Publisher : ISerializable
     {
         Books = new List<Book>();
     }
-    public Publisher(string id,string name,Author manager) {
-    this.Id = id;
-        this.Name = name;  
-        this.Manager = manager;
-          
+
+    public Publisher(string id, string name, Author manager, List<Author> authors, List<Book> books)
+    {
+        Id = id;
+        Name = name;
+        Manager = manager;
+        Authors = authors;
+        Books = books;
     }
-        
+
 
     public void FromCSV(string[] values)
     {
-        throw new NotImplementedException();
+        Id = values[0];
+        Name = values[1];
     }
 
     public string[] ToCSV()
     {
-        throw new NotImplementedException();
+        string[] values =
+        {
+            Id,
+            Name
+            //Manager
+            //Authors
+            //Books
+        };
+        return values;
+    }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append($"Id: {Id}, ");
+        sb.Append($"Name: {Name}, ");
+
+        return sb.ToString();
     }
 
 }
