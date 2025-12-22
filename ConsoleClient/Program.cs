@@ -7,9 +7,6 @@ namespace ConsoleClient
     {
         static void Main(string[] args)
         {
-        
-
-            
 
             Address adresa1 = new Address("DJordja Zlicica","34","Novi Sad","Vojvodina","Srbija");
             Address adresa2 = new Address("Kralja Petra 1", "15b", "Pristina", "KiM", "Srbija");

@@ -15,12 +15,17 @@ namespace Core.DAO
 
         public VisitorDAO()
         {
-            storage = new Storage<Visitor>("DataBase.txt");
+            storage = new Storage<Visitor>("Visitors.txt");
             visitors = storage.Load();
         }
 
         public Visitor AddVisitor(Visitor visitor)
         {
+            if(GetVisitorByMemebershipId(visitor.Membership_number) != null)
+            {
+                return null;
+            }
+
             visitors.Add(visitor);
             storage.Save(visitors);
             return visitor;
@@ -50,12 +55,9 @@ namespace Core.DAO
             Visitor? visitor = GetVisitorByMemebershipId(mmId);
             if (visitor == null)
             {
-                Console.WriteLine("Visitor NOT FOUND: " + mmId);
                 return null;
-
             }
             
-
             visitors.Remove(visitor);
             storage.Save(visitors);
 

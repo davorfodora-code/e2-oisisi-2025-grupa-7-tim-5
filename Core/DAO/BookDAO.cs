@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Core.DAO
 {
-    internal class BookDAO
+    public class BookDAO
     {
         private readonly List<Book> books;
         private readonly Storage<Book> storage;
 
         public BookDAO()
         {
-            storage = new Storage<Book>("DataBase.txt");
+            storage = new Storage<Book>("Books.txt");
             books = storage.Load();
         }
     //#brisanje_knjige
