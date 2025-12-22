@@ -26,17 +26,21 @@ public class Purchase : ISerializable
 
     public void FromCSV(string[] values)
     {
-        //Visitor
-        //Book
-        Date_of_purchase = values[0];
-        Review = double.Parse(values[1]);
-        Comment = values[2];
+        Visitor = new Visitor();
+        Visitor.Membership_number = values[0];
+        Book = new Book();
+        Book.Isbn = values[1];
+        Date_of_purchase = values[2];
+        Review = double.Parse(values[3]);
+        Comment = values[4];
     }
 
     public string[] ToCSV()
     {
         string[] values =
         {
+            Visitor.Membership_number.ToString(),
+            Book.Isbn.ToString(),
             Date_of_purchase,
             Review.ToString(),
             Comment
