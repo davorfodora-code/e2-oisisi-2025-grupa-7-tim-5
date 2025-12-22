@@ -8,13 +8,13 @@ namespace ConsoleClient
         static void Main(string[] args)
         {
 
-            Address adresa1 = new Address("DJordja Zlicica","34","Novi Sad","Vojvodina","Srbija");
+            Address adresa1 = new Address("DJordja Zlicica", "34", "Novi Sad", "Vojvodina", "Srbija");
             Address adresa2 = new Address("Kralja Petra 1", "15b", "Pristina", "KiM", "Srbija");
             Console.WriteLine(adresa1);
-            Publisher publisher = new Publisher();
-            Console.WriteLine(publisher);
-          
 
+            //   Console.WriteLine(publisher1);
+
+            List<Visitor> visitors = new List<Visitor>();
             List<Purchase> purchases = new List<Purchase>();
             List<Book> wishlist = new List<Book>();
             Visitor visitor = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", 5.4, purchases, wishlist);
@@ -24,12 +24,16 @@ namespace ConsoleClient
             visitors1.RemoveVisitor("12");
             visitors1.ShowVisitors();
 
+            Book book1 = new Book();
+            // BookDAO bookDAO= new BookDAO();
+            //  bookDAO.AddBook(book1);
+            List<Book> books = new List<Book>();
 
             AuthorDAO authorDAO = new AuthorDAO();
 
-            Author a1= new Author("Ivo", "Andrić", "1892-10-09",  "064123456", "ivo@andric.rs" , "ID001",adresa1, 40, new List<Book>());
+            Author a1 = new Author("Ivo", "Andrić", "1892-10-09", "064123456", "ivo@andric.rs", "ID001", adresa1, 40, new List<Book>());
 
-            Author a2 = new Author( "Mesa", "Selimović", "1910-04-26", "065987654", "mesa@selimovic.rs", "ID002",adresa2,35, new List<Book>()
+            Author a2 = new Author("Mesa", "Selimović", "1910-04-26", "065987654", "mesa@selimovic.rs", "ID002", adresa2, 35, new List<Book>()
         );
             authorDAO.AddAuthor(a1);
 
@@ -38,6 +42,7 @@ namespace ConsoleClient
             {
                 Console.WriteLine(author);
             }
+            Publisher publisher1 = new Publisher("IDPUBLISHERA", "ime", a1, authors, books);
 
             a1.Phone_number = "066111222";
             authorDAO.UpdateAuthor(a1);
@@ -49,6 +54,9 @@ namespace ConsoleClient
 
             authorDAO.RemoveAuthor("ID002");
 
+            Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, publisher1, visitors, visitors);
+            BookDAO bookDAO = new BookDAO();
+            bookDAO.AddBook(book2);
 
 
 

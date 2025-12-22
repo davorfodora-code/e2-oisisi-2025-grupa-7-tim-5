@@ -45,6 +45,9 @@ public Book(string isbn, string name, string genre, string publication_year,doub
 		Genre = values[2];
 		Publication_year = values[3];
 		Price = double.Parse(values[4]);
+		Publisher = new Publisher();
+		Publisher.Id = values[5];
+		Publisher.Name = values[6];
     }
 
     public string[] ToCSV()
@@ -52,7 +55,7 @@ public Book(string isbn, string name, string genre, string publication_year,doub
         string[] values =
         {
            Isbn, Name, Genre, Publication_year,
-		   Price.ToString()
+		   Price.ToString(), Publisher.Id.ToString(), Publisher.Name.ToString()
         };
         return values;
     }
