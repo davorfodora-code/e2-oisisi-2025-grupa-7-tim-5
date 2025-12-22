@@ -17,14 +17,28 @@ namespace Core.DAO
             storage = new Storage<Book>("DataBase.txt");
             books = storage.Load();
         }
+    //#brisanje_knjige
 
+        public Book? RemoveBook(String bIsbn)
+        {
+            Book? book = GetBookByIsbn(bIsbn);
+            if (book == null)
+                return null;
+            books.Remove(book);
+            storage.Save(books);
+            return book;
+        }
+        //#dodavanje_knjige 
         public Book AddBook(Book book)
         {
+            if (GetBookByIsbn(book.Isbn) != null)
+                return null;
+
             books.Add(book);
             storage.Save(books);
             return book;
         }
-
+       //#izmena_knjige 
         public Book? UpdateBook(Book b)
         {
             Book? oldBook = GetBookByIsbn(b.Isbn);
@@ -46,10 +60,20 @@ namespace Core.DAO
             return oldBook;
         }
 
+    //prikaz_knjige(jedne)
         private Book? GetBookByIsbn(string bIsbn)
         {
             return books.Find(v => v.Isbn == bIsbn);
         }
+
+     //prikaz_knjige(svih)
+
+        public List<Book> GetAllBooks()
+        {
+            return new List<Book>(books);
+        }
+
+
 
     }
 }
