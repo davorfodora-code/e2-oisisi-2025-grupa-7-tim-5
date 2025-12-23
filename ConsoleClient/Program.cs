@@ -24,6 +24,10 @@ namespace ConsoleClient
             visitors1.RemoveVisitor("12");
             visitors1.ShowVisitors();
 
+            AddressDAO addressDAO = new AddressDAO();
+            addressDAO.AddAddress(adresa1);
+            
+
             Book book1 = new Book();
             // BookDAO bookDAO= new BookDAO();
             //  bookDAO.AddBook(book1);
@@ -51,12 +55,20 @@ namespace ConsoleClient
             {
                 Console.WriteLine(author);
             }
+            
 
             authorDAO.RemoveAuthor("ID002");
 
             Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
+            Purchase p1 = new Purchase(visitor,book2,"12.12.2000",4.3,"Odlicna knjiga");
+
+            PublisherDAO publisherDAO = new PublisherDAO();
+            publisherDAO.AddPublisher(publisher1);
+            PurchaseDAO purchaseDAO = new PurchaseDAO();
+            purchaseDAO.AddPurchase(p1);
+
 
 
 
