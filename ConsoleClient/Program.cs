@@ -59,7 +59,7 @@ namespace ConsoleClient
 
             authorDAO.RemoveAuthor("ID002");
 
-            Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, publisher1, visitors, visitors);
+            Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, authors, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
             Purchase p1 = new Purchase(visitor,book2,"12.12.2000",4.3,"Odlicna knjiga");

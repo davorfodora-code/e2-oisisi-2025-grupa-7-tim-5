@@ -45,14 +45,14 @@ namespace Core.DAO
             if (oldBook == null) return null;
 
             oldBook.Publisher = b.Publisher;
-            oldBook.Visitor_wish_list = b.Visitor_wish_list;
-            oldBook.Visitor_bought_book = b.Visitor_bought_book;
-            oldBook.Number_of_pages = b.Number_of_pages;
+            oldBook.VisitorWishList = b.VisitorWishList;
+            oldBook.VisitorBoughtBook = b.VisitorBoughtBook;
+            oldBook.NumberOfPages = b.NumberOfPages;
             oldBook.Authors = b.Authors;
             oldBook.Genre = b.Genre;
             oldBook.Name = b.Name;
             oldBook.Price = b.Price;
-            oldBook.Publication_year = b.Publication_year;
+            oldBook.PublicationYear = b.PublicationYear;
 
             storage.Save(books);
 
