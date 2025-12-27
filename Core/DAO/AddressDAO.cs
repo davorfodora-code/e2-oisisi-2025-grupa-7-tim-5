@@ -22,6 +22,10 @@ namespace Core.DAO
         // #dodavanje_adrese
         public Address AddAddress(Address address)
         {
+            if(FindAddress(address) != null)
+            {
+                return null;
+            }
       
             addresses.Add(address);
             storage.Save(addresses);
