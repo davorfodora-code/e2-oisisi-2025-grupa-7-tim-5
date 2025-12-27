@@ -8,12 +8,12 @@ public class Author : ISerializable
 {
 	public string Name { get; set; }
 	public string Lastname { get; set; }
-	public string Date_of_birth { get; set; }
+	public string DateOfBirth { get; set; }
 	public Address Address { get; set; }
-	public string Phone_number { get; set; }
+	public string PhoneNumber { get; set; }
 	public string Email { get; set; }
 	public string Id_card { get; set; }
-	public double Experience_length { get; set; }
+	public double ExperienceLength { get; set; }
 	public List<Book> BookList { get; set; }
 
 
@@ -37,32 +37,32 @@ public class Author : ISerializable
     {
 		this.Name = Name;
 		this.Lastname = Lastname;
-		this.Date_of_birth = Date_of_birth;
-		this.Phone_number = Phone_number;
+		this.DateOfBirth = DateOfBirth;
+		this.PhoneNumber = PhoneNumber;
 		this.Email = Email;
 		this.Id_card = Id_card;
 		this.Address = Address;
-		this.Experience_length = Experience_length;
+		this.ExperienceLength = ExperienceLength;
         BookList = new List<Book>();
     }
     public void FromCSV(string[] values)
     {
-        
+
         Name = values[0];
         Lastname = values[1];
-        Date_of_birth = values[2];
-        Phone_number = values[3];
+        DateOfBirth = values[2];
+        PhoneNumber = values[3];
         Email = values[4];
         Id_card = values[5];
-        Experience_length = double.Parse(values[6]);
+        ExperienceLength = double.Parse(values[6]);
     }
 
     public string[] ToCSV()
     {
         string[] values =
         {
-           Name, Lastname, Date_of_birth, Phone_number, Email, Id_card,
-           Experience_length.ToString()
+           Name, Lastname, DateOfBirth, PhoneNumber, Email, Id_card,
+           ExperienceLength.ToString()
         };
         return values;
     }
@@ -72,11 +72,11 @@ public class Author : ISerializable
 
         sb.Append("NAME: " + Name + ", ");
         sb.Append("LASTNAME: " + Lastname + ", ");
-        sb.Append("DATE OF BIRTH: " + Date_of_birth + ", ");
-        sb.Append("PHONE: " + Phone_number + ", ");
+        sb.Append("DATE OF BIRTH: " + DateOfBirth + ", ");
+        sb.Append("PHONE: " + PhoneNumber + ", ");
         sb.Append("EMAIL: " + Email + ", ");
         sb.Append("ID CARD: " + Id_card + ", ");
-        sb.Append("EXPERIENCE: " + Experience_length + ", ");
+        sb.Append("EXPERIENCE: " + ExperienceLength + ", ");
         sb.Append("ADDRESS: " + Address + ", ");
         sb.Append("BOOKS: ");
         foreach(Book book in BookList)

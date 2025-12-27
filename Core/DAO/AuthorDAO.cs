@@ -39,11 +39,11 @@ namespace Core.DAO
 
             oldAuthor.Name = a.Name;
             oldAuthor.Lastname = a.Lastname;
-            oldAuthor.Date_of_birth = a.Date_of_birth;
-            oldAuthor.Phone_number = a.Phone_number;
+            oldAuthor.DateOfBirth = a.DateOfBirth;
+            oldAuthor.PhoneNumber = a.PhoneNumber;
             oldAuthor.Email = a.Email;
             oldAuthor.Address = a.Address;
-            oldAuthor.Experience_length = a.Experience_length;
+            oldAuthor.ExperienceLength = a.ExperienceLength;
             oldAuthor.BookList = a.BookList;
 
             storage.Save(authors);

@@ -1,1 +1,1 @@
-Ivo|Andrić|1892-10-09|066111222|ivo@andric.rs|ID001|40
+Ivo|Andrić||066111222|ivo@andric.rs|ID001|0

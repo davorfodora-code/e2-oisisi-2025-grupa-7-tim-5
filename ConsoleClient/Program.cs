@@ -48,7 +48,7 @@ namespace ConsoleClient
             }
             Publisher publisher1 = new Publisher("IDPUBLISHERA", "ime", a1, authors, books);
 
-            a1.Phone_number = "066111222";
+            a1.PhoneNumber = "066111222";
             authorDAO.UpdateAuthor(a1);
 
             foreach (Author author in authorDAO.GetAllAuthors())
