@@ -21,6 +21,10 @@ namespace Core.DAO
       
         public Purchase AddPurchase(Purchase purchase)
         {
+            if(FindPurchase(purchase) != null)
+            {
+                return null;
+            }
           
             purchases.Add(purchase);
             storage.Save(purchases);
@@ -59,9 +63,9 @@ namespace Core.DAO
         private Purchase? FindPurchase(Purchase p)
         {
             return purchases.Find(x =>
-                x.Visitor.Equals(p.Visitor) &&
-                x.Book.Equals(p.Book) &&
-                x.DateOfPurchase == p.DateOfPurchase
+               x.Visitor.MembershipNumber == p.Visitor.MembershipNumber &&
+               x.Book.Isbn == p.Book.Isbn &&
+               x.DateOfPurchase == p.DateOfPurchase
             );
         }
 
