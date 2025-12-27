@@ -7,15 +7,15 @@ public class Visitor : ISerializable
 {
     public enum Status_type {P, B}
     public string Name { get; set; }
-    public string Last_name { get; set; }
-    public string Date_of_birth { get; set; }
+    public string LastName { get; set; }
+    public string DateOfBirth { get; set; }
     public Address Address { get; set; }
-    public string Contact_phone { get; set; }
+    public string ContactPhone { get; set; }
     public string Email { get; set; }
-    public string Membership_number { get; set; }
-    public string Membership_year { get; set; }
+    public string MembershipNumber { get; set; }
+    public string MembershipYear { get; set; }
     public string Status { get; set; }
-    public double Average_review { get; set; }
+    public double AverageReview { get; set; }
     public List<Purchase> Purchases { get; set; }
     public List<Book> Wishlist { get; set; }
 
@@ -27,18 +27,18 @@ public class Visitor : ISerializable
         Wishlist = new List<Book>();
     }
 
-    public Visitor(string name, string last_name, string date_of_birth, Address address, string contact_phone, string email, string membership_number, string membership_year, string status, double average_review, List<Purchase> purchases, List<Book> wishlist)
+    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status, double averageReview, List<Purchase> purchases, List<Book> wishlist)
     {
         Name = name;
-        Last_name = last_name;
-        Date_of_birth = date_of_birth;
+        LastName = lastName;
+        DateOfBirth = dateofbirth;
         Address = address;
-        Contact_phone = contact_phone;
+        ContactPhone = contactPhone;
         Email = email;
-        Membership_number = membership_number;
-        Membership_year = membership_year;
+        MembershipNumber = membershipNumber;
+        MembershipYear = membershipYear;
         Status = status;
-        Average_review = average_review;
+        AverageReview = averageReview;
         Purchases = purchases;
         Wishlist = wishlist;
     }
@@ -48,14 +48,14 @@ public class Visitor : ISerializable
         string[] Values =
         {
             Name,
-            Last_name,
-            Date_of_birth,
-            Contact_phone,
+            LastName,
+            DateOfBirth,
+            ContactPhone,
             Email,
-            Membership_number,
-            Membership_year,
+            MembershipNumber,
+            MembershipYear,
             Status,
-            Average_review.ToString()
+            AverageReview.ToString()
         };
         return Values;
     }
@@ -63,15 +63,15 @@ public class Visitor : ISerializable
     public void FromCSV(string[] values)
     {
         Name = values[0];
-        Last_name = values[1];
-        Date_of_birth = values[2];
+        LastName = values[1];
+        DateOfBirth = values[2];
         //Address = new Address {  }
-        Contact_phone = values[3];
+        ContactPhone = values[3];
         Email = values[4];
-        Membership_number = values[5];
-        Membership_year = values[6];
+        MembershipNumber = values[5];
+        MembershipYear = values[6];
         Status = values[7];
-        Average_review = double.Parse(values[8]);
+        AverageReview = double.Parse(values[8]);
         //Purchases = new Purchases {  }
         //Wishlist = new Wishlist {  }
     }
@@ -80,14 +80,14 @@ public class Visitor : ISerializable
     {
         StringBuilder sb = new StringBuilder();
         sb.Append($"Name: {Name}, ");
-        sb.Append($"Last name: {Last_name}, ");
-        sb.Append($"Date of birth: {Date_of_birth}, ");
-        sb.Append($"Contact phone: {Contact_phone}, ");
+        sb.Append($"Last name: {LastName}, ");
+        sb.Append($"Date of birth: {DateOfBirth}, ");
+        sb.Append($"Contact phone: {ContactPhone}, ");
         sb.Append($"Email: {Email}, ");
-        sb.Append($"Membership number: {Membership_number}, ");
-        sb.Append($"Membership year: {Membership_year}, ");
+        sb.Append($"Membership number: {MembershipNumber}, ");
+        sb.Append($"Membership year: {MembershipYear}, ");
         sb.Append($"Status: {Status}, ");
-        sb.Append($"Average review: {Average_review}, ");
+        sb.Append($"Average review: {AverageReview}, ");
         return sb.ToString();
     }
 

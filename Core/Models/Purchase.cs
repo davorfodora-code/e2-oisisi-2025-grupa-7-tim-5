@@ -27,7 +27,7 @@ public class Purchase : ISerializable
     public void FromCSV(string[] values)
     {
         Visitor = new Visitor();
-        Visitor.Membership_number = values[0];
+        Visitor.MembershipNumber = values[0];
         Book = new Book();
         Book.Isbn = values[1];
         Date_of_purchase = values[2];
@@ -39,7 +39,7 @@ public class Purchase : ISerializable
     {
         string[] values =
         {
-            Visitor.Membership_number.ToString(),
+            Visitor.MembershipNumber.ToString(),
             Book.Isbn.ToString(),
             Date_of_purchase,
             Review.ToString(),

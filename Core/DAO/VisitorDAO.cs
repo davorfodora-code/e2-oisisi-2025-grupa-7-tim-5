@@ -21,7 +21,7 @@ namespace Core.DAO
 
         public Visitor AddVisitor(Visitor visitor)
         {
-            if(GetVisitorByMemebershipId(visitor.Membership_number) != null)
+            if(GetVisitorByMemebershipId(visitor.MembershipNumber) != null)
             {
                 return null;
             }
@@ -33,17 +33,18 @@ namespace Core.DAO
 
         public Visitor? UpdateVisitor(Visitor v)
         {
-            Visitor? oldVisitor = GetVisitorByMemebershipId(v.Membership_number);
+            Visitor? oldVisitor = GetVisitorByMemebershipId(v.MembershipNumber);
             if (oldVisitor == null) return null;
             oldVisitor.Name = v.Name;
             oldVisitor.Address = v.Address;
             oldVisitor.Wishlist = v.Wishlist;
             oldVisitor.Purchases = v.Purchases;
             oldVisitor.Status = v.Status;
-            oldVisitor.Average_review = v.Average_review;
-            oldVisitor.Date_of_birth = v.Date_of_birth;
-            oldVisitor.Membership_year = v.Membership_year;
-            oldVisitor.Contact_phone = v.Contact_phone;
+            oldVisitor.AverageReview = v.AverageReview;
+            oldVisitor.DateOfBirth = v.DateOfBirth;
+            oldVisitor.MembershipYear = v.MembershipYear;
+            oldVisitor.MembershipNumber = v.MembershipNumber;
+            oldVisitor.ContactPhone = v.ContactPhone;
             oldVisitor.Email = v.Email;
             storage.Save(visitors);
 
@@ -66,7 +67,7 @@ namespace Core.DAO
 
         private Visitor? GetVisitorByMemebershipId(string mmId)
         {
-            return visitors.Find(v => v.Membership_number == mmId);
+            return visitors.Find(v => v.MembershipNumber == mmId);
         }
 
         public void ShowVisitors()
