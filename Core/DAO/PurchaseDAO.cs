@@ -35,7 +35,7 @@ namespace Core.DAO
 
             oldPurchase.Visitor = p.Visitor;
             oldPurchase.Book = p.Book;
-            oldPurchase.Date_of_purchase = p.Date_of_purchase;
+            oldPurchase.DateOfPurchase = p.DateOfPurchase;
             oldPurchase.Review = p.Review;
             oldPurchase.Comment = p.Comment;
 
@@ -61,7 +61,7 @@ namespace Core.DAO
             return purchases.Find(x =>
                 x.Visitor.Equals(p.Visitor) &&
                 x.Book.Equals(p.Book) &&
-                x.Date_of_purchase == p.Date_of_purchase
+                x.DateOfPurchase == p.DateOfPurchase
             );
         }
 
