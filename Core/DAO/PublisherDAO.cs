@@ -21,6 +21,10 @@ namespace Core.DAO
 
         public Publisher AddPublisher(Publisher p)
         {
+            if(FindPublisher(p.Id) != null)
+            {
+                return null;
+            }
             
             publishers.Add(p);
             storage.Save(publishers);
