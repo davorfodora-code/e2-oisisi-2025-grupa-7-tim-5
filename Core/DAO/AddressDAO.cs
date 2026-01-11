@@ -19,23 +19,23 @@ namespace Core.DAO
             addresses = storage.Load();
         }
 
-        // #dodavanje_adrese
-        public Address AddAddress(Address address)
+        // add address
+        public Address AddAddress(Address a)
         {
-            if(FindAddress(address) != null)
+            if(FindAddress(a.Id) != null)
             {
                 return null;
             }
       
-            addresses.Add(address);
+            addresses.Add(a);
             storage.Save(addresses);
-            return address;
+            return a;
         }
 
-        // #izmena_adrese
+        // Update address
         public Address? UpdateAddress(Address a)
         {
-            Address? oldAddress = FindAddress(a);
+            Address? oldAddress = FindAddress(a.Id);
             if (oldAddress == null)
                 return null;
 
@@ -49,10 +49,10 @@ namespace Core.DAO
             return oldAddress;
         }
 
-        // #brisanje_adrese
+        // Remove address
         public Address? RemoveAddress(Address a)
         {
-            Address? address = FindAddress(a);
+            Address? address = FindAddress(a.Id);
             if (address == null)
                 return null;
 
@@ -61,19 +61,15 @@ namespace Core.DAO
             return address;
         }
 
-       
-        private Address? FindAddress(Address a)
+        // FindAddress by id
+        private Address? FindAddress(int id)
         {
-            return addresses.Find(addr =>
-                addr.Street == a.Street &&
-                addr.Number == a.Number &&
-                addr.City == a.City &&
-                addr.State == a.State &&
-                addr.Country == a.Country
-            );
+            return addresses.Find(a => a.Id == id);
+
         }
 
-        
+        // Get all addresses
+
         public List<Address> GetAllAddresses()
         {
             return new List<Address>(addresses);

@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Address : ISerializable
 {
-
+    public int Id { set; get; }
     public string Street { set; get; }
     public string Number { set; get; }
     public string City { set; get; }
