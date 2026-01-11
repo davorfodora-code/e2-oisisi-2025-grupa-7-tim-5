@@ -62,7 +62,8 @@ namespace ConsoleClient
             Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, authors, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
-            Purchase p1 = new Purchase(visitor,book2,"12.12.2000",4.3,"Odlicna knjiga");
+            DateOnly purchaseDate = DateOnly.ParseExact("12.12.2000.", "dd.MM.yyyy.");
+            Purchase p1 = new Purchase(visitor,book2, purchaseDate, 4.3,"Odlicna knjiga");
 
             PublisherDAO publisherDAO = new PublisherDAO();
             publisherDAO.AddPublisher(publisher1);
