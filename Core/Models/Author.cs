@@ -12,16 +12,14 @@ public class Author : ISerializable
 	public Address Address { get; set; }
 	public string PhoneNumber { get; set; }
 	public string Email { get; set; }
-	public string Id_card { get; set; }
+	public string IdCard { get; set; }
 	public double ExperienceLength { get; set; }
 	public List<Book> BookList { get; set; }
 
 
 	public Author()
 	{
-		 string name, lastname, date_of_birth, phone_number, email, id_card;
-		 Address address;
-		 double experience_length;
+		
 		BookList  = new List<Book>();
 	}
     public Author(
@@ -40,20 +38,19 @@ public class Author : ISerializable
 		this.DateOfBirth = DateOfBirth;
 		this.PhoneNumber = PhoneNumber;
 		this.Email = Email;
-		this.Id_card = Id_card;
+		this.IdCard = Id_card;
 		this.Address = Address;
 		this.ExperienceLength = ExperienceLength;
         BookList = new List<Book>();
     }
     public void FromCSV(string[] values)
     {
-
+        IdCard = values[5];
         Name = values[0];
         Lastname = values[1];
         DateOfBirth = DateOnly.Parse(values[2]);
         PhoneNumber = values[3];
         Email = values[4];
-        Id_card = values[5];
         ExperienceLength = double.Parse(values[6]);
     }
 
@@ -61,9 +58,11 @@ public class Author : ISerializable
     {
         string[] values =
         {
-           Name, Lastname, PhoneNumber, Email, Id_card,
+          IdCard, Name, Lastname,
+           DateOfBirth.ToString(),
+           PhoneNumber, Email,
            ExperienceLength.ToString(),
-           DateOfBirth.ToString()
+           
         };
         return values;
     }
@@ -76,7 +75,7 @@ public class Author : ISerializable
         sb.Append("DATE OF BIRTH: " + DateOfBirth + ", ");
         sb.Append("PHONE: " + PhoneNumber + ", ");
         sb.Append("EMAIL: " + Email + ", ");
-        sb.Append("ID CARD: " + Id_card + ", ");
+        sb.Append("ID CARD: " + IdCard + ", ");
         sb.Append("EXPERIENCE: " + ExperienceLength + ", ");
         sb.Append("ADDRESS: " + Address + ", ");
         sb.Append("BOOKS: ");
