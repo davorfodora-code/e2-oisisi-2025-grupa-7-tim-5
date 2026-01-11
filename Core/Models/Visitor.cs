@@ -53,7 +53,8 @@ public class Visitor : ISerializable
             Email,
             MembershipNumber,
             MembershipYear,
-            Status
+            Status,
+            AverageReview.ToString()
         };
         return Values;
     }
@@ -69,6 +70,7 @@ public class Visitor : ISerializable
         MembershipNumber = values[5];
         MembershipYear = values[6];
         Status = values[7];
+        AverageReview = double.Parse(values[8]);
         //Purchases = new Purchases {  }
         //Wishlist = new Wishlist {  }
     }
