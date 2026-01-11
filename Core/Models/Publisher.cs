@@ -24,6 +24,14 @@ public class Publisher : ISerializable
         Books = books;
     }
 
+    public Publisher(int id, string name, Author manager, List<Author> authors, List<Book> books)
+    {
+        Id = id;
+        Name = name;
+        Manager = manager;
+        Authors = authors;
+        Books = books;
+    }
 
     public void FromCSV(string[] values)
     {
