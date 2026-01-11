@@ -35,7 +35,12 @@ namespace Core.DAO
 
         public Publisher AddPublisher(Publisher p)
         {
-            
+            var existing = publishers.FirstOrDefault(existingPublisher => existingPublisher.Name.Equals(p.Name, StringComparison.OrdinalIgnoreCase));
+
+            if (existing != null)
+            {
+                return existing;
+            }
 
             p.Id = CreatePublisherID();
             
