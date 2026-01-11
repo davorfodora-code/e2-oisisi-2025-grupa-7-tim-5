@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class Address : ISerializable
 {
-
+    public int Id { set; get; }
     public string Street { set; get; }
     public string Number { set; get; }
     public string City { set; get; }
@@ -19,33 +19,34 @@ public class Address : ISerializable
     }
     public void FromCSV(string[] values)
     {
-
-        Street = values[0];
-        Number = values[1];
-        City = values[2];
-        State = values[3];
-        Country = values[4];
+        
+        Id = int.Parse(values[0]);
+        Street = values[1];
+        Number = values[2];
+        City = values[3];
+        State = values[4];
+        Country = values[5];
     }
 
     public string[] ToCSV()
     {
-        string[] values =
+        return new string[]
         {
-           Street, Number, City, State, Country
+        Id.ToString(), Street, Number, City, State, Country
         };
-        return values;
     }
 
-    public Address(string street,string number,string  city,string state,string country)
-{
-        this.Street = street;
-        this.Number = number;
-        this.City = city;
-        this.State = state;
-        this.Country = country;
 
+    public Address( string street, string number, string city, string state, string country)
+    {
+        Street = street;
+        Number = number;
+        City = city;
+        State = state;
+        Country = country;
     }
-public override string ToString()
+
+    public override string ToString()
 {
     StringBuilder sb = new StringBuilder();
     sb.Append("ULICA " + Street + " ");
