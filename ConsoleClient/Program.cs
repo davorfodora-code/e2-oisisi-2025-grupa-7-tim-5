@@ -26,7 +26,7 @@ namespace ConsoleClient
 
             AddressDAO addressDAO = new AddressDAO();
             addressDAO.AddAddress(adresa1);
-            
+
 
             Book book1 = new Book();
             // BookDAO bookDAO= new BookDAO();
@@ -55,19 +55,54 @@ namespace ConsoleClient
             {
                 Console.WriteLine(author);
             }
-            
+
 
             authorDAO.RemoveAuthor("ID002");
 
             Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, authors, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
-            Purchase p1 = new Purchase(visitor,book2,"12.12.2000",4.3,"Odlicna knjiga");
+            Purchase p1 = new Purchase(visitor, book2, "12.12.2000", 4.3, "Odlicna knjiga");
 
             PublisherDAO publisherDAO = new PublisherDAO();
             publisherDAO.AddPublisher(publisher1);
             PurchaseDAO purchaseDAO = new PurchaseDAO();
             purchaseDAO.AddPurchase(p1);
+
+
+
+
+
+            var dao = new AddressDAO();
+
+            // Dodaj dve adrese
+            var adr1 = dao.AddAddress(new Address
+            {
+                Street = "Knez Mihajlova",
+                Number = "10",
+                City = "Beograd",
+                State = "Srbija",
+                Country = "Srbija"
+            });
+
+            var adr2 = dao.AddAddress(new Address
+            {
+                Street = "Kralja Petra",
+                Number = "5",
+                City = "Novi Sad",
+                State = "Vojvodina",
+                Country = "Srbija"
+            });
+
+            // Update adr2
+            adr2.Street = "Updated2"; 
+            var updatedAdr2 = dao.UpdateAddress(adr2);
+
+            foreach (var adr in dao.GetAllAddresses())
+            {
+                Console.WriteLine($"{adr.Street}, {adr.Number}, {adr.City}, {adr.State}, {adr.Country}");
+            }
+
 
 
 

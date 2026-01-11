@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,26 +12,33 @@ namespace Core.DAO
     {
         private readonly List<Address> addresses;
         private readonly Storage<Address> storage;
+        private int nextId;
 
         public AddressDAO()
         {
-
             storage = new Storage<Address>("Addresses.txt");
             addresses = storage.Load();
-        }
+       
 
-        // add address
+
+            nextId = addresses.Any() ? addresses.Max(a => a.Id) + 1 : 1;
+        }
+       
+
+        // Add address
         public Address AddAddress(Address a)
         {
-            if(FindAddress(a.Id) != null)
-            {
-                return null;
-            }
-      
+            var existing = FindAddressByDetails(a);
+            if (existing != null) return existing;
+
+            a.Id = nextId++;
             addresses.Add(a);
             storage.Save(addresses);
             return a;
         }
+
+      
+
 
         // Update address
         public Address? UpdateAddress(Address a)
@@ -50,9 +58,9 @@ namespace Core.DAO
         }
 
         // Remove address
-        public Address? RemoveAddress(Address a)
+        public Address? RemoveAddress(int id)
         {
-            Address? address = FindAddress(a.Id);
+            Address? address = FindAddress(id);
             if (address == null)
                 return null;
 
@@ -67,6 +75,20 @@ namespace Core.DAO
             return addresses.Find(a => a.Id == id);
 
         }
+        private Address? FindAddressByDetails(Address a)
+        {
+            return addresses.FirstOrDefault(addr =>
+                string.Equals(addr.Street, a.Street, StringComparison.OrdinalIgnoreCase) &&
+                addr.Number == a.Number &&
+                string.Equals(addr.City, a.City, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(addr.State, a.State, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(addr.Country, a.Country, StringComparison.OrdinalIgnoreCase)
+            );
+        }
+
+
+   
+
 
         // Get all addresses
 
