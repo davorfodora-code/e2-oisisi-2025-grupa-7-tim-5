@@ -8,7 +8,7 @@ public class Author : ISerializable
 {
 	public string Name { get; set; }
 	public string Lastname { get; set; }
-	public string DateOfBirth { get; set; }
+	public DateOnly DateOfBirth { get; set; }
 	public Address Address { get; set; }
 	public string PhoneNumber { get; set; }
 	public string Email { get; set; }
@@ -50,7 +50,7 @@ public class Author : ISerializable
 
         Name = values[0];
         Lastname = values[1];
-        DateOfBirth = values[2];
+        DateOfBirth = DateOnly.Parse(values[2]);
         PhoneNumber = values[3];
         Email = values[4];
         Id_card = values[5];
@@ -61,8 +61,9 @@ public class Author : ISerializable
     {
         string[] values =
         {
-           Name, Lastname, DateOfBirth, PhoneNumber, Email, Id_card,
-           ExperienceLength.ToString()
+           Name, Lastname, PhoneNumber, Email, Id_card,
+           ExperienceLength.ToString(),
+           DateOfBirth.ToString()
         };
         return values;
     }
