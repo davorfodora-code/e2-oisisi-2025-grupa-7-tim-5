@@ -31,7 +31,6 @@ public class WishList : ISerializable
         VisitorMemberShipNumber = values[0];
         VistorName = values[1];
         VisitorLastName = values[2];
-        //Address = new Address {  }
         BookIsbn = values[3];
         BookName = values[4];
 
