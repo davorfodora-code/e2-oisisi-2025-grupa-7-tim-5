@@ -17,7 +17,7 @@ namespace ConsoleClient
             List<Visitor> visitors = new List<Visitor>();
             List<Purchase> purchases = new List<Purchase>();
             List<Book> wishlist = new List<Book>();
-            Visitor visitor = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", 5.4, purchases, wishlist);
+            Visitor visitor = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", purchases, wishlist);
             VisitorDAO visitors1 = new VisitorDAO();
             visitors1.AddVisitor(visitor);
 

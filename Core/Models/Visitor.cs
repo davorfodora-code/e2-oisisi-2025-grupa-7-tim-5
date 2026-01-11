@@ -27,7 +27,7 @@ public class Visitor : ISerializable
         Wishlist = new List<Book>();
     }
 
-    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status, double averageReview, List<Purchase> purchases, List<Book> wishlist)
+    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status, List<Purchase> purchases, List<Book> wishlist)
     {
         Name = name;
         LastName = lastName;
@@ -38,7 +38,6 @@ public class Visitor : ISerializable
         MembershipNumber = membershipNumber;
         MembershipYear = membershipYear;
         Status = status;
-        AverageReview = averageReview;
         Purchases = purchases;
         Wishlist = wishlist;
     }
@@ -71,7 +70,6 @@ public class Visitor : ISerializable
         MembershipNumber = values[5];
         MembershipYear = values[6];
         Status = values[7];
-        AverageReview = double.Parse(values[8]);
         //Purchases = new Purchases {  }
         //Wishlist = new Wishlist {  }
     }
