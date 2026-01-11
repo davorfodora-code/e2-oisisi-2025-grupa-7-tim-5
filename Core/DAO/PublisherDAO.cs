@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Core.DAO
 {
@@ -11,6 +12,19 @@ namespace Core.DAO
     {
         private readonly List<Publisher> publishers;
         private readonly Storage<Publisher> storage;
+
+        private int CreatePublisherID()
+        {
+            if (publishers.Count == 0)
+            {
+                return 1;
+            }
+
+           
+            var lastPublisher = publishers[publishers.Count - 1];
+
+            return lastPublisher.Id + 1;
+        }
 
         public PublisherDAO()
         {
@@ -21,10 +35,9 @@ namespace Core.DAO
 
         public Publisher AddPublisher(Publisher p)
         {
-            if(FindPublisher(p.Id) != null)
-            {
-                return null;
-            }
+            
+
+            p.Id = CreatePublisherID();
             
             publishers.Add(p);
             storage.Save(publishers);
@@ -57,7 +70,7 @@ namespace Core.DAO
         }
 
 
-        private Publisher? FindPublisher(string id)
+        private Publisher? FindPublisher(int id)
         {
             return publishers.Find(p => p.Id == id);
         }

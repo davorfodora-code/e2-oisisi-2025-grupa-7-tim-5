@@ -6,7 +6,7 @@ using System.Text;
 
 public class Publisher : ISerializable
 {
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public Author Manager { get; set; }
     public List<Author> Authors { get; set; }
@@ -16,9 +16,8 @@ public class Publisher : ISerializable
         Books = new List<Book>();
     }
 
-    public Publisher(string id, string name, Author manager, List<Author> authors, List<Book> books)
+    public Publisher(string name, Author manager, List<Author> authors, List<Book> books)
     {
-        Id = id;
         Name = name;
         Manager = manager;
         Authors = authors;
@@ -28,7 +27,7 @@ public class Publisher : ISerializable
 
     public void FromCSV(string[] values)
     {
-        Id = values[0];
+        Id = int.Parse(values[0]);
         Name = values[1];
     }
 
@@ -36,7 +35,7 @@ public class Publisher : ISerializable
     {
         string[] values =
         {
-            Id,
+            Id.ToString(),
             Name
             //Manager
             //Authors

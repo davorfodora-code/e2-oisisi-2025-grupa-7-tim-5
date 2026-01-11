@@ -46,7 +46,7 @@ namespace ConsoleClient
             {
                 Console.WriteLine(author);
             }
-            Publisher publisher1 = new Publisher("IDPUBLISHERA", "ime", a1, authors, books);
+            Publisher publisher1 = new Publisher("Mirko", a1, authors, books);
 
             a1.PhoneNumber = "066111222";
             authorDAO.UpdateAuthor(a1);
