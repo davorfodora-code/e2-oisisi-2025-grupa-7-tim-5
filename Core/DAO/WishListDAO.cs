@@ -40,7 +40,23 @@ public class WishListDAO
         return oneWishList;
     }
 
-   
+    public bool RemoveFromWishlist(string visitorId, string bookIsbn)
+    {
+        var item = wishLists.FirstOrDefault(w =>
+            w.VisitorMemberShipNumber == visitorId &&
+            w.BookIsbn == bookIsbn);
+
+        if (item != null)
+        {
+            wishLists.Remove(item);
+            storage.Save(wishLists);
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 }
 
