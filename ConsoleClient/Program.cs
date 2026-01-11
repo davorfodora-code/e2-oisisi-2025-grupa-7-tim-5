@@ -52,23 +52,27 @@ namespace ConsoleClient
 
             authorDAO.RemoveAuthor("ID002");
 
-            Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, authors, publisher1, visitors, visitors);
+            Book book2 = new Book("strinng", "ime", "zanr", 11, 123.0, 15, authors, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
-            DateOnly purchaseDate = DateOnly.ParseExact("12.12.2000.", "dd.MM.yyyy.");
-            DateOnly purchaseDate2 = DateOnly.ParseExact("13.12.2000.", "dd.MM.yyyy.");
+            //DateOnly purchaseDate = DateOnly.ParseExact("12.12.2000.", "dd.MM.yyyy.");
+            //DateOnly purchaseDate2 = DateOnly.ParseExact("13.12.2000.", "dd.MM.yyyy.");
+
+            WishListDAO wishlistDAO = new WishListDAO();
+            
 
 
 
 
 
             Visitor visitor = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", purchases, wishlist);
+            wishlistDAO.AddWishList(visitor, book1);
 
-            Purchase p1 = new Purchase(visitor, book2, purchaseDate, 4.3, "Odlicna knjiga");
-            Purchase p4 = new Purchase(visitor, book2, purchaseDate2, 4.1, "Sup knjiga");
+           // Purchase p1 = new Purchase(visitor, book2, purchaseDate, 4.3, "Odlicna knjiga");
+            //Purchase p4 = new Purchase(visitor, book2, purchaseDate2, 4.1, "Sup knjiga");
             PurchaseDAO purchaseDAO = new PurchaseDAO();
-            purchaseDAO.AddPurchase(p1);
-            purchaseDAO.AddPurchase(p4);
+           // purchaseDAO.AddPurchase(p1);
+            //purchaseDAO.AddPurchase(p4);
 
             VisitorDAO visitors1 = new VisitorDAO(purchaseDAO);
             visitors1.AddVisitor(visitor);
