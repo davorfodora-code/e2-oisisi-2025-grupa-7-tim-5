@@ -74,6 +74,15 @@ namespace Core.DAO
         {
             return new List<Purchase>(purchases);
         }
+
+        public double CalculateAverageReview(Visitor v)
+        {
+            var VisitorPurchases = purchases.Where(p => p.Visitor.MembershipNumber == v.MembershipNumber).ToList();
+
+            if (VisitorPurchases.Count == 0) return 0.0;
+
+            return VisitorPurchases.Sum(p => p.Review) / VisitorPurchases.Count;
+        }
     }
 
 }

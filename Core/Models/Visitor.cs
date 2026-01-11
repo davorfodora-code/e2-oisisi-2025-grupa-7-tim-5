@@ -53,8 +53,7 @@ public class Visitor : ISerializable
             Email,
             MembershipNumber,
             MembershipYear,
-            Status,
-            AverageReview.ToString()
+            Status
         };
         return Values;
     }
