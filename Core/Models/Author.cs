@@ -22,35 +22,28 @@ public class Author : ISerializable
 		
 		BookList  = new List<Book>();
 	}
-    public Author(
-    string Name,
-    string Lastname,
-    string Date_of_birth,
-    string Phone_number,
-    string Email,
-    string Id_card,
-    Address Address,
-    double Experience_length,
-    List<Book> bookList)
+
+    public Author(string name, string lastname, DateOnly dateOfBirth, Address address, string phoneNumber, string email, string idCard, double experienceLength, List<Book> bookList)
     {
-		this.Name = Name;
-		this.Lastname = Lastname;
-		this.DateOfBirth = DateOfBirth;
-		this.PhoneNumber = PhoneNumber;
-		this.Email = Email;
-		this.IdCard = Id_card;
-		this.Address = Address;
-		this.ExperienceLength = ExperienceLength;
-        BookList = new List<Book>();
+        Name = name;
+        Lastname = lastname;
+        DateOfBirth = dateOfBirth;
+        Address = address;
+        PhoneNumber = phoneNumber;
+        Email = email;
+        IdCard = idCard;
+        ExperienceLength = experienceLength;
+        BookList = bookList;
     }
+
     public void FromCSV(string[] values)
     {
-        IdCard = values[5];
-        Name = values[0];
-        Lastname = values[1];
-        DateOfBirth = DateOnly.Parse(values[2]);
-        PhoneNumber = values[3];
-        Email = values[4];
+        IdCard = values[0];
+        Name = values[1];
+        Lastname = values[2];
+        DateOfBirth = DateOnly.Parse(values[3]);
+        PhoneNumber = values[4];
+        Email = values[5];
         ExperienceLength = double.Parse(values[6]);
     }
 
@@ -59,7 +52,7 @@ public class Author : ISerializable
         string[] values =
         {
           IdCard, Name, Lastname,
-           DateOfBirth.ToString(),
+           DateOfBirth.ToString("dd.MM.yyyy."),
            PhoneNumber, Email,
            ExperienceLength.ToString(),
            

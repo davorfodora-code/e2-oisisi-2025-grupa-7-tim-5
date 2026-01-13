@@ -51,7 +51,7 @@ namespace Core.DAO
         }
 
         // #brisanje_autora  
-        public Author? RemoveAuthor(string idCard)
+        public Author? RemoveAuthor( string idCard)
         {
             Author? author = GetAuthorByIdCard(idCard);
             if (author == null) 
