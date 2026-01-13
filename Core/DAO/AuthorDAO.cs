@@ -22,7 +22,7 @@ namespace Core.DAO
         //#dodavanje_autora 
         public Author? AddAuthor(Author author)
         {
-            if (GetAuthorByIdCard(author.Id_card) != null)
+            if (GetAuthorByIdCard(author.IdCard) != null)
                 return null;
 
             authors.Add(author);
@@ -33,7 +33,7 @@ namespace Core.DAO
         // #izmena_autora 
         public Author? UpdateAuthor(Author a)
         {
-            Author? oldAuthor = GetAuthorByIdCard(a.Id_card);
+            Author? oldAuthor = GetAuthorByIdCard(a.IdCard);
             if (oldAuthor == null) 
                 return null;
 
@@ -65,7 +65,7 @@ namespace Core.DAO
         //  #prikaz_autora (jednog)
         private Author? GetAuthorByIdCard(string idCard)
         {
-            return authors.Find(a => a.Id_card == idCard);
+            return authors.Find(a => a.IdCard == idCard);
         }
 
         //  #prikaz_autora (svih)

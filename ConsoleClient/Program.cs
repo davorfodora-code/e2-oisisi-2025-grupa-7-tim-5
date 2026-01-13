@@ -35,7 +35,7 @@ namespace ConsoleClient
 
             AuthorDAO authorDAO = new AuthorDAO();
 
-            Author a1 = new Author("Ivo", "Andrić", "1892-10-09", "064123456", "ivo@andric.rs", "ID001", adresa1, 40, new List<Book>());
+            Author a1 = new Author("Ivo", "Andrić", "1892 - 10 - 09", "064123456", "ivo@andric.rs", "ID001", adresa1, 40, new List<Book>());
 
             Author a2 = new Author("Mesa", "Selimović", "1910-04-26", "065987654", "mesa@selimovic.rs", "ID002", adresa2, 35, new List<Book>()
         );
@@ -59,7 +59,7 @@ namespace ConsoleClient
 
             authorDAO.RemoveAuthor("ID002");
 
-            Book book2 = new Book("strinng", "ime", "zanr", "godina", 123.0, 15, authors, publisher1, visitors, visitors);
+            Book book2 = new Book("strinng", "ime", "zanr",2025 , 123.0, 15, authors, publisher1, visitors, visitors);
             BookDAO bookDAO = new BookDAO();
             bookDAO.AddBook(book2);
             Purchase p1 = new Purchase(visitor, book2, "12.12.2000", 4.3, "Odlicna knjiga");
