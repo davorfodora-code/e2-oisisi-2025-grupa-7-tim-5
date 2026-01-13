@@ -64,15 +64,13 @@ public class Visitor : ISerializable
         Name = values[0];
         LastName = values[1];
         DateOfBirth = values[2];
-        //Address = new Address {  }
         ContactPhone = values[3];
         Email = values[4];
         MembershipNumber = values[5];
         MembershipYear = values[6];
         Status = values[7];
         AverageReview = double.Parse(values[8]);
-        //Purchases = new Purchases {  }
-        //Wishlist = new Wishlist {  }
+
     }
 
     public override string ToString()

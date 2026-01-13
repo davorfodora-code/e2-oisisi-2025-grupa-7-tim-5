@@ -86,9 +86,9 @@ namespace ConsoleClient
             PublisherDAO publisherDAO = new PublisherDAO();
             publisherDAO.AddPublisher(publisher1);
 
-           
 
-
+            VisitorBoughtBookDAO vbbDAO = new VisitorBoughtBookDAO();
+            vbbDAO.AddVisitorBoughtBook(visitor, book2);
 
 
 
