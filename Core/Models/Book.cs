@@ -48,7 +48,7 @@ public class Book : ISerializable
 		PublicationYear = int.Parse(values[3]);
 		Price = double.Parse(values[4]);
 		Publisher = new Publisher();
-		Publisher.Id = values[5];
+		Publisher.Id = int.Parse(values[5]);
 		Publisher.Name = values[6];
     }
 

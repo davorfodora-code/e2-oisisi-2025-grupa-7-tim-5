@@ -12,11 +12,46 @@ namespace Core.DAO
     {
         private readonly List<Visitor> visitors;
         private readonly Storage<Visitor> storage;
+        private PurchaseDAO _purchaseDAO;
+        private PurchaseDAO PurchaseDAO
+        {   
+            get
+            {
+                if (_purchaseDAO == null)
+                    _purchaseDAO = new PurchaseDAO();
+                return _purchaseDAO;
+            }
+        }
 
-        public VisitorDAO()
+        public VisitorDAO(PurchaseDAO purchaseDAO)
         {
             storage = new Storage<Visitor>("Visitors.txt");
             visitors = storage.Load();
+        }
+
+        public double GetAverageReview(string membershipNumber)
+        {
+            Visitor visitor = GetVisitorByMemebershipId(membershipNumber);
+
+            if(visitor == null)
+            {
+                return 0.0;
+            }
+
+            double avgReview = _purchaseDAO.CalculateAverageReview(visitor);
+
+            return avgReview;
+        }
+
+        public void UpdateAverageReview(string membershipNumber)
+        {
+            Visitor? visitor = GetVisitorByMemebershipId(membershipNumber);
+            if (visitor == null) return;
+
+            double avgReview = PurchaseDAO.CalculateAverageReview(visitor);
+            visitor.AverageReview = Math.Round(avgReview, 2);
+
+            storage.Save(visitors);
         }
 
         public Visitor AddVisitor(Visitor visitor)
@@ -36,6 +71,7 @@ namespace Core.DAO
             Visitor? oldVisitor = GetVisitorByMemebershipId(v.MembershipNumber);
             if (oldVisitor == null) return null;
             oldVisitor.Name = v.Name;
+            oldVisitor.LastName = v.LastName;
             oldVisitor.Address = v.Address;
             oldVisitor.Wishlist = v.Wishlist;
             oldVisitor.Purchases = v.Purchases;

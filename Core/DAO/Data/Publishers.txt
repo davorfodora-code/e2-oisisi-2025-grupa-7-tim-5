@@ -1,1 +1,2 @@
-IDPUBLISHERA|ime
+1|Davor
+2|Mirko

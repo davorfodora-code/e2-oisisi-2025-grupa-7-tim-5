@@ -8,14 +8,14 @@ public class Purchase : ISerializable
 {
     public Visitor Visitor { get; set; }
     public Book Book { get; set; }
-    public string DateOfPurchase { get; set; }
+    public DateOnly DateOfPurchase { get; set; }
     public double Review { get; set; }
     public string Comment { get; set; }
     public Purchase()
     {
     }
 
-    public Purchase(Visitor visitor, Book book, string dateofpurchase, double review, string comment)
+    public Purchase(Visitor visitor, Book book, DateOnly dateofpurchase, double review, string comment)
     {
         Visitor = visitor;
         Book = book;
@@ -30,7 +30,7 @@ public class Purchase : ISerializable
         Visitor.MembershipNumber = values[0];
         Book = new Book();
         Book.Isbn = values[1];
-        DateOfPurchase = values[2];
+        DateOfPurchase = DateOnly.Parse(values[2]);
         Review = double.Parse(values[3]);
         Comment = values[4];
     }
@@ -41,7 +41,7 @@ public class Purchase : ISerializable
         {
             Visitor.MembershipNumber.ToString(),
             Book.Isbn.ToString(),
-            DateOfPurchase,
+            DateOfPurchase.ToString("dd.MM.yyyy."),
             Review.ToString(),
             Comment
         };
