@@ -21,8 +21,6 @@ public class Visitor : ISerializable
 
     public Visitor()
     {
-
-
         Purchases = new List<Purchase>();
         Wishlist = new List<Book>();
     }
@@ -41,6 +39,22 @@ public class Visitor : ISerializable
         Purchases = purchases;
         Wishlist = wishlist;
     }
+
+    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status)
+    {
+        Name = name;
+        LastName = lastName;
+        DateOfBirth = dateofbirth;
+        Address = address;
+        ContactPhone = contactPhone;
+        Email = email;
+        MembershipNumber = membershipNumber;
+        MembershipYear = membershipYear;
+        Status = status;
+        Purchases = new List<Purchase>();
+        Wishlist = new List<Book>();
+    }
+
 
     public string[] ToCSV()
     {

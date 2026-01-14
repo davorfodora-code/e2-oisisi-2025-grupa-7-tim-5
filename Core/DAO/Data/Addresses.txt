@@ -1,4 +1,1 @@
 1|DJordja Zlicica|34|Novi Sad|Vojvodina|Srbija
-2|Knez Mihajlova|10|Beograd|Srbija|Srbija
-3|Updated2|5|Novi Sad|Vojvodina|Srbija
-4|Updated2|5|Novi Sad|Vojvodina|Srbija
