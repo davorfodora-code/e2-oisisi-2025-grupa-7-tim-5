@@ -58,6 +58,8 @@ public class Visitor : ISerializable
 
     public string[] ToCSV()
     {
+        string wishlistString = string.Join(";",Wishlist.Select(book => $"{book.Isbn},{book.Name}"));
+        string purchasesString = string.Join(";",Purchases.Select(purchase =>$"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.}"));
         string[] Values =
         {
             Name,
@@ -68,7 +70,9 @@ public class Visitor : ISerializable
             MembershipNumber,
             MembershipYear,
             Status,
-            AverageReview.ToString()
+            AverageReview.ToString(),
+            wishlistString,         
+            purchasesString
         };
         return Values;
     }
@@ -84,6 +88,47 @@ public class Visitor : ISerializable
         MembershipYear = values[6];
         Status = values[7];
         AverageReview = double.Parse(values[8]);
+
+        if (values.Length > 9 && !string.IsNullOrEmpty(values[9]))
+        {
+            var wishlistEntries = values[9].Split(';');
+            Wishlist = new List<Book>();
+            foreach (var entry in wishlistEntries)
+            {
+                var parts = entry.Split(',');
+                if (parts.Length == 2)
+                {
+                    Wishlist.Add(new Book
+                    {
+                        Isbn = parts[0],
+                        Name = parts[1]
+                    });
+                }
+            }
+        }
+
+        if (values.Length > 10 && !string.IsNullOrEmpty(values[10]))
+        {
+            var purchaseEntries = values[10].Split(';');
+            Purchases = new List<Purchase>();
+            foreach (var entry in purchaseEntries)
+            {
+                var parts = entry.Split(',');
+                if (parts.Length == 3)
+                {
+                    Purchases.Add(new Purchase
+                    {
+                        Book = new Book
+                        {
+                            Isbn = parts[0],
+                            Name = parts[1]
+                        },
+                        DateOfPurchase = DateOnly.Parse(parts[2])
+                    });
+                }
+            }
+        }
+
 
     }
 

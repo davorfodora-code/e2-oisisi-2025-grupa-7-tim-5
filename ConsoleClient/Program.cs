@@ -54,16 +54,22 @@ namespace ConsoleClient
             purchaseDAO.AddPurchase(p1);
             purchaseDAO.AddPurchase(p4);
             List<Purchase> purchases = new List<Purchase>();
+            purchases.Add(p1);
 
             //TESTIRANJE WISHLSTE
             List<Book> wishlist = new List<Book>();
             WishListDAO wishlistDAO = new WishListDAO();
             wishlistDAO.AddWishList(visitor, book2);
+            wishlist.Add(book2);
 
             //TESTIRANJE VISITORBOUGHTBOOK
             VisitorBoughtBookDAO vbbDAO = new VisitorBoughtBookDAO();
             vbbDAO.AddVisitorBoughtBook(visitor, book2);
 
+
+            //TESTIRANJE VISITORA SA LISTAMA ISPISA
+            Visitor visitor11 = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "909", "12", "12", purchases, wishlist);
+            visitors1.AddVisitor(visitor11);
         }
     }
 }
