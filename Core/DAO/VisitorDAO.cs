@@ -101,7 +101,7 @@ namespace Core.DAO
             return visitor;
         }
 
-        private Visitor? GetVisitorByMemebershipId(string mmId)
+        public Visitor? GetVisitorByMemebershipId(string mmId)
         {
             return visitors.Find(v => v.MembershipNumber == mmId);
         }
