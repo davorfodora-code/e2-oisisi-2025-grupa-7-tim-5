@@ -5,7 +5,7 @@ using System.Text;
 
 public class Visitor : ISerializable
 {
-    public enum Status_type {P, B}
+    public enum Status_type {R, V}
     public string Name { get; set; }
     public string LastName { get; set; }
     public string DateOfBirth { get; set; }
