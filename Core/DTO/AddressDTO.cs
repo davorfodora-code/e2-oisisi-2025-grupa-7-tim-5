@@ -38,5 +38,29 @@ namespace Core.DTO
 
             return (true, "");
         }
+
+        public Address ToModel()
+        {
+            return new Address
+            {
+                Street = this.Street,
+                Number = this.Number,
+                City = this.City,
+                State = this.State,
+                Country = this.Country
+            };
+        }
+
+        public static AddressDTO FromModel(Address address)
+        {
+            return new AddressDTO
+            {
+                Street = address.Street,
+                Number = address.Number,
+                City = address.City,
+                State = address.State,
+                Country = address.Country
+            };
+        }
     }
 }
