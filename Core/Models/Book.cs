@@ -4,12 +4,34 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
+public enum Genre
+{
+    Roman,
+    Poezija,
+    Esej,
+    Novela,
+    Pripovetka,
+    Drama,
+    Biografija,
+    NaučnaFantastika,
+    Fantastika,
+    Triler,
+    Horor,
+    LjubavniRoman,
+    Istorija,
+    Autobiografija,
+    Putopis,
+    Filozofija,
+    NaučnaLiteratura,
+    DečjaKnjiga,
+    Misterija,
+    Kriminalistički
+}
 public class Book : ISerializable
 {
 	public string Isbn { get; set; }
 	public string Name { get; set; }
-	public string Genre { get; set; }
+	public Genre Genre { get; set; }
 	public string PublicationYear { get; set; }
 	public double Price { get; set; }
 	public int NumberOfPages { get; set; }
@@ -25,7 +47,7 @@ public class Book : ISerializable
         VisitorWishList = new List<Visitor>();
 	}
 
-    public Book(string isbn, string name, string genre, string publicationYear, double price, int numberOfPages, List<Author> authors, Publisher publisher, List<Visitor> visitorBoughtBook, List<Visitor> visitorWishList)
+    public Book(string isbn, string name, Genre genre, string publicationYear, double price, int numberOfPages, List<Author> authors, Publisher publisher, List<Visitor> visitorBoughtBook, List<Visitor> visitorWishList)
     {
         Isbn = isbn;
         Name = name;
@@ -44,7 +66,7 @@ public class Book : ISerializable
 
 		Isbn = values[0];
 		Name = values[1];
-		Genre = values[2];
+        Genre = (Genre)Enum.Parse(typeof(Genre), values[2]);
         PublicationYear = values[3];
 		Price = double.Parse(values[4]);
 		Publisher = new Publisher();
@@ -56,7 +78,7 @@ public class Book : ISerializable
     {
         string[] values =
         {
-           Isbn, Name, Genre, 
+           Isbn, Name, Genre.ToString(), 
            PublicationYear,Price.ToString(), Publisher.Id.ToString(), Publisher.Name.ToString()
         };
         return values;
