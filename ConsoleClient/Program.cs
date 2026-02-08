@@ -62,6 +62,7 @@ namespace ConsoleClient
 
         List<Purchase> purchases4 = new List<Purchase>();
         List<Book> wishlist4 = new List<Book>();
+            Console.WriteLine(adresa2);
 
         Visitor v1 = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", purchases1, wishlist1);
         Visitor v2 = new Visitor("Ana", "Marković", "15-03-02", adresa3, "001", "15", "305", "8", "10", purchases2, wishlist2);
@@ -180,6 +181,42 @@ visitorDAO.UpdateAverageReview("204");
 // PublisherDAO
 PublisherDAO publisherDAO = new PublisherDAO();
 publisherDAO.AddPublisher(publisher1);
+
+            publisherDAO.AddPublisher(publisher1);
+
+           
+
+
+
+
+
+
+
+
+
+            publisherDAO.AddPublisher(publisher1);
+
+           
+
+
+
+
+
+
+
+
+
+            publisherDAO.AddPublisher(publisher1);
+
+           
+
+
+
+
+
+
+
+
 
         }
     }

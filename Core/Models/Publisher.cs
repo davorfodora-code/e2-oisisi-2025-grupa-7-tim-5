@@ -37,19 +37,57 @@ public class Publisher : ISerializable
     {
         Id = int.Parse(values[0]);
         Name = values[1];
+
+        if (values.Length > 2 && !string.IsNullOrEmpty(values[2]))
+        {
+            var AuthorsToAdd = values[2].Split(';');
+            Authors = new List<Author>();
+            foreach (var author in AuthorsToAdd)
+            {
+                var parts = author.Split(',');
+                if (parts.Length == 2)
+                {
+                    Authors.Add(new Author
+                    {
+                        IdCard = parts[0],
+                        Name = parts[1]
+                    });
+                }
+            }
+        }
+
+        if (values.Length > 3 && !string.IsNullOrEmpty(values[3]))
+        {
+            var bookEntries = values[3].Split(';');
+            Books = new List<Book>();
+            foreach (var entry in bookEntries)
+            {
+                var parts = entry.Split(',');
+                if (parts.Length == 2)
+                {
+                    Books.Add(new Book
+                    {
+                        Isbn = parts[0],
+                        Name = parts[1]
+                    });
+                }
+            }
+        }
     }
 
     public string[] ToCSV()
     {
-        string[] values =
+        string authorsString = string.Join(";",Authors.Select(a => $"{a.IdCard},{a.Name}"));
+
+        string booksString = string.Join(";",Books.Select(b => $"{b.Isbn},{b.Name}"));
+
+        return new string[]
         {
             Id.ToString(),
-            Name
-            //Manager
-            //Authors
-            //Books
+            Name,
+            authorsString,
+            booksString
         };
-        return values;
     }
 
     public override string ToString()
@@ -57,6 +95,8 @@ public class Publisher : ISerializable
         StringBuilder sb = new StringBuilder();
         sb.Append($"Id: {Id}, ");
         sb.Append($"Name: {Name}, ");
+        sb.Append($"Authors: {Authors.Count}, ");
+        sb.Append($"Books: {Books.Count}");
 
         return sb.ToString();
     }

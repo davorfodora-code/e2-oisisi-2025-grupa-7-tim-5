@@ -1,1 +1,1 @@
-strinng|ime|zanr|godina|123|0|ime
+strinng|ime|zanr|2022|123|1|Mirko
