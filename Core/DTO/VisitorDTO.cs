@@ -49,5 +49,29 @@ namespace Core.DTO
 
         public string DisplayStatus => Status == "R" ? "Regular" : "VIP";
         public string DisplayAddress => Address.DisplayAddress;
+
+        public Visitor ToModel()
+        {
+            return new Visitor
+            {
+                MembershipNumber = this.MembershipNumber,
+                Name = this.Name,
+                LastName = this.LastName,
+                Address = this.Address.ToModel(),
+                Status = this.Status
+            };
+        }
+
+        public static VisitorDTO FromModel(Visitor visitor)
+        {
+            return new VisitorDTO
+            {
+                MembershipNumber = visitor.MembershipNumber,
+                Name = visitor.Name,
+                LastName = visitor.LastName,
+                Address = AddressDTO.FromModel(visitor.Address),
+                Status = visitor.Status
+            };
+        }
     }
 }
