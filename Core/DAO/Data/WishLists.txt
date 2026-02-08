@@ -1,2 +1,3 @@
 204|Davor|Fodora||
 204|Davor|Fodora|strinng|ime
+204|Davor|Fodora|ISBN9788661452071|Hazarski rečnik

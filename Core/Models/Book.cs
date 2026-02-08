@@ -62,16 +62,32 @@ public class Book : ISerializable
     }
 
     public void FromCSV(string[] values)
-	{
+    {
+        Isbn = values[0];
+        Name = values[1];
 
-		Isbn = values[0];
-		Name = values[1];
-        Genre = (Genre)Enum.Parse(typeof(Genre), values[2]);
+        // Proverite da li je vrednost "zanr" i zamenite je
+        string genreValue = values[2];
+        if (genreValue == "zanr")
+        {
+            Genre = Genre.Roman; // ili neka druga podrazumevana vrednost
+        }
+        else if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
+        {
+            Genre = parsedGenre;
+        }
+        else
+        {
+            // Ako ne može da parsira, postavi podrazumevanu vrednost
+            Genre = Genre.Roman;
+            Console.WriteLine($"Upozorenje: Nevažeći žanr '{genreValue}'. Postavljeno na {Genre.Roman}");
+        }
+
         PublicationYear = values[3];
-		Price = double.Parse(values[4]);
-		Publisher = new Publisher();
-		Publisher.Id = int.Parse(values[5]);
-		Publisher.Name = values[6];
+        Price = double.Parse(values[4]);
+        Publisher = new Publisher();
+        Publisher.Id = int.Parse(values[5]);
+        Publisher.Name = values[6];
     }
 
     public string[] ToCSV()
