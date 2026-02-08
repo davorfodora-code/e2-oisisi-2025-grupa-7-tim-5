@@ -5,48 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
         
-       
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <Menu  Grid.Row="1">
-            <MenuItem Header="File" FontSize="14" FontFamily="Lucida Fax"/>
-            <MenuItem Header="Edit" FontSize="14"  FontFamily="Lucida Fax"/>
-            <MenuItem Header="Help" FontSize="14"  FontFamily="Lucida Fax"/>
-        </Menu>
-
-        <StatusBar  Grid.Row="2"/>
-        
-        
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
-
-                <Button ToolTip="Add Entity">Add</Button>
-                <Button ToolTip="Edit Selected">Edit</Button>
-                <Button ToolTip="Delete Selected">Delete</Button>
-                <TextBox x:Name="SearchBox" Width="120" ToolTip="Enter search text"/>
-                <Button ToolTip="Search">Search</Button>
-
-            </ToolBar>
-        </ToolBarTray>
-        
-        <TabControl Grid.Row="0">
-            <TabItem Header="Posetioci">
-                <DataGrid x:Name="VisitorsGrid"/>
-            </TabItem>
-            <TabItem Header="Autori">
-                <DataGrid x:Name="AuthorsGrid"/>
-            </TabItem>
-            <TabItem Header="Knjige">
-                <DataGrid x:Name="BooksGrid"/>
-            </TabItem>
-        </TabControl>
-
-    </Grid>
+        Title="Sajam Knjiga">
+        WindowStartupLocation="Manual"
+        Loaded="Window_Loaded"
+      <DockPanel>
+    <Menu DockPanel.Dock="Top"/>
+    <ToolBar DockPanel.Dock="Top"/>
+    <StatusBar DockPanel.Dock="Bottom"/>
+</DockPanel>  
 </Window>
