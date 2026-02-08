@@ -114,5 +114,10 @@ namespace Core.DAO
             }
         }
 
+        public List<Visitor> GetAllVisitors()
+        {
+            return new List<Visitor>(visitors);
+        }
+
     }
 }
