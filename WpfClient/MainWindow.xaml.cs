@@ -25,5 +25,10 @@ namespace WpfClient
         {
 
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -5,48 +5,181 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-       
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Title="Sajam knjiga"
+        WindowStartupLocation="Manual"
+        Loaded="Window_Loaded" d:DesignWidth="435" d:DesignHeight="140">
 
-        <Menu  Grid.Row="1">
-            <MenuItem Header="File" FontSize="14" FontFamily="Lucida Fax"/>
-            <MenuItem Header="Edit" FontSize="14"  FontFamily="Lucida Fax"/>
-            <MenuItem Header="Help" FontSize="14"  FontFamily="Lucida Fax"/>
-        </Menu>
+    <DockPanel>
 
-        <StatusBar  Grid.Row="2"/>
-        
-        
-        <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar>
 
-                <Button ToolTip="Add Entity">Add</Button>
-                <Button ToolTip="Edit Selected">Edit</Button>
-                <Button ToolTip="Delete Selected">Delete</Button>
-                <TextBox x:Name="SearchBox" Width="120" ToolTip="Enter search text"/>
-                <Button ToolTip="Search">Search</Button>
+        <!-- TOOLBAR SA IKONICAMA -->
+        <Border DockPanel.Dock="Top"
+        Background="#F0F0F0"
+        Padding="6"
+        BorderBrush="#CCCCCC"
+        BorderThickness="0,0,0,1">
 
-            </ToolBar>
-        </ToolBarTray>
-        
-        <TabControl Grid.Row="0">
-            <TabItem Header="Posetioci">
-                <DataGrid x:Name="VisitorsGrid"/>
-            </TabItem>
-            <TabItem Header="Autori">
-                <DataGrid x:Name="AuthorsGrid"/>
-            </TabItem>
+            <StackPanel Orientation="Horizontal">
+
+                <!-- 1. DODAJ -->
+                <Button x:Name="BtnAdd"
+                Click="BtnAdd_Click"
+                ToolTip="Dodaj novi entitet (Ctrl+A)"
+                Margin="0,0,8,0"
+                Padding="8,4" Width="34">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/add-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 2. IZMENI -->
+                <Button x:Name="BtnEdit"
+                Click="BtnEdit_Click"
+                ToolTip="Izmeni selektovani entitet (Ctrl+E)"
+                Margin="0,0,8,0"
+                Padding="8,4" Width="33">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/edit-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 3. OBRISI -->
+                <Button x:Name="BtnDelete"
+                Click="BtnDelete_Click"
+                ToolTip="Obriši selektovani entitet (Del)"
+                Margin="0,0,24,0"
+                Padding="8,4" Width="33">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/delete-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
+                    </StackPanel>
+                </Button>
+
+
+                <!-- 4. PRETRAGA -->
+                <StackPanel Orientation="Horizontal" Margin="150,0,0,0">
+                    <TextBox x:Name="TxtSearch"
+                     Width="102"
+                     Padding="6"
+                     KeyDown="TxtSearch_KeyDown"
+                     ToolTip="Unesite tekst za pretragu (Ctrl+F)" Height="13" RenderTransformOrigin="-1.196,0.38">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="345.984"/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </StackPanel>
+                <Button x:Name="BtnSearch"
+                    Background="#FFF0F0F0"
+                     Foreground="White"
+                    BorderThickness="1"
+                     BorderBrush="Transparent"
+                    Click="BtnSearch_Click"
+                    ToolTip="Pretraži (Enter)"
+                    Padding="8,4" Height="28" Width="35">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/magnifier.png" Width="16" Height="16" Margin="0,0,4,0"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+
+        <!-- TABOVI-->
+        <TabControl x:Name="MainTabs"
+            SelectionChanged="MainTabs_SelectionChanged"
+            Margin="10"
+            Background="White"
+            BorderBrush="#E0E0E0"
+            BorderThickness="1" Height="105">
+
+            <!-- Tab 1: Knjige -->
             <TabItem Header="Knjige">
-                <DataGrid x:Name="BooksGrid"/>
+                <DataGrid x:Name="BooksGrid"
+                  ItemsSource="{Binding Books}"
+                  SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="10"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  RowBackground="White"
+                  AlternatingRowBackground="#F8F9FA">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ISBN" 
+                                    Binding="{Binding ISBN}" 
+                                    Width="120"/>
+                        <DataGridTextColumn Header="Naziv" 
+                                    Binding="{Binding Title}" 
+                                    Width="2*"/>
+                        <DataGridTextColumn Header="Cena" 
+                                    Binding="{Binding Price, StringFormat='{}{0:C}'}" 
+                                    Width="100"/>
+                        <DataGridTextColumn Header="Godina" 
+                                    Binding="{Binding ReleaseYear}" 
+                                    Width="80"/>
+                        <DataGridTextColumn Header="Žanr" 
+                                    Binding="{Binding Genre}" 
+                                    Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
+
+            <!-- Tab 2: Posetioci -->
+            <TabItem Header="Posetioci">
+                <Grid Margin="10" Background="White">
+                    <Border Background="#F8F9FA"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    Padding="20"
+                    CornerRadius="4">
+                        <TextBlock Text="Tab Posetioci (student 1)"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 3: Autori -->
+            <TabItem Header="Autori">
+                <DataGrid x:Name="AuthorsGrid"
+                  ItemsSource="{Binding Authors}"
+                  SelectedItem="{Binding SelectedAuthor, Mode=TwoWay}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="10"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  RowBackground="White"
+                  AlternatingRowBackground="#F8F9FA">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ime" 
+                                    Binding="{Binding FirstName}" 
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Prezime" 
+                                    Binding="{Binding LastName}" 
+                                    Width="*"/>
+                        <DataGridTextColumn Header="Lična karta" 
+                                    Binding="{Binding IdCardNumber}" 
+                                    Width="120"/>
+                        <DataGridTextColumn Header="Datum rođenja" 
+                                    Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}" 
+                                    Width="120"/>
+                        <DataGridTextColumn Header="Email" 
+                                    Binding="{Binding Email}" 
+                                    Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
         </TabControl>
 
-    </Grid>
+    </DockPanel>
 </Window>
