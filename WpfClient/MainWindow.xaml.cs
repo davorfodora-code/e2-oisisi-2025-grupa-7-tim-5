@@ -93,7 +93,43 @@ namespace WpfClient
                     MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-        private void BtnDelete_Click(object sender, RoutedEventArgs e) { }
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
+            {
+                // Pitaj za potvrdu
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete posetioca:\n" +
+                    $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
+                    $"({selectedVisitor.MembershipNumber})?",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Pozovi kontroler za brisanje
+                    var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
+
+                    if (deleteResult.Success)
+                    {
+                        MessageBox.Show(deleteResult.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadVisitors(); // Osveži prikaz
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite posetioca za brisanje", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
         private void BtnSearch_Click(object sender, RoutedEventArgs e) { }
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e) { }
         private void MainTabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) { }
