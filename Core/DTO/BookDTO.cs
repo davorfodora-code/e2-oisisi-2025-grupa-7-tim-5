@@ -56,17 +56,20 @@ namespace Core.DTO
 
         public static BookDTO FromModel(Book book)
         {
+            // Prvo proverite null
+            if (book == null)
+                return new BookDTO();
 
             return new BookDTO
             {
-                Isbn = book.Isbn,
-                Name = book.Name,
+                Isbn = book.Isbn ?? "",
+                Name = book.Name ?? "",
                 Genre = book.Genre,
-                PublicationYear = book.PublicationYear,
+                PublicationYear = book.PublicationYear ?? "",
                 Price = book.Price,
                 NumberOfPages = book.NumberOfPages,
-                Authors = book.Authors.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
-                Publisher = PublisherDTO.FromModel(book.Publisher),
+                Authors = book.Authors?.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
+                Publisher = book.Publisher != null ? PublisherDTO.FromModel(book.Publisher) : new PublisherDTO(),
                 VisitorBoughtBook = book.VisitorBoughtBook?.Select(VisitorDTO.FromModel).ToList() ?? new List<VisitorDTO>(),
                 VisitorWishList = book.VisitorWishList?.Select(VisitorDTO.FromModel).ToList() ?? new List<VisitorDTO>()
             };
