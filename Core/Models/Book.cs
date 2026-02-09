@@ -40,12 +40,16 @@ public class Book : ISerializable
 	public List<Visitor> VisitorBoughtBook { get; set; }
 	public List<Visitor> VisitorWishList { get; set; }
 
-	public Book()
-	{
-
+    public Book()
+    {
+        Authors = new List<Author>();
+        Publisher = new Publisher();
         VisitorBoughtBook = new List<Visitor>();
         VisitorWishList = new List<Visitor>();
-	}
+        Isbn = "";
+        Name = "";
+        PublicationYear = "";
+    }
 
     public Book(string isbn, string name, Genre genre, string publicationYear, double price, int numberOfPages, List<Author> authors, Publisher publisher, List<Visitor> visitorBoughtBook, List<Visitor> visitorWishList)
     {
@@ -66,11 +70,10 @@ public class Book : ISerializable
         Isbn = values[0];
         Name = values[1];
 
-        // Proverite da li je vrednost "zanr" i zamenite je
         string genreValue = values[2];
         if (genreValue == "zanr")
         {
-            Genre = Genre.Roman; // ili neka druga podrazumevana vrednost
+            Genre = Genre.Roman; 
         }
         else if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
         {
@@ -78,7 +81,6 @@ public class Book : ISerializable
         }
         else
         {
-            // Ako ne može da parsira, postavi podrazumevanu vrednost
             Genre = Genre.Roman;
             Console.WriteLine($"Upozorenje: Nevažeći žanr '{genreValue}'. Postavljeno na {Genre.Roman}");
         }
