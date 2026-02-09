@@ -42,8 +42,37 @@ namespace WpfClient
             LoadVisitors();
         }
 
- 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e) { }
+
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            // Kreiraj i otvori dijalog za dodavanje posetioca
+            var dialog = new AddVisitorDialog();
+
+            // Prikaži dijalog i čekaj da korisnik unese podatke
+            if (dialog.ShowDialog() == true)
+            {
+                // Dobavi VisitorDTO iz dijaloga
+                var newVisitor = dialog.Visitor;
+
+                // Pozovi kontroler da doda posetioca
+                var result = _visitorController.AddVisitor(newVisitor);
+
+                // Proveri rezultat
+                if (result.Success)
+                {
+                    // Prikaži poruku o uspehu
+                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Osveži listu posetilaca
+                    LoadVisitors();
+                }
+                else
+                {
+                    // Prikaži poruku o grešci
+                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
         private void BtnEdit_Click(object sender, RoutedEventArgs e) { }
         private void BtnDelete_Click(object sender, RoutedEventArgs e) { }
         private void BtnSearch_Click(object sender, RoutedEventArgs e) { }

@@ -95,7 +95,7 @@
             Margin="10"
             Background="White"
             BorderBrush="#E0E0E0"
-            BorderThickness="1" Height="105">
+            BorderThickness="1">
 
             <!-- Tab 1: Knjige -->
             <TabItem Header="Knjige">
@@ -133,34 +133,37 @@
             <!-- Tab 2: Posetioci -->
             <TabItem Header="Posetioci">
                 <DataGrid x:Name="VisitorsGrid"
-              ItemsSource="{Binding Visitors}"
-              SelectedItem="{Binding SelectedVisitor, Mode=TwoWay}"
-              AutoGenerateColumns="False"
-              IsReadOnly="True"
-              Margin="10"
-              BorderBrush="#E0E0E0"
-              BorderThickness="1"
-              RowBackground="White"
-              AlternatingRowBackground="#F8F9FA"
-              FontSize="12"
-              HeadersVisibility="Column">
+          ItemsSource="{Binding Visitors}"
+          SelectedItem="{Binding SelectedVisitor, Mode=TwoWay}"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          Margin="10"
+          BorderBrush="#E0E0E0"
+          BorderThickness="1"
+          RowBackground="White"
+          AlternatingRowBackground="#F8F9FA"
+          FontSize="14"
+          RowHeight="30"
+          HeadersVisibility="Column"
+          VerticalGridLinesBrush="#E0E0E0"
+          HorizontalGridLinesBrush="#E0E0E0">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Broj članske karte" 
-                                Binding="{Binding MembershipNumber}" 
-                                Width="130"/>
+                            Binding="{Binding MembershipNumber}" 
+                            Width="150"/>
                         <DataGridTextColumn Header="Ime" 
-                                Binding="{Binding Name}" 
-                                Width="80"/>
+                            Binding="{Binding Name}" 
+                            Width="100"/>
                         <DataGridTextColumn Header="Prezime" 
-                                Binding="{Binding LastName}" 
-                                Width="90"/>
+                            Binding="{Binding LastName}" 
+                            Width="120"/>
                         <DataGridTextColumn Header="Adresa" 
-                            Binding="{Binding Address.DisplayAddress}" 
-                            Width="200"/>
+                            Binding="{Binding DisplayAddress}" 
+                            Width="250"/>
                         <DataGridTextColumn Header="Status" 
-                                Binding="{Binding DisplayStatus}" 
-                                Width="80"/>
+                            Binding="{Binding DisplayStatus}" 
+                            Width="100"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
