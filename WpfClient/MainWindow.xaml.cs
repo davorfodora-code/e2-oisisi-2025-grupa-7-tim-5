@@ -97,7 +97,6 @@ namespace WpfClient
         {
             if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
             {
-                // Pitaj za potvrdu
                 var result = MessageBox.Show(
                     $"Da li ste sigurni da želite da obrišete posetioca:\n" +
                     $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
@@ -108,14 +107,13 @@ namespace WpfClient
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Pozovi kontroler za brisanje
                     var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
 
                     if (deleteResult.Success)
                     {
                         MessageBox.Show(deleteResult.Message, "Uspešno",
                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadVisitors(); // Osveži prikaz
+                        LoadVisitors(); 
                     }
                     else
                     {

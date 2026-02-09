@@ -11,6 +11,26 @@
 
     <DockPanel>
 
+        <StatusBar DockPanel.Dock="Bottom" Background="#F0F0F0">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarDate" Text="Datum: " Width="120"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarTime" Text="Vreme: " Width="100"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarAppName" Text="Sajam knjiga" Width="100"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="StatusBarTabName" Text="Tab: " Width="200"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock x:Name="StatusBarStatus" Text="Spremno" Margin="5,0"/>
+            </StatusBarItem>
+        </StatusBar>
 
         <!-- TOOLBAR SA IKONICAMA -->
         <Border DockPanel.Dock="Top"
