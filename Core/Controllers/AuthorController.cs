@@ -15,7 +15,6 @@ namespace Core.Controllers
             _authorDAO = authorDAO;
         }
 
-        // Observer pattern
         public void SubscribeObserver(IObserver observer)
         {
             Subscribe(observer);
@@ -26,7 +25,7 @@ namespace Core.Controllers
             Unsubscribe(observer);
         }
 
-        // Dohvati sve autore
+     
         public List<Author> GetAllAuthors()
         {
             return _authorDAO.GetAllAuthors();
@@ -56,7 +55,6 @@ namespace Core.Controllers
             return (true, "Author added successfully!");
         }
 
-        // Ažuriranje autora
         public (bool Success, string Message) UpdateAuthor(AuthorDTO dto)
         {
             var (isValid, errorMessage) = dto.Validate();
@@ -75,7 +73,6 @@ namespace Core.Controllers
             return (true, "Author updated successfully!");
         }
 
-        // Brisanje autora po ID kartici
         public (bool Success, string Message) DeleteAuthor(string idCard)
         {
             var result = _authorDAO.RemoveAuthor(idCard);
@@ -87,7 +84,7 @@ namespace Core.Controllers
             return (true, "Author deleted successfully!");
         }
 
-        // Provera da li autor postoji po ID kartici
+        // Provera da li autor postoji 
         public bool ExistsIdCard(string idCard)
         {
             return _authorDAO.GetAuthorByIdCard(idCard) != null;

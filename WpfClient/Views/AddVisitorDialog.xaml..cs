@@ -6,9 +6,9 @@ namespace WpfClient
 {
     public partial class AddVisitorDialog : Window
     {
-        public VisitorDTO Visitor { get; private set; }
+        public VisitorDTO Visitor { get; private set; } = new VisitorDTO();
         private bool _isEditMode;
-        private VisitorDTO _originalVisitor;
+        private VisitorDTO _originalVisitor= new VisitorDTO();
 
         public AddVisitorDialog()
         {

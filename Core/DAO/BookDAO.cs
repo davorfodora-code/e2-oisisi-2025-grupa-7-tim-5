@@ -61,7 +61,7 @@ namespace Core.DAO
         }
 
     //prikaz_knjige(jedne)
-        private Book? GetBookByIsbn(string bIsbn)
+        public Book? GetBookByIsbn(string bIsbn)
         {
             return books.Find(v => v.Isbn == bIsbn);
         }

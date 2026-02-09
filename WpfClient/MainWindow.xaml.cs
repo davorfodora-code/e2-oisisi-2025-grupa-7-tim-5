@@ -15,20 +15,48 @@ namespace WpfClient
     {
         private VisitorController _visitorController;
         private ObservableCollection<VisitorDTO> _visitors;
-        private DispatcherTimer _timer;
+        private DispatcherTimer _timer = new DispatcherTimer();
+        private AuthorController _authorController;
+        private ObservableCollection<AuthorDTO> _authors;
+        private BookController _bookController;
+        private ObservableCollection<BookDTO> _books;
 
         public MainWindow()
         {
-            InitializeComponent();
+          
+            InitializeComponent(); 
 
+            InitializeStatusBar(); 
+
+      
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
+            var publisherDAO = new PublisherDAO();
+            var bookDAO = new BookDAO();
+            var authorDAO = new AuthorDAO();
+
+            _authorController = new AuthorController(authorDAO);
+            _bookController = new BookController(bookDAO, publisherDAO);
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
 
-            LoadVisitors();
 
-            InitializeStatusBar();
+            _visitors = new ObservableCollection<VisitorDTO>();
+            _authors = new ObservableCollection<AuthorDTO>();
+            _books = new ObservableCollection<BookDTO>();
+
+            VisitorsGrid.ItemsSource = _visitors;
+            AuthorsGrid.ItemsSource = _authors;
+            BooksGrid.ItemsSource = _books;
+
+ 
+            LoadVisitors();
+            LoadAuthors();
+            LoadBooks();
         }
+
+
+           
+        
 
         private void InitializeStatusBar()
         {
@@ -47,7 +75,7 @@ namespace WpfClient
             _timer.Start();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object? sender, EventArgs e)
         {
             UpdateDateTime();
         }
@@ -84,25 +112,131 @@ namespace WpfClient
 
             VisitorsGrid.ItemsSource = _visitors;
         }
+        private void LoadAuthors()
+        {
+            var authorModels = _authorController.GetAllAuthors();
+            _authors = new ObservableCollection<AuthorDTO>();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+            foreach (var author in authorModels)
+            {
+                var dto = AuthorDTO.FromModel(author);
+                _authors.Add(dto);
+            }
+
+            AuthorsGrid.ItemsSource = _authors; // poveži sa DataGrid-om
+        }
+        private void LoadBooks()
+        {
+            var bookModels = _bookController.GetAllBooks();
+            _books = new ObservableCollection<BookDTO>();
+
+            foreach (var book in bookModels)
+            {
+                var dto = BookDTO.FromModel(book);
+                _books.Add(dto);
+            }
+
+            BooksGrid.ItemsSource = _books;
+        }
+
+
+        private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
             LoadVisitors();
             UpdateTabName();
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void BtnAdd_Click(object? sender, RoutedEventArgs e)
         {
-            var dialog = new AddVisitorDialog();
+            var selectedTab = MainTabs?.SelectedItem as TabItem;
 
-            if (dialog.ShowDialog() == true)
+            if (selectedTab?.Header?.ToString() == "Visitor")
+            {
+                var dialog = new AddVisitorDialog();
+                if (dialog.ShowDialog() == true)
+                    _visitorController.AddVisitor(dialog.Visitor);
+            }
+            else if (selectedTab?.Header?.ToString() == "Author")
+            {
+                var dialog = new AddAuthorDialog();
+                if (dialog.ShowDialog() == true)
+                    _authorController.AddAuthor(dialog.Author);
+            }
+            else if (selectedTab?.Header?.ToString() == "Book")
+            {
+                var dialog = new AddBookDialog();
+                if (dialog.ShowDialog() == true)
+                    _bookController.CreateBook(dialog.Book);
+            }
+        }
+
+
+        private void BtnEdit_Click(object? sender, RoutedEventArgs e)
+        {
+            var selectedTab = MainTabs?.SelectedItem as TabItem;
+
+            if (selectedTab?.Header?.ToString() == "Visitor")
+            {
+                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
+                if (selectedVisitor == null) return;
+
+                var dialog = new AddVisitorDialog(selectedVisitor);
+                if (dialog.ShowDialog() == true)
+                    _visitorController.UpdateVisitor(dialog.Visitor);
+            }
+            else if (selectedTab?.Header?.ToString() == "Author")
+            {
+                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+                if (selectedAuthor == null) return;
+
+                var dialog = new AddAuthorDialog(selectedAuthor);
+                if (dialog.ShowDialog() == true)
+                    _authorController.UpdateAuthor(dialog.Author);
+            }
+            else if (selectedTab?.Header?.ToString() == "Book")
+            {
+                var selectedBook = BooksGrid.SelectedItem as BookDTO;
+                if (selectedBook == null) return;
+
+                var dialog = new AddBookDialog(selectedBook);
+                if (dialog.ShowDialog() == true)
+                    _bookController.EditBook(dialog.Book);
+            }
+        }
+        private void BtnDelete_Click(object? sender, RoutedEventArgs e)
+        {
+            var selectedTab = MainTabs?.SelectedItem as TabItem;
+
+            if (selectedTab?.Header?.ToString() == "Visitor")
+            {
+                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
+                if (selectedVisitor != null)
+                    _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
+            }
+            else if (selectedTab?.Header?.ToString() == "Author")
+            {
+                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+                if (selectedAuthor != null)
+                    _authorController.DeleteAuthor(selectedAuthor.IdCard);
+            }
+            else if (selectedTab?.Header?.ToString() == "Book")
+            {
+                var selectedBook = BooksGrid.SelectedItem as BookDTO;
+                if (selectedBook != null)
+                    _bookController.RemoveBook(selectedBook.Isbn);
+            }
+        }
+        private void BtnAddVisitor_Click(object? sender, RoutedEventArgs e)
+        {
+            var dialog = new AddVisitorDialog();  
+            if (dialog.ShowDialog() == true)     
             {
                 var result = _visitorController.AddVisitor(dialog.Visitor);
 
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadVisitors();
+                    LoadVisitors(); 
                 }
                 else
                 {
@@ -111,35 +245,8 @@ namespace WpfClient
             }
         }
 
-        private void BtnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
-            {
-                var dialog = new AddVisitorDialog(selectedVisitor);
 
-                if (dialog.ShowDialog() == true)
-                {
-                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
-
-                    if (result.Success)
-                    {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadVisitors();
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        private void BtnDeleteVisitor_Click(object? sender, RoutedEventArgs e)
         {
             if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
             {
@@ -175,17 +282,208 @@ namespace WpfClient
             }
         }
 
-        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        private void BtnEditVisitor_Click(object? sender, RoutedEventArgs e)
+        {
+            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
+            {
+                var dialog = new AddVisitorDialog(selectedVisitor);
+
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
+
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadVisitors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void BtnAddAuthor_Click(object? sender, RoutedEventArgs e)
+        {
+            var dialog = new AddAuthorDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                var result = _authorController.AddAuthor(dialog.Author);
+
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadAuthors();
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void BtnEditAuthor_Click(object? sender, RoutedEventArgs e)
+        {
+            if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
+            {
+                var dialog = new AddAuthorDialog(selectedAuthor);
+
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _authorController.UpdateAuthor(dialog.Author);
+
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadAuthors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite autora za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+       
+        private void BtnDeleteAuthor_Click(object? sender, RoutedEventArgs e)
+        {
+            if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
+            {
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete autora:\n" +
+                    $"{selectedAuthor.Name} {selectedAuthor.Lastname}\n" +
+                    $"({selectedAuthor.IdCard})?",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
+
+                    if (deleteResult.Success)
+                    {
+                        MessageBox.Show(deleteResult.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadAuthors(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite autora za brisanje", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        private void BtnAddBook_Click(object? sender, RoutedEventArgs e)
+        {
+            var dialog = new AddBookDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                var result = _bookController.CreateBook(dialog.Book);
+
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadBooks();
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private void BtnEditBook_Click(object? sender, RoutedEventArgs e)
+        {
+            if (BooksGrid.SelectedItem is BookDTO selectedBook)
+            {
+                var dialog = new AddBookDialog(selectedBook);
+
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _bookController.EditBook(dialog.Book);
+
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadBooks();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite knjigu za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void BtnDeleteBook_Click(object? sender, RoutedEventArgs e)
+        {
+            if (BooksGrid.SelectedItem is BookDTO selectedBook)
+            {
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete knjigu:\n" +
+                    $"{selectedBook.Name}\n" +
+                    $"(ISBN: {selectedBook.Isbn})",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteResult = _bookController.RemoveBook(selectedBook.Isbn);
+
+                    if (deleteResult.Success)
+                    {
+                        MessageBox.Show(deleteResult.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadBooks(); // Funkcija koja osvežava BooksGrid
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite knjigu za brisanje", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+        private void BtnSearch_Click(object? sender, RoutedEventArgs e)
         {
 
         }
 
-        private void TxtSearch_KeyDown(object sender, KeyEventArgs e)
+        private void TxtSearch_KeyDown(object? sender, KeyEventArgs e)
         {
 
         }
 
-        private void MainTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             TxtSearch.Clear();
 
@@ -197,7 +495,7 @@ namespace WpfClient
             UpdateTabName();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Click(object? sender, RoutedEventArgs e)
         {
             // Prazno
         }
@@ -213,7 +511,7 @@ namespace WpfClient
             _timer?.Stop();
         }
 
-        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e)
         {
 
         }
