@@ -53,6 +53,11 @@ namespace Core.DTO
 
         public static AddressDTO FromModel(Address address)
         {
+            if (address == null)
+            {
+                return new AddressDTO();
+            }
+
             return new AddressDTO
             {
                 Street = address.Street,
