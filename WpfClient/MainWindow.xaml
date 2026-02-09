@@ -27,9 +27,6 @@
             <StatusBarItem>
                 <TextBlock x:Name="StatusBarTabName" Text="Tab: " Width="200"/>
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock x:Name="StatusBarStatus" Text="Spremno" Margin="5,0"/>
-            </StatusBarItem>
         </StatusBar>
 
         <!-- TOOLBAR SA IKONICAMA -->
