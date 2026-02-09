@@ -61,6 +61,8 @@ namespace Core.DTO
 
         public static AuthorDTO FromModel(Author author)
         {
+            if (author == null)
+                return new AuthorDTO();
 
             return new AuthorDTO
             {
