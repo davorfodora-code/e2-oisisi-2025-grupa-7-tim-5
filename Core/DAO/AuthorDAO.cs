@@ -63,7 +63,7 @@ namespace Core.DAO
         }
 
         //  #prikaz_autora (jednog)
-        private Author? GetAuthorByIdCard(string idCard)
+        public Author? GetAuthorByIdCard(string idCard)
         {
             return authors.Find(a => a.IdCard == idCard);
         }
