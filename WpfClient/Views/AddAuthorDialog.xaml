@@ -1,76 +1,114 @@
 ﻿<Window x:Class="WpfClient.AddAuthorDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dodaj posetioca"
-        Height="600"
-        Width="400"
-        WindowStartupLocation="CenterOwner">
+        Title="Dodaj autora"
+        Height="650"
+        Width="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
 
-	<Grid Margin="10">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="15">
+            <Grid.RowDefinitions>
+                <!-- ID kartica -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-		<Label Grid.Row="8" Content="Datum rođenja:"/>
-<DatePicker Grid.Row="9" x:Name="DpDateOfBirth" Margin="0,0,0,10"/>
+                <!-- Ime -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-		<Label Grid.Row="0" Content="Broj clanske karte:"/>
-		<TextBox Grid.Row="1" x:Name="TxtMembershipNumber" Margin="0,0,0,10"/>
-		<Label Grid.Row="10" Content="Telefon:"/>
-<TextBox Grid.Row="11" x:Name="TxtPhoneNumber" Margin="0,0,0,10"/>
+                <!-- Prezime -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-<Label Grid.Row="12" Content="Email:"/>
-<TextBox Grid.Row="13" x:Name="TxtEmail" Margin="0,0,0,10"/>
+                <!-- Datum rođenja -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-<Label Grid.Row="14" Content="Dužina iskustva (godine):"/>
-<TextBox Grid.Row="15" x:Name="TxtExperienceLength" Margin="0,0,0,10"/>
-<Label Grid.Row="0" Content="ID kartica:"/>
-<TextBox Grid.Row="1" x:Name="TxtIdCard" Margin="0,0,0,10"/>
+                <!-- Telefon -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
+                <!-- Email -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-		<Label Grid.Row="2" Content="Ime:"/>
-		<TextBox Grid.Row="3" x:Name="TxtName" Margin="0,0,0,10"/>
+                <!-- Iskustvo -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-		
-		<Label Grid.Row="4" Content="Prezime:"/>
-        <TextBox Grid.Row="5" x:Name="TxtLastName" Margin="0,0,0,10"/>
+                <!-- Adresa -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 
-		<Label Grid.Row="6" Content="Status:"/>
-		<ComboBox Grid.Row="7" x:Name="CmbStatus" Margin="0,0,0,10">
-			<ComboBoxItem Content="Redovan" Tag="R"/>
-			<ComboBoxItem Content="VIP" Tag="V"/>
-		</ComboBox>
+                <!-- Dugmad -->
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-		
-		<GroupBox Grid.Row="8" Header="Adresa" Margin="0,0,0,10">
-			<StackPanel Margin="5">
-				<Label Content="Ulica:"/>
-				<TextBox x:Name="TxtStreet" Margin="0,0,0,5"/>
-				<Label Content="Broj:"/>
-				<TextBox x:Name="TxtNumber" Margin="0,0,0,5"/>
-				<Label Content="Grad:"/>
-				<TextBox x:Name="TxtCity" Margin="0,0,0,5"/>
-				<Label Content="Opstina:"/>
-				<TextBox x:Name="TxtState" Margin="0,0,0,5"/>
-				<Label Content="Drzava:"/>
-				<TextBox x:Name="TxtCountry" Text="Srbija"/>
-			</StackPanel>
-		</GroupBox>
+            <!-- ID kartica -->
+            <Label Grid.Row="0" Content="ID kartica:" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="1" x:Name="TxtIdCard" Margin="0,0,0,10" Height="25"/>
 
-		
-		<StackPanel Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button x:Name="BtnOk" Content="Sacuvaj" Width="80" Margin="0,0,10,0" Click="BtnOk_Click"/>
-			<Button x:Name="BtnCancel" Content="Otkazi" Width="80" Click="BtnCancel_Click"/>
-		</StackPanel>
-	</Grid>
+            <!-- Ime -->
+            <Label Grid.Row="2" Content="Ime:" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="3" x:Name="TxtName" Margin="0,0,0,10" Height="25"/>
+
+            <!-- Prezime -->
+            <Label Grid.Row="4" Content="Prezime:" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="5" x:Name="TxtLastName" Margin="0,0,0,10" Height="25"/>
+
+            <!-- Datum rođenja -->
+            <Label Grid.Row="6" Content="Datum rođenja:" FontWeight="SemiBold"/>
+            <DatePicker Grid.Row="7" x:Name="DpDateOfBirth" Margin="0,0,0,15" Height="25"/>
+
+            <!-- Telefon -->
+            <Label Grid.Row="8" Content="Telefon:" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="9" x:Name="TxtPhoneNumber" Margin="0,0,0,10" Height="25"/>
+
+            <!-- Email -->
+            <Label Grid.Row="10" Content="Email:" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="11" x:Name="TxtEmail" Margin="0,0,0,10" Height="25"/>
+
+            <!-- Iskustvo -->
+            <Label Grid.Row="12" Content="Dužina iskustva (godine):" FontWeight="SemiBold"/>
+            <TextBox Grid.Row="13" x:Name="TxtExperienceLength" Margin="0,0,0,15" Height="25"/>
+
+            <!-- Adresa GroupBox -->
+            <GroupBox Grid.Row="14" Header="Adresa" FontWeight="SemiBold" Margin="0,0,0,15">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="Ulica:"/>
+                    <TextBox Grid.Row="1" x:Name="TxtStreet" Margin="0,0,0,5" Height="25"/>
+
+                    <Label Grid.Row="2" Content="Broj:"/>
+                    <TextBox Grid.Row="3" x:Name="TxtNumber" Margin="0,0,0,5" Height="25"/>
+
+                    <Label Grid.Row="4" Content="Grad:"/>
+                    <TextBox Grid.Row="5" x:Name="TxtCity" Margin="0,0,0,5" Height="25"/>
+
+                    <Label Grid.Row="6" Content="Opština:"/>
+                    <TextBox Grid.Row="7" x:Name="TxtState" Margin="0,0,0,5" Height="25"/>
+
+                    <Label Grid.Row="8" Content="Država:"/>
+                    <TextBox Grid.Row="9" x:Name="TxtCountry" Text="Srbija" Height="25"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Dugmad -->
+            <StackPanel Grid.Row="15" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button x:Name="BtnOk" Content="Sačuvaj" Width="100" Height="30" Margin="0,0,10,0" 
+                        Click="BtnOk_Click" FontWeight="SemiBold"/>
+                <Button x:Name="BtnCancel" Content="Otkaži" Width="100" Height="30" 
+                        Click="BtnCancel_Click" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Window>
