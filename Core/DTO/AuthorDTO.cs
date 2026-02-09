@@ -12,7 +12,7 @@ namespace Core.DTO
         public string Name { get; set; } = "";
         public string Lastname { get; set; } = "";
         public DateOnly DateOfBirth { get; set; }
-        public AddressDTO Address { get; set; }
+        public AddressDTO Address { get; set; } = new AddressDTO();
         public string PhoneNumber { get; set; } = "";
         public string Email { get; set; } = "";
         public string IdCard { get; set; } = "";
@@ -50,7 +50,7 @@ namespace Core.DTO
                 Name = this.Name,
                 Lastname = this.Lastname,
                 DateOfBirth = this.DateOfBirth,
-                Address = this.Address?.ToModel(),
+                Address = this.Address.ToModel(),
                 PhoneNumber = this.PhoneNumber,
                 Email = this.Email,
                 IdCard = this.IdCard,
@@ -61,7 +61,6 @@ namespace Core.DTO
 
         public static AuthorDTO FromModel(Author author)
         {
-            if (author == null) return null;
 
             return new AuthorDTO
             {

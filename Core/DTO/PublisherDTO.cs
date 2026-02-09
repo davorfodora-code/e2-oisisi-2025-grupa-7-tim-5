@@ -8,7 +8,7 @@ namespace Core.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
-        public AuthorDTO Manager { get; set; }
+        public AuthorDTO Manager { get; set; } = new AuthorDTO();
         public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public List<BookDTO> Books { get; set; } = new List<BookDTO>();
 
@@ -47,8 +47,8 @@ namespace Core.DTO
             {
                 Id = this.Id,
                 Name = this.Name,
-                Manager = this.Manager?.ToModel(),
-                Authors = this.Authors?.Select(a => a.ToModel()).ToList() ?? new List<Author>(),
+                Manager = this.Manager.ToModel(),
+                Authors = this.Authors.Select(a => a.ToModel()).ToList() ?? new List<Author>(),
                 Books = this.Books?.Select(b => b.ToModel()).ToList() ?? new List<Book>()
             };
         }
@@ -56,14 +56,14 @@ namespace Core.DTO
 
         public static PublisherDTO FromModel(Publisher publisher)
         {
-            if (publisher == null) return null;
+         
 
             return new PublisherDTO
             {
                 Id = publisher.Id,
                 Name = publisher.Name,
                 Manager = AuthorDTO.FromModel(publisher.Manager),
-                Authors = publisher.Authors?.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
+                Authors = publisher.Authors.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
                 Books = publisher.Books?.Select(BookDTO.FromModel).ToList() ?? new List<BookDTO>()
             };
         }
