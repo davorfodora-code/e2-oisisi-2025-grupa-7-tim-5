@@ -17,11 +17,11 @@ public class Author : ISerializable
 	public List<Book> BookList { get; set; }
 
 
-	public Author()
-	{
-		
-		BookList  = new List<Book>();
-	}
+    public Author()
+    {
+        BookList = new List<Book>();
+        Address = new Address(); 
+    }
 
     public Author(string name, string lastname, DateOnly dateOfBirth, Address address, string phoneNumber, string email, string idCard, double experienceLength, List<Book> bookList)
     {
