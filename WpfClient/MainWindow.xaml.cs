@@ -149,149 +149,14 @@ namespace WpfClient
         private void BtnAdd_Click(object? sender, RoutedEventArgs e)
         {
             var selectedTab = MainTabs?.SelectedItem as TabItem;
+            var tabName = selectedTab?.Header?.ToString();
 
-            if (selectedTab?.Header?.ToString() == "Visitor")
+            if (tabName == "Posetioci")
             {
                 var dialog = new AddVisitorDialog();
                 if (dialog.ShowDialog() == true)
-                    _visitorController.AddVisitor(dialog.Visitor);
-            }
-            else if (selectedTab?.Header?.ToString() == "Author")
-            {
-                var dialog = new AddAuthorDialog();
-                if (dialog.ShowDialog() == true)
-                    _authorController.AddAuthor(dialog.Author);
-            }
-            else if (selectedTab?.Header?.ToString() == "Book")
-            {
-                var dialog = new AddBookDialog();
-                if (dialog.ShowDialog() == true)
-                    _bookController.CreateBook(dialog.Book);
-            }
-        }
-
-
-        private void BtnEdit_Click(object? sender, RoutedEventArgs e)
-        {
-            var selectedTab = MainTabs?.SelectedItem as TabItem;
-
-            if (selectedTab?.Header?.ToString() == "Visitor")
-            {
-                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
-                if (selectedVisitor == null) return;
-
-                var dialog = new AddVisitorDialog(selectedVisitor);
-                if (dialog.ShowDialog() == true)
-                    _visitorController.UpdateVisitor(dialog.Visitor);
-            }
-            else if (selectedTab?.Header?.ToString() == "Author")
-            {
-                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
-                if (selectedAuthor == null) return;
-
-                var dialog = new AddAuthorDialog(selectedAuthor);
-                if (dialog.ShowDialog() == true)
-                    _authorController.UpdateAuthor(dialog.Author);
-            }
-            else if (selectedTab?.Header?.ToString() == "Book")
-            {
-                var selectedBook = BooksGrid.SelectedItem as BookDTO;
-                if (selectedBook == null) return;
-
-                var dialog = new AddBookDialog(selectedBook);
-                if (dialog.ShowDialog() == true)
-                    _bookController.EditBook(dialog.Book);
-            }
-        }
-        private void BtnDelete_Click(object? sender, RoutedEventArgs e)
-        {
-            var selectedTab = MainTabs?.SelectedItem as TabItem;
-
-            if (selectedTab?.Header?.ToString() == "Visitor")
-            {
-                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
-                if (selectedVisitor != null)
-                    _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
-            }
-            else if (selectedTab?.Header?.ToString() == "Author")
-            {
-                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
-                if (selectedAuthor != null)
-                    _authorController.DeleteAuthor(selectedAuthor.IdCard);
-            }
-            else if (selectedTab?.Header?.ToString() == "Book")
-            {
-                var selectedBook = BooksGrid.SelectedItem as BookDTO;
-                if (selectedBook != null)
-                    _bookController.RemoveBook(selectedBook.Isbn);
-            }
-        }
-        private void BtnAddVisitor_Click(object? sender, RoutedEventArgs e)
-        {
-            var dialog = new AddVisitorDialog();  
-            if (dialog.ShowDialog() == true)     
-            {
-                var result = _visitorController.AddVisitor(dialog.Visitor);
-
-                if (result.Success)
                 {
-                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadVisitors(); 
-                }
-                else
-                {
-                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-
-        private void BtnDeleteVisitor_Click(object? sender, RoutedEventArgs e)
-        {
-            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
-            {
-                var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete posetioca:\n" +
-                    $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
-                    $"({selectedVisitor.MembershipNumber})?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
-
-                    if (deleteResult.Success)
-                    {
-                        MessageBox.Show(deleteResult.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadVisitors();
-                    }
-                    else
-                    {
-                        MessageBox.Show(deleteResult.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Izaberite posetioca za brisanje", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        private void BtnEditVisitor_Click(object? sender, RoutedEventArgs e)
-        {
-            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
-            {
-                var dialog = new AddVisitorDialog(selectedVisitor);
-
-                if (dialog.ShowDialog() == true)
-                {
-                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
-
+                    var result = _visitorController.AddVisitor(dialog.Visitor);
                     if (result.Success)
                     {
                         MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -303,40 +168,12 @@ namespace WpfClient
                     }
                 }
             }
-            else
+            else if (tabName == "Autori")
             {
-                MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-        private void BtnAddAuthor_Click(object? sender, RoutedEventArgs e)
-        {
-            var dialog = new AddAuthorDialog();
-            if (dialog.ShowDialog() == true)
-            {
-                var result = _authorController.AddAuthor(dialog.Author);
-
-                if (result.Success)
-                {
-                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadAuthors();
-                }
-                else
-                {
-                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-        private void BtnEditAuthor_Click(object? sender, RoutedEventArgs e)
-        {
-            if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
-            {
-                var dialog = new AddAuthorDialog(selectedAuthor);
-
+                var dialog = new AddAuthorDialog();
                 if (dialog.ShowDialog() == true)
                 {
-                    var result = _authorController.UpdateAuthor(dialog.Author);
-
+                    var result = _authorController.AddAuthor(dialog.Author);
                     if (result.Success)
                     {
                         MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -348,77 +185,12 @@ namespace WpfClient
                     }
                 }
             }
-            else
+            else if (tabName == "Knjige")
             {
-                MessageBox.Show("Izaberite autora za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-
-       
-        private void BtnDeleteAuthor_Click(object? sender, RoutedEventArgs e)
-        {
-            if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
-            {
-                var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete autora:\n" +
-                    $"{selectedAuthor.Name} {selectedAuthor.Lastname}\n" +
-                    $"({selectedAuthor.IdCard})?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
-
-                    if (deleteResult.Success)
-                    {
-                        MessageBox.Show(deleteResult.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadAuthors(); 
-                    }
-                    else
-                    {
-                        MessageBox.Show(deleteResult.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Izaberite autora za brisanje", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-        private void BtnAddBook_Click(object? sender, RoutedEventArgs e)
-        {
-            var dialog = new AddBookDialog();
-            if (dialog.ShowDialog() == true)
-            {
-                var result = _bookController.CreateBook(dialog.Book);
-
-                if (result.Success)
-                {
-                    MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadBooks();
-                }
-                else
-                {
-                    MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-        private void BtnEditBook_Click(object? sender, RoutedEventArgs e)
-        {
-            if (BooksGrid.SelectedItem is BookDTO selectedBook)
-            {
-                var dialog = new AddBookDialog(selectedBook);
-
+                var dialog = new AddBookDialog();
                 if (dialog.ShowDialog() == true)
                 {
-                    var result = _bookController.EditBook(dialog.Book);
-
+                    var result = _bookController.CreateBook(dialog.Book);
                     if (result.Success)
                     {
                         MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -432,18 +204,185 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Izaberite knjigu za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
+                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void BtnDeleteBook_Click(object? sender, RoutedEventArgs e)
+        private void BtnEdit_Click(object? sender, RoutedEventArgs e)
         {
-            if (BooksGrid.SelectedItem is BookDTO selectedBook)
+            var selectedTab = MainTabs?.SelectedItem as TabItem;
+            var tabName = selectedTab?.Header?.ToString();
+
+            if (tabName == "Posetioci")
             {
+                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
+                if (selectedVisitor == null)
+                {
+                    MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new AddVisitorDialog(selectedVisitor);
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadVisitors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Autori")
+            {
+                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+                if (selectedAuthor == null)
+                {
+                    MessageBox.Show("Izaberite autora za izmenu", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new AddAuthorDialog(selectedAuthor);
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _authorController.UpdateAuthor(dialog.Author);
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadAuthors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Knjige")
+            {
+                var selectedBook = BooksGrid.SelectedItem as BookDTO;
+                if (selectedBook == null)
+                {
+                    MessageBox.Show("Izaberite knjigu za izmenu", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new AddBookDialog(selectedBook);
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _bookController.EditBook(dialog.Book);
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadBooks();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
+                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void BtnDelete_Click(object? sender, RoutedEventArgs e)
+        {
+            var selectedTab = MainTabs?.SelectedItem as TabItem;
+            var tabName = selectedTab?.Header?.ToString();
+
+            if (tabName == "Posetioci")
+            {
+                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
+                if (selectedVisitor == null)
+                {
+                    MessageBox.Show("Izaberite posetioca za brisanje", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete posetioca:\n" +
+                    $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
+                    $"(Broj članske karte: {selectedVisitor.MembershipNumber})?",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
+                    if (deleteResult.Success)
+                    {
+                        MessageBox.Show(deleteResult.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadVisitors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Autori")
+            {
+                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+                if (selectedAuthor == null)
+                {
+                    MessageBox.Show("Izaberite autora za brisanje", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete autora:\n" +
+                    $"{selectedAuthor.Name} {selectedAuthor.Lastname}\n" +
+                    $"(ID kartica: {selectedAuthor.IdCard})?",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
+                    if (deleteResult.Success)
+                    {
+                        MessageBox.Show(deleteResult.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadAuthors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(deleteResult.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Knjige")
+            {
+                var selectedBook = BooksGrid.SelectedItem as BookDTO;
+                if (selectedBook == null)
+                {
+                    MessageBox.Show("Izaberite knjigu za brisanje", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 var result = MessageBox.Show(
                     $"Da li ste sigurni da želite da obrišete knjigu:\n" +
                     $"{selectedBook.Name}\n" +
-                    $"(ISBN: {selectedBook.Isbn})",
+                    $"(ISBN: {selectedBook.Isbn})?",
                     "Potvrda brisanja",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
@@ -451,12 +390,11 @@ namespace WpfClient
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _bookController.RemoveBook(selectedBook.Isbn);
-
                     if (deleteResult.Success)
                     {
                         MessageBox.Show(deleteResult.Message, "Uspešno",
                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadBooks(); // Funkcija koja osvežava BooksGrid
+                        LoadBooks();
                     }
                     else
                     {
@@ -467,10 +405,255 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Izaberite knjigu za brisanje", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
+                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+        //private void BtnAddVisitor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new AddVisitorDialog();  
+        //    if (dialog.ShowDialog() == true)     
+        //    {
+        //        var result = _visitorController.AddVisitor(dialog.Visitor);
+
+        //        if (result.Success)
+        //        {
+        //            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //            LoadVisitors(); 
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //}
+
+
+        //private void BtnDeleteVisitor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
+        //    {
+        //        var result = MessageBox.Show(
+        //            $"Da li ste sigurni da želite da obrišete posetioca:\n" +
+        //            $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
+        //            $"({selectedVisitor.MembershipNumber})?",
+        //            "Potvrda brisanja",
+        //            MessageBoxButton.YesNo,
+        //            MessageBoxImage.Question);
+
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
+
+        //            if (deleteResult.Success)
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Uspešno",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadVisitors();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Greška",
+        //                    MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite posetioca za brisanje", "Upozorenje",
+        //            MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
+
+        //private void BtnEditVisitor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
+        //    {
+        //        var dialog = new AddVisitorDialog(selectedVisitor);
+
+        //        if (dialog.ShowDialog() == true)
+        //        {
+        //            var result = _visitorController.UpdateVisitor(dialog.Visitor);
+
+        //            if (result.Success)
+        //            {
+        //                MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadVisitors();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
+        //            MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
+        //private void BtnAddAuthor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new AddAuthorDialog();
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        var result = _authorController.AddAuthor(dialog.Author);
+
+        //        if (result.Success)
+        //        {
+        //            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //            LoadAuthors();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //}
+        //private void BtnEditAuthor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
+        //    {
+        //        var dialog = new AddAuthorDialog(selectedAuthor);
+
+        //        if (dialog.ShowDialog() == true)
+        //        {
+        //            var result = _authorController.UpdateAuthor(dialog.Author);
+
+        //            if (result.Success)
+        //            {
+        //                MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadAuthors();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite autora za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
+
+
+       
+        //private void BtnDeleteAuthor_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (AuthorsGrid.SelectedItem is AuthorDTO selectedAuthor)
+        //    {
+        //        var result = MessageBox.Show(
+        //            $"Da li ste sigurni da želite da obrišete autora:\n" +
+        //            $"{selectedAuthor.Name} {selectedAuthor.Lastname}\n" +
+        //            $"({selectedAuthor.IdCard})?",
+        //            "Potvrda brisanja",
+        //            MessageBoxButton.YesNo,
+        //            MessageBoxImage.Question);
+
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
+
+        //            if (deleteResult.Success)
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Uspešno",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadAuthors(); 
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Greška",
+        //                    MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite autora za brisanje", "Upozorenje",
+        //            MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
+        //private void BtnAddBook_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new AddBookDialog();
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        var result = _bookController.CreateBook(dialog.Book);
+
+        //        if (result.Success)
+        //        {
+        //            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //            LoadBooks();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //}
+        //private void BtnEditBook_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (BooksGrid.SelectedItem is BookDTO selectedBook)
+        //    {
+        //        var dialog = new AddBookDialog(selectedBook);
+
+        //        if (dialog.ShowDialog() == true)
+        //        {
+        //            var result = _bookController.EditBook(dialog.Book);
+
+        //            if (result.Success)
+        //            {
+        //                MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadBooks();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite knjigu za izmenu", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
+
+        //private void BtnDeleteBook_Click(object? sender, RoutedEventArgs e)
+        //{
+        //    if (BooksGrid.SelectedItem is BookDTO selectedBook)
+        //    {
+        //        var result = MessageBox.Show(
+        //            $"Da li ste sigurni da želite da obrišete knjigu:\n" +
+        //            $"{selectedBook.Name}\n" +
+        //            $"(ISBN: {selectedBook.Isbn})",
+        //            "Potvrda brisanja",
+        //            MessageBoxButton.YesNo,
+        //            MessageBoxImage.Question);
+
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            var deleteResult = _bookController.RemoveBook(selectedBook.Isbn);
+
+        //            if (deleteResult.Success)
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Uspešno",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information);
+        //                LoadBooks(); // Funkcija koja osvežava BooksGrid
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(deleteResult.Message, "Greška",
+        //                    MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Izaberite knjigu za brisanje", "Upozorenje",
+        //            MessageBoxButton.OK, MessageBoxImage.Warning);
+        //    }
+        //}
 
 
         private void BtnSearch_Click(object? sender, RoutedEventArgs e)
