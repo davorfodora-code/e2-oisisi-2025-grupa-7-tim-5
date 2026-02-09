@@ -187,7 +187,8 @@ namespace WpfClient
             }
             else if (tabName == "Knjige")
             {
-                var dialog = new AddBookDialog();
+                var dialog = new AddBookDialog(_authors);
+
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _bookController.CreateBook(dialog.Book);
@@ -274,21 +275,25 @@ namespace WpfClient
                     return;
                 }
 
-                var dialog = new AddBookDialog(selectedBook);
+                var dialog = new AddBookDialog(selectedBook, _authors);
+
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _bookController.EditBook(dialog.Book);
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(result.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadBooks();
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(result.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
+
             else
             {
                 MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",

@@ -132,22 +132,27 @@
                   AlternatingRowBackground="#F8F9FA">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ISBN" 
-                                    Binding="{Binding ISBN}" 
-                                    Width="120"/>
-                        <DataGridTextColumn Header="Naziv" 
-                                    Binding="{Binding Title}" 
-                                    Width="2*"/>
-                        <DataGridTextColumn Header="Cena" 
-                                    Binding="{Binding Price, StringFormat='{}{0:C}'}" 
-                                    Width="100"/>
-                        <DataGridTextColumn Header="Godina" 
-                                    Binding="{Binding ReleaseYear}" 
-                                    Width="80"/>
-                        <DataGridTextColumn Header="Žanr" 
-                                    Binding="{Binding Genre}" 
-                                    Width="*"/>
-                    </DataGrid.Columns>
+    <DataGridTextColumn Header="ISBN"
+                        Binding="{Binding Isbn}"
+                        Width="120"/>
+
+    <DataGridTextColumn Header="Naziv"
+                        Binding="{Binding Name}"
+                        Width="2*"/>
+
+    <DataGridTextColumn Header="Cena"
+                        Binding="{Binding Price, StringFormat='{}{0:C}'}"
+                        Width="100"/>
+
+    <DataGridTextColumn Header="Godina"
+                        Binding="{Binding PublicationYear}"
+                        Width="80"/>
+
+    <DataGridTextColumn Header="Žanr"
+                        Binding="{Binding Genre}"
+                        Width="*"/>
+</DataGrid.Columns>
+
                 </DataGrid>
             </TabItem>
 
@@ -202,23 +207,28 @@
                   RowBackground="White"
                   AlternatingRowBackground="#F8F9FA">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ime" 
-                                    Binding="{Binding FirstName}" 
-                                    Width="*"/>
-                        <DataGridTextColumn Header="Prezime" 
-                                    Binding="{Binding LastName}" 
-                                    Width="*"/>
-                        <DataGridTextColumn Header="Lična karta" 
-                                    Binding="{Binding IdCardNumber}" 
-                                    Width="120"/>
-                        <DataGridTextColumn Header="Datum rođenja" 
-                                    Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}" 
-                                    Width="120"/>
-                        <DataGridTextColumn Header="Email" 
-                                    Binding="{Binding Email}" 
-                                    Width="2*"/>
-                    </DataGrid.Columns>
+                  <DataGrid.Columns>
+    <DataGridTextColumn Header="Ime"
+                        Binding="{Binding Name}"
+                        Width="*"/>
+
+    <DataGridTextColumn Header="Prezime"
+                        Binding="{Binding Lastname}"
+                        Width="*"/>
+
+    <DataGridTextColumn Header="Lična karta"
+                        Binding="{Binding IdCard}"
+                        Width="120"/>
+
+    <DataGridTextColumn Header="Datum rođenja"
+                        Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
+                        Width="120"/>
+
+    <DataGridTextColumn Header="Email"
+                        Binding="{Binding Email}"
+                        Width="2*"/>
+</DataGrid.Columns>
+
                 </DataGrid>
             </TabItem>
 

@@ -62,10 +62,10 @@ namespace Core.DTO
 
             return new BookDTO
             {
-                Isbn = book.Isbn ?? "",
-                Name = book.Name ?? "",
+                Isbn = book.Isbn,
+                Name = book.Name,
                 Genre = book.Genre,
-                PublicationYear = book.PublicationYear ?? "",
+                PublicationYear = book.PublicationYear,
                 Price = book.Price,
                 NumberOfPages = book.NumberOfPages,
                 Authors = book.Authors?.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
