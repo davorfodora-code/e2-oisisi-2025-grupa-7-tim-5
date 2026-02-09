@@ -64,7 +64,7 @@ namespace ConsoleClient
         List<Book> wishlist4 = new List<Book>();
             Console.WriteLine(adresa2);
 
-        Visitor v1 = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "12", "12", purchases1, wishlist1);
+        Visitor v1 = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "1V2", "V");
         Visitor v2 = new Visitor("Ana", "Marković", "15-03-02", adresa3, "001", "15", "305", "8", "10", purchases2, wishlist2);
         Visitor v3 = new Visitor("Marko", "Petrović", "10-11-05", adresa5, "002", "22", "118", "15", "20", purchases3, wishlist3);
         Visitor v4 = new Visitor("Jovana", "Nikolić", "03-07-01", adresa6, "003", "9", "412", "5", "7", purchases4, wishlist4);

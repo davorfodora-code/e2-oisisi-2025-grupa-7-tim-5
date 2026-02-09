@@ -132,18 +132,37 @@
 
             <!-- Tab 2: Posetioci -->
             <TabItem Header="Posetioci">
-                <Grid Margin="10" Background="White">
-                    <Border Background="#F8F9FA"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="1"
-                    Padding="20"
-                    CornerRadius="4">
-                        <TextBlock Text="Tab Posetioci (student 1)"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontSize="14"/>
-                    </Border>
-                </Grid>
+                <DataGrid x:Name="VisitorsGrid"
+              ItemsSource="{Binding Visitors}"
+              SelectedItem="{Binding SelectedVisitor, Mode=TwoWay}"
+              AutoGenerateColumns="False"
+              IsReadOnly="True"
+              Margin="10"
+              BorderBrush="#E0E0E0"
+              BorderThickness="1"
+              RowBackground="White"
+              AlternatingRowBackground="#F8F9FA"
+              FontSize="12"
+              HeadersVisibility="Column">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Broj članske karte" 
+                                Binding="{Binding MembershipNumber}" 
+                                Width="130"/>
+                        <DataGridTextColumn Header="Ime" 
+                                Binding="{Binding Name}" 
+                                Width="80"/>
+                        <DataGridTextColumn Header="Prezime" 
+                                Binding="{Binding LastName}" 
+                                Width="90"/>
+                        <DataGridTextColumn Header="Adresa" 
+                            Binding="{Binding Address.DisplayAddress}" 
+                            Width="200"/>
+                        <DataGridTextColumn Header="Status" 
+                                Binding="{Binding DisplayStatus}" 
+                                Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
 
             <!-- Tab 3: Autori -->

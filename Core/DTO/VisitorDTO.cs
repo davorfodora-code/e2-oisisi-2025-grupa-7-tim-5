@@ -15,6 +15,10 @@ namespace Core.DTO
         public AddressDTO Address { get; set; } = new AddressDTO();
         public string Status { get; set; } = "R";
 
+        public string DisplayAddress => Address?.DisplayAddress ?? "";
+
+        public string DisplayStatus => Status == "R" ? "Regular" : "VIP";
+
         public (bool IsValid, string ErrorMessage) Validate()
         {
             if (string.IsNullOrWhiteSpace(MembershipNumber))
@@ -46,9 +50,6 @@ namespace Core.DTO
 
             return (true, "");
         }
-
-        public string DisplayStatus => Status == "R" ? "Regular" : "VIP";
-        public string DisplayAddress => Address.DisplayAddress;
 
         public Visitor ToModel()
         {

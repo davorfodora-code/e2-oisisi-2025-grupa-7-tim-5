@@ -1,34 +1,54 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Core.Controllers;
+using Core.DAO;
+using Core.DTO;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace WpfClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private VisitorController _visitorController;
+        private ObservableCollection<VisitorDTO> _visitors;
+
         public MainWindow()
         {
             InitializeComponent();
+            var purchaseDAO = new PurchaseDAO();
+            var visitorDAO = new VisitorDAO(purchaseDAO);
+            _visitorController = new VisitorController(visitorDAO, purchaseDAO);
+
+            LoadVisitors();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void LoadVisitors()
         {
+            var visitorModels = _visitorController.GetAllVisitors();
+            _visitors = new ObservableCollection<VisitorDTO>();
 
+            foreach (var visitor in visitorModels)
+            {
+                var dto = VisitorDTO.FromModel(visitor);
+                _visitors.Add(dto);
+            }
+
+            VisitorsGrid.ItemsSource = _visitors;
         }
 
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            LoadVisitors();
         }
+
+ 
+        private void BtnAdd_Click(object sender, RoutedEventArgs e) { }
+        private void BtnEdit_Click(object sender, RoutedEventArgs e) { }
+        private void BtnDelete_Click(object sender, RoutedEventArgs e) { }
+        private void BtnSearch_Click(object sender, RoutedEventArgs e) { }
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e) { }
+        private void MainTabs_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) { }
+        private void MenuItem_Click(object sender, RoutedEventArgs e) { }
     }
 }

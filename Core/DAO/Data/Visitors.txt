@@ -1,2 +1,2 @@
-Davor|Fodora|24-06-04|000|11|204|12|12|4,3||
-Davor|Fodora|24-06-04|000|11|909|12|12|0|strinng,ime|strinng,ime,12.12.2000.
+Davor|Fodora|24-06-04|DJordja Zlicica|34|Novi Sad|Vojvodina|Srbija|000|11|204|1V2|V|4,3||
+Test|Posetilac||Test Ulica|1|Beograd|Srbija|Srbija|||CK-1-2025||R|0||
