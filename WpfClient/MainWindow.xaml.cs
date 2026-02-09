@@ -212,5 +212,10 @@ namespace WpfClient
             base.OnClosed(e);
             _timer?.Stop();
         }
+
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

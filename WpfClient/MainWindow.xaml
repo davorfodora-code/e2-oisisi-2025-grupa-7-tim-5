@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
         Title="Sajam knjiga"
-        WindowStartupLocation="Manual"
-        Loaded="Window_Loaded" d:DesignWidth="435" d:DesignHeight="140">
+        Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+        
 
     <DockPanel>
 
@@ -29,84 +30,86 @@
             </StatusBarItem>
         </StatusBar>
 
-        <!-- TOOLBAR SA IKONICAMA -->
-        <Border DockPanel.Dock="Top"
+       <Border DockPanel.Dock="Top"
         Background="#F0F0F0"
         Padding="6"
         BorderBrush="#CCCCCC"
         BorderThickness="0,0,0,1">
 
-            <StackPanel Orientation="Horizontal">
+    <Grid HorizontalAlignment="Stretch">
 
-                <!-- 1. DODAJ -->
-                <Button x:Name="BtnAdd"
-                Click="BtnAdd_Click"
-                ToolTip="Dodaj novi entitet (Ctrl+A)"
-                Margin="0,0,8,0"
-                Padding="8,4" Width="34">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/add-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
-                    </StackPanel>
-                </Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-                <!-- 2. IZMENI -->
-                <Button x:Name="BtnEdit"
-                Click="BtnEdit_Click"
-                ToolTip="Izmeni selektovani entitet (Ctrl+E)"
-                Margin="0,0,8,0"
-                Padding="8,4" Width="33">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/edit-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
-                    </StackPanel>
-                </Button>
+        <!-- LEVA DUGMAD -->
+        <StackPanel Orientation="Horizontal" Grid.Column="0">
 
-                <!-- 3. OBRISI -->
-                <Button x:Name="BtnDelete"
-                Click="BtnDelete_Click"
-                ToolTip="Obriši selektovani entitet (Del)"
-                Margin="0,0,24,0"
-                Padding="8,4" Width="33">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/delete-user.png" Width="16" Height="16" Margin="0,0,4,0"/>
-                    </StackPanel>
-                </Button>
+            <Button x:Name="BtnAdd"
+                    Click="BtnAdd_Click"
+                    Margin="0,0,8,0"
+                    Padding="8,4"
+                    Width="34">
+                <Image Source="pack://application:,,,/Icons/add-user.png"
+                       Width="16" Height="16"/>
+            </Button>
 
+            <Button x:Name="BtnEdit"
+                    Click="BtnEdit_Click"
+                    Margin="0,0,8,0"
+                    Padding="8,4"
+                    Width="33">
+                <Image Source="/Icons/edit-user.png"
+                       Width="16" Height="16"/>
+            </Button>
 
-                <!-- 4. PRETRAGA -->
-                <StackPanel Orientation="Horizontal" Margin="150,0,0,0">
-                    <TextBox x:Name="TxtSearch"
-                     Width="102"
+            <Button x:Name="BtnDelete"
+                    Click="BtnDelete_Click"
+                    Margin="0,0,24,0"
+                    Padding="8,4"
+                    Width="33">
+                <Image Source="/Icons/delete-user.png"
+                       Width="16" Height="16"/>
+            </Button>
+
+        </StackPanel>
+
+        
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+            <TextBox x:Name="TxtSearch"
+                     Width="200"
+                     Height="28"
                      Padding="6"
                      KeyDown="TxtSearch_KeyDown"
-                     ToolTip="Unesite tekst za pretragu (Ctrl+F)" Height="13" RenderTransformOrigin="-1.196,0.38">
-                        <TextBox.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="-1"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform X="345.984"/>
-                            </TransformGroup>
-                        </TextBox.RenderTransform>
-                    </TextBox>
-                </StackPanel>
-                <Button x:Name="BtnSearch"
-                    Background="#FFF0F0F0"
-                     Foreground="White"
-                    BorderThickness="1"
-                     BorderBrush="Transparent"
-                    Click="BtnSearch_Click"
-                    ToolTip="Pretraži (Enter)"
-                    Padding="8,4" Height="28" Width="35">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Icons/magnifier.png" Width="16" Height="16" Margin="0,0,4,0"/>
-                    </StackPanel>
-                </Button>
+                     TextChanged="TxtSearch_TextChanged"/>
 
-            </StackPanel>
-        </Border>
+            <Button x:Name="BtnSearch"
+                    Width="35"
+                    Height="28"
+                    Margin="5,0,0,0"
+                    Click="BtnSearch_Click">
+
+                <Image Source="/Icons/magnifier.png"
+                       Width="16"
+                       Height="16"/>
+            </Button>
+
+        </StackPanel>
+
+    </Grid>
+
+</Border>
 
 
-        <!-- TABOVI-->
+           
+       
+       
         <TabControl x:Name="MainTabs"
             SelectionChanged="MainTabs_SelectionChanged"
             Margin="10"
@@ -114,7 +117,7 @@
             BorderBrush="#E0E0E0"
             BorderThickness="1">
 
-            <!-- Tab 1: Knjige -->
+           
             <TabItem Header="Knjige">
                 <DataGrid x:Name="BooksGrid"
                   ItemsSource="{Binding Books}"
@@ -147,7 +150,7 @@
                 </DataGrid>
             </TabItem>
 
-            <!-- Tab 2: Posetioci -->
+            
             <TabItem Header="Posetioci">
                 <DataGrid x:Name="VisitorsGrid"
           ItemsSource="{Binding Visitors}"
@@ -219,6 +222,7 @@
             </TabItem>
 
         </TabControl>
+        
 
     </DockPanel>
 </Window>
