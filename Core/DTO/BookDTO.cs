@@ -18,14 +18,12 @@ namespace Core.DTO
         public List<VisitorDTO> VisitorBoughtBook { get; set; } = new List<VisitorDTO>();
         public List<VisitorDTO> VisitorWishList { get; set; } = new List<VisitorDTO>();
 
-        // DISPLAY PROPERTIES
         public string DisplayAuthors => Authors != null && Authors.Count > 0
             ? string.Join(", ", Authors.Select(a => $"{a.Name} {a.Lastname}"))
             : "";
 
         public string DisplayPublisher => Publisher != null ? Publisher.Name : "";
 
-        // VALIDACIJA
         public (bool IsValid, string ErrorMessage) Validate()
         {
             if (string.IsNullOrWhiteSpace(Isbn))
@@ -39,7 +37,6 @@ namespace Core.DTO
             return (true, "");
         }
 
-        // KONVERZIJA U MODEL
         public Book ToModel()
         {
             return new Book
@@ -57,7 +54,6 @@ namespace Core.DTO
             };
         }
 
-        // KONVERZIJA IZ MODELA
         public static BookDTO FromModel(Book book)
         {
             if (book == null) return null;
