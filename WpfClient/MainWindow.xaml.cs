@@ -26,9 +26,8 @@ namespace WpfClient
           
             InitializeComponent(); 
 
-            InitializeStatusBar(); 
+            InitializeStatusBar();
 
-      
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
             var publisherDAO = new PublisherDAO();
@@ -669,12 +668,6 @@ namespace WpfClient
         private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             TxtSearch.Clear();
-
-            if (MainTabs.SelectedIndex == 1) 
-            {
-                LoadVisitors();
-            }
-
             UpdateTabName();
         }
 
