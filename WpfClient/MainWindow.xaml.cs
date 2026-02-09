@@ -45,35 +45,54 @@ namespace WpfClient
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            // Kreiraj i otvori dijalog za dodavanje posetioca
             var dialog = new AddVisitorDialog();
 
-            // Prikaži dijalog i čekaj da korisnik unese podatke
             if (dialog.ShowDialog() == true)
             {
-                // Dobavi VisitorDTO iz dijaloga
                 var newVisitor = dialog.Visitor;
 
-                // Pozovi kontroler da doda posetioca
                 var result = _visitorController.AddVisitor(newVisitor);
 
-                // Proveri rezultat
                 if (result.Success)
                 {
-                    // Prikaži poruku o uspehu
                     MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Osveži listu posetilaca
                     LoadVisitors();
                 }
                 else
                 {
-                    // Prikaži poruku o grešci
+
                     MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
-        private void BtnEdit_Click(object sender, RoutedEventArgs e) { }
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (VisitorsGrid.SelectedItem is VisitorDTO selectedVisitor)
+            {
+                var dialog = new AddVisitorDialog(selectedVisitor);
+
+                if (dialog.ShowDialog() == true)
+                {
+                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
+
+                    if (result.Success)
+                    {
+                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadVisitors();
+                    }
+                    else
+                    {
+                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
         private void BtnDelete_Click(object sender, RoutedEventArgs e) { }
         private void BtnSearch_Click(object sender, RoutedEventArgs e) { }
         private void TxtSearch_KeyDown(object sender, KeyEventArgs e) { }
