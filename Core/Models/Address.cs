@@ -15,7 +15,11 @@ public class Address : ISerializable
     public string Country { set; get; }
     public Address()
     {
-        
+        Street = "";
+        Number = "";
+        City = "";
+        State = "";
+        Country = "Srbija";
     }
     public void FromCSV(string[] values)
     {
