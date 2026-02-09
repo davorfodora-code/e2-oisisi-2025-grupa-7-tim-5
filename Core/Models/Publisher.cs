@@ -13,6 +13,9 @@ public class Publisher : ISerializable
     public List<Book> Books { get; set; }
     public Publisher()
     {
+        Name = "";
+        Manager = new Author(); 
+        Authors = new List<Author>(); 
         Books = new List<Book>();
     }
 
