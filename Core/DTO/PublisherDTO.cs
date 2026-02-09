@@ -12,12 +12,10 @@ namespace Core.DTO
         public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public List<BookDTO> Books { get; set; } = new List<BookDTO>();
 
-        // DISPLAY PROPERTIES (korisno za DataGrid)
         public string DisplayManager => Manager != null ? $"{Manager.Name} {Manager.Lastname}" : "";
         public int AuthorsCount => Authors?.Count ?? 0;
         public int BooksCount => Books?.Count ?? 0;
 
-        // VALIDACIJA
         public (bool IsValid, string ErrorMessage) Validate()
         {
             if (string.IsNullOrWhiteSpace(Name))
@@ -43,7 +41,6 @@ namespace Core.DTO
             return (true, "");
         }
 
-        // KONVERZIJA U MODEL
         public Publisher ToModel()
         {
             return new Publisher
@@ -56,7 +53,7 @@ namespace Core.DTO
             };
         }
 
-        // KONVERZIJA IZ MODELA
+
         public static PublisherDTO FromModel(Publisher publisher)
         {
             if (publisher == null) return null;
