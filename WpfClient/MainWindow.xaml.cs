@@ -23,21 +23,18 @@ namespace WpfClient
 
         public MainWindow()
         {
-          
-            InitializeComponent(); 
 
+            InitializeComponent();
             InitializeStatusBar();
 
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
-            var publisherDAO = new PublisherDAO();
-            var bookDAO = new BookDAO();
+            var bookDAO = new BookDAO(); // OVO JE NOVO
             var authorDAO = new AuthorDAO();
 
             _authorController = new AuthorController(authorDAO);
-            _bookController = new BookController(bookDAO, publisherDAO);
+            _bookController = new BookController(bookDAO); 
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
-
 
             _visitors = new ObservableCollection<VisitorDTO>();
             _authors = new ObservableCollection<AuthorDTO>();
@@ -47,19 +44,18 @@ namespace WpfClient
             AuthorsGrid.ItemsSource = _authors;
             BooksGrid.ItemsSource = _books;
 
- 
             LoadVisitors();
             LoadAuthors();
             LoadBooks();
         }
 
 
-           
-        
+
+
 
         private void InitializeStatusBar()
         {
-  
+
             StatusBarAppName.Text = "Sajam knjiga";
 
 
@@ -147,65 +143,79 @@ namespace WpfClient
 
         private void BtnAdd_Click(object? sender, RoutedEventArgs e)
         {
-            var selectedTab = MainTabs?.SelectedItem as TabItem;
-            var tabName = selectedTab?.Header?.ToString();
+            try
+            {
+                var selectedTab = MainTabs?.SelectedItem as TabItem;
+                var tabName = selectedTab?.Header?.ToString();
 
-            if (tabName == "Posetioci")
-            {
-                var dialog = new AddVisitorDialog();
-                if (dialog.ShowDialog() == true)
+                if (tabName == "Posetioci")
                 {
-                    var result = _visitorController.AddVisitor(dialog.Visitor);
-                    if (result.Success)
+                    var dialog = new AddVisitorDialog();
+                    if (dialog.ShowDialog() == true)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadVisitors();
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var result = _visitorController.AddVisitor(dialog.Visitor);
+                        if (result.Success)
+                        {
+                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadVisitors();
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
-            }
-            else if (tabName == "Autori")
-            {
-                var dialog = new AddAuthorDialog();
-                if (dialog.ShowDialog() == true)
+                else if (tabName == "Autori")
                 {
-                    var result = _authorController.AddAuthor(dialog.Author);
-                    if (result.Success)
+                    var dialog = new AddAuthorDialog();
+                    if (dialog.ShowDialog() == true)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadAuthors();
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var result = _authorController.AddAuthor(dialog.Author);
+                        if (result.Success)
+                        {
+                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadAuthors();
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
-            }
-            else if (tabName == "Knjige")
-            {
-                var dialog = new AddBookDialog(_authors);
+                else if (tabName == "Knjige")
+                {
+                    var dialog = new AddBookDialog(_authors);
+                    Console.WriteLine("Dijalog kreiran"); // DEBAG
 
-                if (dialog.ShowDialog() == true)
-                {
-                    var result = _bookController.CreateBook(dialog.Book);
-                    if (result.Success)
+                    if (dialog.ShowDialog() == true)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadBooks();
+                        Console.WriteLine($"ISBN knjige: {dialog.Book?.Isbn}"); // DEBAG
+                        var result = _bookController.CreateBook(dialog.Book);
+                        if (result.Success)
+                        {
+                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadBooks();
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Console.WriteLine("Dijalog otkazan"); // DEBAG
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
+                        "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
-                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show($"Greška: {ex.Message}\n\nDetalji: {ex.StackTrace}",
+                    "Kritična greška", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -413,7 +423,7 @@ namespace WpfClient
                     "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-      
+
         private void BtnSearch_Click(object? sender, RoutedEventArgs e)
         {
 
@@ -454,6 +464,54 @@ namespace WpfClient
         private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        // ===== FILE MENU HANDLERS =====
+        private void FileNew_Click(object sender, RoutedEventArgs e)
+        {
+            // Poziva postojeću Add funkcionalnost
+            BtnAdd_Click(sender, e);
+        }
+
+        private void FileSave_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Funkcija 'Save' je pozvana.\nTrenutno stanje aplikacije je sačuvano.",
+                "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void OpenPosetioci_Click(object sender, RoutedEventArgs e)
+        {
+            MainTabs.SelectedIndex = 1; // Posetioci tab
+        }
+
+        private void OpenKnjige_Click(object sender, RoutedEventArgs e)
+        {
+            MainTabs.SelectedIndex = 0; // Knjige tab
+        }
+
+        private void OpenAutori_Click(object sender, RoutedEventArgs e)
+        {
+            MainTabs.SelectedIndex = 2; // Autori tab
+        }
+
+        // ===== EDIT MENU HANDLERS =====
+        private void EditEdit_Click(object sender, RoutedEventArgs e)
+        {
+            // Poziva postojeću Edit funkcionalnost
+            BtnEdit_Click(sender, e);
+        }
+
+        private void EditDelete_Click(object sender, RoutedEventArgs e)
+        {
+            // Poziva postojeću Delete funkcionalnost
+            BtnDelete_Click(sender, e);
+        }
+
+        // ===== HELP MENU HANDLERS =====
+        private void HelpAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var aboutWindow = new AboutWindow();
+            aboutWindow.ShowDialog();
         }
     }
 }

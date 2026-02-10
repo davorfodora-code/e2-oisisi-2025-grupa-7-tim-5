@@ -1,3 +1,2 @@
-dddasdsad|ddd||asd|asd|asd|asd|Srbija|||CK-1-1123||V|0||
-Davor|Fodora|24-06-04|DJordja Zlicica|34|Novi Sad|Vojvodina|Srbija|000|11|204|1V2|V|4,3||
-ASDASD|ASD||ASD|11|asdasd|asdasads|Srbija|||CK-1-9999||R|0||
+Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||V|0||
+Nemanja|Elor||Dunavska|13|Novi Sad|Novi Sad|Srbija|||CK-1-0002||V|0||

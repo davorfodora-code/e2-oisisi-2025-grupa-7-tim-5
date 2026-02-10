@@ -10,9 +10,17 @@
 
   <ItemGroup>
     <None Remove="Icons\add-user.png" />
+    <None Remove="Icons\author.png" />
+    <None Remove="Icons\cancel.png" />
     <None Remove="Icons\delete-user.png" />
+    <None Remove="Icons\diskette.png" />
     <None Remove="Icons\edit-user.png" />
+    <None Remove="Icons\information-button.png" />
     <None Remove="Icons\magnifier.png" />
+    <None Remove="Icons\multiple-users-silhouette.png" />
+    <None Remove="Icons\open-book.png" />
+    <None Remove="Icons\plus.png" />
+    <None Remove="Icons\share.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,15 +32,23 @@
     <Resource Include="Icons\add-user.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\author.png" />
+    <Resource Include="Icons\cancel.png" />
     <Resource Include="Icons\delete-user.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\diskette.png" />
     <Resource Include="Icons\edit-user.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\information-button.png" />
     <Resource Include="Icons\magnifier.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Icons\multiple-users-silhouette.png" />
+    <Resource Include="Icons\open-book.png" />
+    <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\share.png" />
   </ItemGroup>
 
 </Project>

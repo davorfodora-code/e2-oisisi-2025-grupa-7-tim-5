@@ -8,9 +8,65 @@
         Title="Sajam knjiga"
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
-        
+
 
     <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="#F0F0F0">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Click="FileNew_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/plus.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save" Click="FileSave_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/diskette.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Open">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/share.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                    <MenuItem Header="Posetioci" Click="OpenPosetioci_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/multiple-users-silhouette.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Knjige" Click="OpenKnjige_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/open-book.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Autori" Click="OpenAutori_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/author.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Edit">
+                <MenuItem Header="Edit" Click="EditEdit_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/edit-user.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Delete" Click="EditDelete_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/delete-user.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Click="HelpAbout_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Icons/information-button.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
 
         <StatusBar DockPanel.Dock="Bottom" Background="#F0F0F0">
             <StatusBarItem>
@@ -30,87 +86,86 @@
             </StatusBarItem>
         </StatusBar>
 
-       <Border DockPanel.Dock="Top"
+        <Border DockPanel.Dock="Top"
         Background="#F0F0F0"
         Padding="6"
         BorderBrush="#CCCCCC"
         BorderThickness="0,0,0,1">
 
-    <Grid HorizontalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- LEVA DUGMAD -->
-        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                <!-- LEVA DUGMAD -->
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
 
-            <Button x:Name="BtnAdd"
+                    <Button x:Name="BtnAdd"
                     Click="BtnAdd_Click"
-
                     Margin="0,0,8,0"
                     Padding="8,4"
                     Width="34">
-                <Image Source="pack://application:,,,/Icons/add-user.png"
+                        <Image Source="pack://application:,,,/Icons/add-user.png"
                        Width="16" Height="16"/>
-            </Button>
+                    </Button>
 
-            <Button x:Name="BtnEdit"
+                    <Button x:Name="BtnEdit"
                     Click="BtnEdit_Click"
                     Margin="0,0,8,0"
                     Padding="8,4"
                     Width="33">
-                <Image Source="/Icons/edit-user.png"
+                        <Image Source="/Icons/edit-user.png"
                        Width="16" Height="16"/>
-            </Button>
+                    </Button>
 
-            <Button x:Name="BtnDelete"
+                    <Button x:Name="BtnDelete"
                     Click="BtnDelete_Click"
                     Margin="0,0,24,0"
                     Padding="8,4"
                     Width="33">
-                <Image Source="/Icons/delete-user.png"
+                        <Image Source="/Icons/delete-user.png"
                        Width="16" Height="16"/>
-            </Button>
+                    </Button>
 
-        </StackPanel>
+                </StackPanel>
 
-        
-        <StackPanel Orientation="Horizontal"
+
+                <StackPanel Orientation="Horizontal"
                     Grid.Column="2"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
 
-            <TextBox x:Name="TxtSearch"
+                    <TextBox x:Name="TxtSearch"
                      Width="200"
                      Height="28"
                      Padding="6"
                      KeyDown="TxtSearch_KeyDown"
                      TextChanged="TxtSearch_TextChanged"/>
 
-            <Button x:Name="BtnSearch"
+                    <Button x:Name="BtnSearch"
                     Width="35"
                     Height="28"
                     Margin="5,0,0,0"
                     Click="BtnSearch_Click">
 
-                <Image Source="/Icons/magnifier.png"
+                        <Image Source="/Icons/magnifier.png"
                        Width="16"
                        Height="16"/>
-            </Button>
+                    </Button>
 
-        </StackPanel>
+                </StackPanel>
 
-    </Grid>
+            </Grid>
 
-</Border>
+        </Border>
 
 
-           
-       
-       
+
+
+
         <TabControl x:Name="MainTabs"
             SelectionChanged="MainTabs_SelectionChanged"
             Margin="10"
@@ -118,7 +173,7 @@
             BorderBrush="#E0E0E0"
             BorderThickness="1">
 
-           
+
             <TabItem Header="Knjige">
                 <DataGrid x:Name="BooksGrid"
                   ItemsSource="{Binding Books}"
@@ -129,34 +184,39 @@
                   BorderBrush="#E0E0E0"
                   BorderThickness="1"
                   RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA">
+                  AlternatingRowBackground="#F8F9FA"
+                  FontSize="14"
+                  RowHeight="30"
+                  HeadersVisibility="Column"
+                  VerticalGridLinesBrush="#E0E0E0"
+                  HorizontalGridLinesBrush="#E0E0E0">
 
                     <DataGrid.Columns>
-    <DataGridTextColumn Header="ISBN"
+                        <DataGridTextColumn Header="ISBN"
                         Binding="{Binding Isbn}"
                         Width="120"/>
 
-    <DataGridTextColumn Header="Naziv"
+                        <DataGridTextColumn Header="Naziv"
                         Binding="{Binding Name}"
                         Width="2*"/>
 
-    <DataGridTextColumn Header="Cena"
+                        <DataGridTextColumn Header="Cena"
                         Binding="{Binding Price, StringFormat='{}{0:C}'}"
                         Width="100"/>
 
-    <DataGridTextColumn Header="Godina"
+                        <DataGridTextColumn Header="Godina"
                         Binding="{Binding PublicationYear}"
                         Width="80"/>
 
-    <DataGridTextColumn Header="Žanr"
+                        <DataGridTextColumn Header="Žanr"
                         Binding="{Binding Genre}"
                         Width="*"/>
-</DataGrid.Columns>
+                    </DataGrid.Columns>
 
                 </DataGrid>
             </TabItem>
 
-            
+
             <TabItem Header="Posetioci">
                 <DataGrid x:Name="VisitorsGrid"
           ItemsSource="{Binding Visitors}"
@@ -205,35 +265,41 @@
                   BorderBrush="#E0E0E0"
                   BorderThickness="1"
                   RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA" SelectionChanged="AuthorsGrid_SelectionChanged">
+                  AlternatingRowBackground="#F8F9FA"
+                  FontSize="14"
+                  RowHeight="30"
+                  HeadersVisibility="Column"
+                  VerticalGridLinesBrush="#E0E0E0"
+                  HorizontalGridLinesBrush="#E0E0E0"
+                  SelectionChanged="AuthorsGrid_SelectionChanged">
 
-                  <DataGrid.Columns>
-    <DataGridTextColumn Header="Ime"
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ime"
                         Binding="{Binding Name}"
                         Width="*"/>
 
-    <DataGridTextColumn Header="Prezime"
+                        <DataGridTextColumn Header="Prezime"
                         Binding="{Binding Lastname}"
                         Width="*"/>
 
-    <DataGridTextColumn Header="Lična karta"
+                        <DataGridTextColumn Header="Lična karta"
                         Binding="{Binding IdCard}"
                         Width="120"/>
 
-    <DataGridTextColumn Header="Datum rođenja"
+                        <DataGridTextColumn Header="Datum rođenja"
                         Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
                         Width="120"/>
 
-    <DataGridTextColumn Header="Email"
+                        <DataGridTextColumn Header="Email"
                         Binding="{Binding Email}"
                         Width="2*"/>
-</DataGrid.Columns>
+                    </DataGrid.Columns>
 
                 </DataGrid>
             </TabItem>
 
         </TabControl>
-        
+
 
     </DockPanel>
 </Window>
