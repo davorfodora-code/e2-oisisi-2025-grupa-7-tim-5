@@ -23,17 +23,17 @@ namespace WpfClient
 
         public MainWindow()
         {
-
             InitializeComponent();
             InitializeStatusBar();
 
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
-            var bookDAO = new BookDAO(); // OVO JE NOVO
+            var bookDAO = new BookDAO();
+            var publisherDAO = new PublisherDAO();
             var authorDAO = new AuthorDAO();
 
             _authorController = new AuthorController(authorDAO);
-            _bookController = new BookController(bookDAO); 
+            _bookController = new BookController(bookDAO, publisherDAO);
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
 
             _visitors = new ObservableCollection<VisitorDTO>();
@@ -49,19 +49,10 @@ namespace WpfClient
             LoadBooks();
         }
 
-
-
-
-
         private void InitializeStatusBar()
         {
-
             StatusBarAppName.Text = "Sajam knjiga";
-
-
             UpdateTabName();
-
-
             UpdateDateTime();
 
             _timer = new DispatcherTimer();
@@ -107,6 +98,7 @@ namespace WpfClient
 
             VisitorsGrid.ItemsSource = _visitors;
         }
+
         private void LoadAuthors()
         {
             var authorModels = _authorController.GetAllAuthors();
@@ -118,8 +110,9 @@ namespace WpfClient
                 _authors.Add(dto);
             }
 
-            AuthorsGrid.ItemsSource = _authors; // poveži sa DataGrid-om
+            AuthorsGrid.ItemsSource = _authors;
         }
+
         private void LoadBooks()
         {
             var bookModels = _bookController.GetAllBooks();
@@ -133,7 +126,6 @@ namespace WpfClient
 
             BooksGrid.ItemsSource = _books;
         }
-
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
@@ -185,11 +177,8 @@ namespace WpfClient
                 else if (tabName == "Knjige")
                 {
                     var dialog = new AddBookDialog(_authors);
-                    Console.WriteLine("Dijalog kreiran"); // DEBAG
-
                     if (dialog.ShowDialog() == true)
                     {
-                        Console.WriteLine($"ISBN knjige: {dialog.Book?.Isbn}"); // DEBAG
                         var result = _bookController.CreateBook(dialog.Book);
                         if (result.Success)
                         {
@@ -200,10 +189,6 @@ namespace WpfClient
                         {
                             MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Dijalog otkazan"); // DEBAG
                     }
                 }
                 else
@@ -302,7 +287,6 @@ namespace WpfClient
                     }
                 }
             }
-
             else
             {
                 MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
@@ -426,12 +410,15 @@ namespace WpfClient
 
         private void BtnSearch_Click(object? sender, RoutedEventArgs e)
         {
-
+           
         }
 
         private void TxtSearch_KeyDown(object? sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Enter)
+            {
+                BtnSearch_Click(sender, e);
+            }
         }
 
         private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -442,12 +429,12 @@ namespace WpfClient
 
         private void MenuItem_Click(object? sender, RoutedEventArgs e)
         {
-            // Prazno
+            
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-
+            
         }
 
         protected override void OnClosed(EventArgs e)
@@ -458,18 +445,16 @@ namespace WpfClient
 
         private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e)
         {
-
+            
         }
 
         private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
-        // ===== FILE MENU HANDLERS =====
         private void FileNew_Click(object sender, RoutedEventArgs e)
         {
-            // Poziva postojeću Add funkcionalnost
             BtnAdd_Click(sender, e);
         }
 
@@ -481,33 +466,29 @@ namespace WpfClient
 
         private void OpenPosetioci_Click(object sender, RoutedEventArgs e)
         {
-            MainTabs.SelectedIndex = 1; // Posetioci tab
+            MainTabs.SelectedIndex = 1;
         }
 
         private void OpenKnjige_Click(object sender, RoutedEventArgs e)
         {
-            MainTabs.SelectedIndex = 0; // Knjige tab
+            MainTabs.SelectedIndex = 0;
         }
 
         private void OpenAutori_Click(object sender, RoutedEventArgs e)
         {
-            MainTabs.SelectedIndex = 2; // Autori tab
+            MainTabs.SelectedIndex = 2;
         }
 
-        // ===== EDIT MENU HANDLERS =====
         private void EditEdit_Click(object sender, RoutedEventArgs e)
         {
-            // Poziva postojeću Edit funkcionalnost
             BtnEdit_Click(sender, e);
         }
 
         private void EditDelete_Click(object sender, RoutedEventArgs e)
         {
-            // Poziva postojeću Delete funkcionalnost
             BtnDelete_Click(sender, e);
         }
 
-        // ===== HELP MENU HANDLERS =====
         private void HelpAbout_Click(object sender, RoutedEventArgs e)
         {
             var aboutWindow = new AboutWindow();

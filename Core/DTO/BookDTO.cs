@@ -27,13 +27,13 @@ namespace Core.DTO
         public (bool IsValid, string ErrorMessage) Validate()
         {
             if (string.IsNullOrWhiteSpace(Isbn))
-                return (false, "ISBN is required.");
+                return (false, "ISBN je obavezan.");
             if (string.IsNullOrWhiteSpace(Name))
-                return (false, "Book name is required.");
+                return (false, "Naziv knjige je obavezan.");
             if (Authors == null || Authors.Count == 0)
-                return (false, "Book must have at least one author.");
-            if (Publisher == null)
-                return (false, "Book must have a publisher.");
+                return (false, "Knjiga mora imati bar jednog autora.");
+            if (Publisher == null || string.IsNullOrWhiteSpace(Publisher.Name))
+                return (false, "Knjiga mora imati izdavača.");
             return (true, "");
         }
 
@@ -56,7 +56,6 @@ namespace Core.DTO
 
         public static BookDTO FromModel(Book book)
         {
-            // Prvo proverite null
             if (book == null)
                 return new BookDTO();
 
@@ -75,7 +74,4 @@ namespace Core.DTO
             };
         }
     }
-    
-    }
-
-
+}

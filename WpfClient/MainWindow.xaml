@@ -100,7 +100,6 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- LEVA DUGMAD -->
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
 
                     <Button x:Name="BtnAdd"
@@ -254,7 +253,6 @@
                 </DataGrid>
             </TabItem>
 
-            <!-- Tab 3: Autori -->
             <TabItem Header="Autori">
                 <DataGrid x:Name="AuthorsGrid"
                   ItemsSource="{Binding Authors}"

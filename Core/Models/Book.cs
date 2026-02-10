@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+
 public enum Genre
 {
     Roman,
@@ -20,18 +20,19 @@ public enum Genre
     Novela,
     Misterija
 }
+
 public class Book : ISerializable
 {
-	public string Isbn { get; set; }
-	public string Name { get; set; }
-	public Genre Genre { get; set; }
-	public string PublicationYear { get; set; }
-	public double Price { get; set; }
-	public int NumberOfPages { get; set; }
-	public List<Author> Authors { get; set; }
-	public Publisher Publisher { get; set; }
-	public List<Visitor> VisitorBoughtBook { get; set; }
-	public List<Visitor> VisitorWishList { get; set; }
+    public string Isbn { get; set; }
+    public string Name { get; set; }
+    public Genre Genre { get; set; }
+    public string PublicationYear { get; set; }
+    public double Price { get; set; }
+    public int NumberOfPages { get; set; }
+    public List<Author> Authors { get; set; }
+    public Publisher Publisher { get; set; }
+    public List<Visitor> VisitorBoughtBook { get; set; }
+    public List<Visitor> VisitorWishList { get; set; }
 
     public Book()
     {
@@ -66,7 +67,7 @@ public class Book : ISerializable
         string genreValue = values[2];
         if (genreValue == "zanr")
         {
-            Genre = Genre.Roman; 
+            Genre = Genre.Roman;
         }
         else if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
         {
@@ -89,28 +90,27 @@ public class Book : ISerializable
     {
         string[] values =
         {
-           Isbn, Name, Genre.ToString(), 
-           PublicationYear,Price.ToString(), Publisher.Id.ToString(), Publisher.Name.ToString()
+           Isbn,
+           Name,
+           Genre.ToString(),
+           PublicationYear,
+           Price.ToString(),
+           NumberOfPages.ToString(),
+           Publisher.Id.ToString(),
+           Publisher.Name
         };
         return values;
     }
 
     public override string ToString()
-{
-    StringBuilder sb = new StringBuilder();
-
-    sb.Append("ISBN: " + Isbn + ", ");
-    sb.Append("NAZIV: " + Name + ", ");
-    sb.Append("ŽANR: " + Genre + ", ");
-    sb.Append("GODINA: " + PublicationYear + ", ");
-    sb.Append("CENA: " + Price + ", ");
-    sb.Append("BROJ STRANA: " + NumberOfPages + ", ");
-
-
-    
-
-    return sb.ToString();
-}
-
-   
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("ISBN: " + Isbn + ", ");
+        sb.Append("NAZIV: " + Name + ", ");
+        sb.Append("ŽANR: " + Genre + ", ");
+        sb.Append("GODINA: " + PublicationYear + ", ");
+        sb.Append("CENA: " + Price + ", ");
+        sb.Append("BROJ STRANA: " + NumberOfPages + ", ");
+        return sb.ToString();
+    }
 }
