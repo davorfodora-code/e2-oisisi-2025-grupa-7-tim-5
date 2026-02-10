@@ -205,7 +205,7 @@
                   BorderBrush="#E0E0E0"
                   BorderThickness="1"
                   RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA">
+                  AlternatingRowBackground="#F8F9FA" SelectionChanged="AuthorsGrid_SelectionChanged">
 
                   <DataGrid.Columns>
     <DataGridTextColumn Header="Ime"
