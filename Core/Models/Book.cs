@@ -9,23 +9,16 @@ public enum Genre
     Roman,
     Poezija,
     Esej,
-    Novela,
     Pripovetka,
     Drama,
     Biografija,
     NaučnaFantastika,
-    Fantastika,
     Triler,
     Horor,
-    LjubavniRoman,
     Istorija,
     Autobiografija,
-    Putopis,
-    Filozofija,
-    NaučnaLiteratura,
-    DečjaKnjiga,
-    Misterija,
-    Kriminalistički
+    Novela,
+    Misterija
 }
 public class Book : ISerializable
 {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace WpfClient
 {
@@ -46,7 +47,8 @@ namespace WpfClient
             TxtPages.Text = bookToEdit.NumberOfPages.ToString();
             TxtPublisher.Text = bookToEdit.Publisher?.Name ?? "";
 
-            // Selektuj autora u ComboBox
+            CmbGenre.ItemsSource = Enum.GetValues(typeof(Genre)).Cast<Genre>().ToList();
+
             var author = bookToEdit.Authors?.FirstOrDefault();
             if (author != null)
             {
@@ -86,6 +88,8 @@ namespace WpfClient
             }
 
             var selectedAuthor = CmbAuthors.SelectedItem as AuthorDTO;
+            var selectedGenre = (Genre)CmbGenre.SelectedItem;
+
 
             if (selectedAuthor == null)
             {
@@ -98,7 +102,7 @@ namespace WpfClient
             {
                 Isbn = TxtIsbn.Text.Trim(),
                 Name = TxtBookName.Text.Trim(),
-                Genre = (Genre)CmbGenre.SelectedIndex,
+                Genre = (Genre)CmbGenre.SelectedItem,
                 PublicationYear = TxtPublicationYear.Text.Trim(),
                 Price = price,
                 NumberOfPages = pages,

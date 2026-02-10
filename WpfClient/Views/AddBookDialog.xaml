@@ -35,21 +35,23 @@
 
     <!-- Autori -->
     <Label Grid.Row="2" Grid.Column="0" Content="Autori:" VerticalAlignment="Center"/>
-    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CmbAuthors"
-             DisplayMemberPath="Name"
-             Height="100"
-             HorizontalAlignment="Stretch"
-             Margin="0,2"/>
+    <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CmbAuthors" Margin="0,2" DisplayMemberPath="Name"/>
 
     <!-- Žanr -->
-    <Label Grid.Row="3" Grid.Column="0" Content="Žanr:" VerticalAlignment="Center"/>
-    <ComboBox Grid.Row="3" Grid.Column="1" x:Name="CmbGenre" Margin="0,2">
-        <ComboBoxItem Content="Roman"/>
-        <ComboBoxItem Content="Poezija"/>
-        <ComboBoxItem Content="Drama"/>
-        <ComboBoxItem Content="Fantastika"/>
-        <ComboBoxItem Content="Triler"/>
-    </ComboBox>
+  <Label Grid.Row="3" Grid.Column="0" Content="Zanr:" VerticalAlignment="Center"/>
+		<ComboBox Grid.Row="3" Grid.Column="1" x:Name="CmbGenre" Margin="0,2">
+			<ComboBoxItem Content="Roman" Tag="R"/>
+			<ComboBoxItem Content="Esej" Tag="E"/>
+            <ComboBoxItem Content="Pripovetka" Tag="P"/>
+            <ComboBoxItem Content="Drama" Tag="D"/>
+            <ComboBoxItem Content="Biografija" Tag="B"/>
+            <ComboBoxItem Content="NaučnaFantastika" Tag="NF"/>
+            <ComboBoxItem Content="Triler" Tag="TR"/>
+            <ComboBoxItem Content="Horor" Tag="H"/>
+            <ComboBoxItem Content="Istorija" Tag="I"/>
+            <ComboBoxItem Content="Misterija" Tag="M"/>
+		</ComboBox>
+
 
     <!-- Godina izdanja -->
     <Label Grid.Row="4" Grid.Column="0" Content="Godina izdanja:" VerticalAlignment="Center"/>
