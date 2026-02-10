@@ -1,0 +1,43 @@
+<Window x:Class="WpfClient.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="O aplikaciji" Height="500" Width="500"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="SingleBorderWindow">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Sajam knjiga" 
+                   FontSize="24" FontWeight="Bold" 
+                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <TextBlock Grid.Row="1" Text="Verzija: 1.0.0" 
+                   FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <TextBlock Text="Opis aplikacije:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBlock Text="Aplikacija Sajam knjiga pruza osnovne CRUD mogucnosti. Omogucava dodavanje, izmenu, brisanje. Pretraga u sledecoj 2.0 verziji :)." 
+                       TextWrapping="Wrap" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Autori:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBlock Text="Davor Fodora" Margin="20,0,0,5"/>
+            <TextBlock Text="Moje ime je Davor Fodora. Trenutno studiram na fakultetu tehnickih nauka i nadam se sledece godine da cu imati zvanje inzenjera. Ovo je moj prvi CRUD projekat, nadam se da vam se dopada." TextWrapping="Wrap" Margin="20,0,0,10"/>
+
+            <TextBlock Text="Nemanja Elor" Margin="20,0,0,5"/>
+            <TextBlock Text="Moje ime je Nemanja Elor. Student sam trece godine i ovo je moja prva CRUD aplikacija." TextWrapping="Wrap" Margin="20,0,0,10"/>
+
+        </StackPanel>
+
+        <Button Grid.Row="3" Content="Zatvori" 
+                Width="80" Height="30" 
+                HorizontalAlignment="Center"
+                Click="CloseButton_Click"/>
+    </Grid>
+</Window>
