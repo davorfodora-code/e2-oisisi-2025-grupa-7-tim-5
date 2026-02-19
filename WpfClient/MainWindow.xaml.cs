@@ -211,18 +211,29 @@ namespace WpfClient
 
             if (tabName == "Posetioci")
             {
-                var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
-                if (selectedVisitor == null)
+                var selectedVisitorDto = VisitorsGrid.SelectedItem as VisitorDTO;
+                if (selectedVisitorDto == null)
                 {
                     MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                var dialog = new AddVisitorDialog(selectedVisitor);
+                var originalVisitor = _visitorController.GetAllVisitors()
+                    .FirstOrDefault(v => v.MembershipNumber == selectedVisitorDto.MembershipNumber);
+
+                if (originalVisitor == null)
+                {
+                    MessageBox.Show("Posetilac nije pronađen!", "Greška",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var dialog = new VisitorEditDialog(selectedVisitorDto, originalVisitor, _bookController);
+
                 if (dialog.ShowDialog() == true)
                 {
-                    var result = _visitorController.UpdateVisitor(dialog.Visitor);
+                    var result = _visitorController.UpdateVisitor(dialog.VisitorDTO);
                     if (result.Success)
                     {
                         MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);

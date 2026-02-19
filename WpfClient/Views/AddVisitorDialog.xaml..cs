@@ -25,7 +25,7 @@ namespace WpfClient
 
 
             TxtMembershipNumber.Text = visitorToEdit.MembershipNumber;
-            TxtMembershipNumber.IsEnabled = false; // Ne može se menjati broj članske karte
+            TxtMembershipNumber.IsEnabled = false; 
 
             TxtName.Text = visitorToEdit.Name;
             TxtLastName.Text = visitorToEdit.LastName;
