@@ -14,6 +14,7 @@ namespace Core.DTO
         public string LastName { get; set; } = "";
         public AddressDTO Address { get; set; } = new AddressDTO();
         public string Status { get; set; } = "R";
+        public List<BookDTO> Wishlist { get; set; } = new List<BookDTO>();
 
         public string DisplayAddress => Address?.DisplayAddress ?? "";
 
@@ -59,7 +60,8 @@ namespace Core.DTO
                 Name = this.Name,
                 LastName = this.LastName,
                 Address = this.Address.ToModel(),
-                Status = this.Status
+                Status = this.Status,
+                Wishlist = this.Wishlist?.Select(b => b.ToModel()).ToList() ?? new List<Book>()
             };
         }
 
@@ -71,7 +73,8 @@ namespace Core.DTO
                 Name = visitor.Name,
                 LastName = visitor.LastName,
                 Address = AddressDTO.FromModel(visitor.Address),
-                Status = visitor.Status
+                Status = visitor.Status,
+                Wishlist = visitor.Wishlist?.Select(BookDTO.FromModel).ToList() ?? new List<BookDTO>()
             };
         }
     }
