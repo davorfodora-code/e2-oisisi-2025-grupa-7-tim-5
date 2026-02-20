@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 using System.Text;
 
 public class Publisher : ISerializable
@@ -11,11 +10,12 @@ public class Publisher : ISerializable
     public Author Manager { get; set; }
     public List<Author> Authors { get; set; }
     public List<Book> Books { get; set; }
+
     public Publisher()
     {
         Name = "";
-        Manager = new Author(); 
-        Authors = new List<Author>(); 
+        Manager = new Author();
+        Authors = new List<Author>();
         Books = new List<Book>();
     }
 
@@ -43,11 +43,24 @@ public class Publisher : ISerializable
 
         if (values.Length > 2 && !string.IsNullOrEmpty(values[2]))
         {
-            var AuthorsToAdd = values[2].Split(';');
-            Authors = new List<Author>();
-            foreach (var author in AuthorsToAdd)
+            var managerParts = values[2].Split(',');
+            if (managerParts.Length == 2)
             {
-                var parts = author.Split(',');
+                Manager = new Author
+                {
+                    IdCard = managerParts[0],
+                    Name = managerParts[1]
+                };
+            }
+        }
+
+        if (values.Length > 3 && !string.IsNullOrEmpty(values[3]))
+        {
+            var authorEntries = values[3].Split(';', StringSplitOptions.RemoveEmptyEntries);
+            Authors = new List<Author>();
+            foreach (var entry in authorEntries)
+            {
+                var parts = entry.Split(',');
                 if (parts.Length == 2)
                 {
                     Authors.Add(new Author
@@ -59,9 +72,9 @@ public class Publisher : ISerializable
             }
         }
 
-        if (values.Length > 3 && !string.IsNullOrEmpty(values[3]))
+        if (values.Length > 4 && !string.IsNullOrEmpty(values[4]))
         {
-            var bookEntries = values[3].Split(';');
+            var bookEntries = values[4].Split(';', StringSplitOptions.RemoveEmptyEntries);
             Books = new List<Book>();
             foreach (var entry in bookEntries)
             {
@@ -80,14 +93,24 @@ public class Publisher : ISerializable
 
     public string[] ToCSV()
     {
-        string authorsString = string.Join(";",Authors.Select(a => $"{a.IdCard},{a.Name}"));
 
-        string booksString = string.Join(";",Books.Select(b => $"{b.Isbn},{b.Name}"));
+        string managerString = Manager != null ? $"{Manager.IdCard},{Manager.Name}" : "";
+
+
+        string authorsString = Authors != null && Authors.Any()
+            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name}"))
+            : "";
+
+
+        string booksString = Books != null && Books.Any()
+            ? string.Join(";", Books.Select(b => $"{b.Isbn},{b.Name}"))
+            : "";
 
         return new string[]
         {
             Id.ToString(),
             Name,
+            managerString,    
             authorsString,
             booksString
         };
@@ -98,10 +121,10 @@ public class Publisher : ISerializable
         StringBuilder sb = new StringBuilder();
         sb.Append($"Id: {Id}, ");
         sb.Append($"Name: {Name}, ");
-        sb.Append($"Authors: {Authors.Count}, ");
-        sb.Append($"Books: {Books.Count}");
+        sb.Append($"Manager: {Manager?.Name ?? "Nema"}, ");
+        sb.Append($"Authors: {Authors?.Count ?? 0}, ");
+        sb.Append($"Books: {Books?.Count ?? 0}");
 
         return sb.ToString();
     }
-
 }
