@@ -101,5 +101,16 @@ namespace Core.Controllers
         {
             _visitorDAO.UpdateAverageReview(membershipNumber);
         }
+
+        public List<Visitor> SearchVisitors(string searchQuery)
+        {
+            return _visitorDAO.SearchVisitors(searchQuery);
+        }
+
+        public List<VisitorDTO> SearchVisitorsDTO(string searchQuery)
+        {
+            var visitors = _visitorDAO.SearchVisitors(searchQuery);
+            return visitors.Select(VisitorDTO.FromModel).ToList();
+        }
     }
 }

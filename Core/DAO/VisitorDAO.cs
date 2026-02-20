@@ -1,4 +1,5 @@
-﻿using Core.Serialization;
+﻿using Core.SearchUtils;
+using Core.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,6 +118,47 @@ namespace Core.DAO
         public List<Visitor> GetAllVisitors()
         {
             return new List<Visitor>(visitors);
+        }
+
+        public List<Visitor> SearchVisitors(string searchQuery)
+        {
+            if (string.IsNullOrWhiteSpace(searchQuery))
+                return GetAllVisitors();
+
+            var words = VisitorSearchParse.ParseQuery(searchQuery);
+            var searchType = VisitorSearchParse.GetSearchType(words);
+
+
+            switch (searchType)
+            {
+                case SearchType.ByLastName:
+                    string lastNameWord = words[0].ToLower();
+                    return visitors.Where(v =>
+                        v.LastName != null &&
+                        v.LastName.ToLower().Contains(lastNameWord)).ToList();
+
+                case SearchType.ByLastAndFirstName:
+                    string lastNamePart = words[0].ToLower();
+                    string firstNamePart = words[1].ToLower();
+
+                    return visitors.Where(v =>
+                        (v.LastName != null && v.LastName.ToLower().Contains(lastNamePart)) &&
+                        (v.Name != null && v.Name.ToLower().Contains(firstNamePart))).ToList();
+
+                case SearchType.ByMembershipAndNameAndLastName:
+                    string membershipPart = words[0].ToLower();
+                    string namePart = words[1].ToLower();
+                    string lastNamePart2 = words[2].ToLower();
+
+                    return visitors.Where(v =>
+                        (v.MembershipNumber != null && v.MembershipNumber.ToLower().Contains(membershipPart)) &&
+                        (v.Name != null && v.Name.ToLower().Contains(namePart)) &&
+                        (v.LastName != null && v.LastName.ToLower().Contains(lastNamePart2)))
+                        .ToList();
+
+                default:
+                    return GetAllVisitors();
+            }
         }
 
     }
