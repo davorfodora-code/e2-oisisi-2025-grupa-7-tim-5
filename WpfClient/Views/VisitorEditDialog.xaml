@@ -179,7 +179,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="120"/>
                             <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="*"/>
-                            <DataGridTextColumn Header="Autori" Width="*" Binding="{Binding DisplayAuthors}"/>
+                            <DataGridTextColumn Header="Autor(i)" Binding="{Binding DisplayAuthors}" Width="*"/>
                             <DataGridTextColumn Header="Cena" Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="100"/>
                             <DataGridTemplateColumn Header="Akcija" Width="80">
                                 <DataGridTemplateColumn.CellTemplate>

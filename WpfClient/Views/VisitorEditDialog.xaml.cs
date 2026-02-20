@@ -194,8 +194,6 @@ namespace WpfClient
 
                 _originalVisitor.Wishlist = _wishlist.ToList();
 
-                VisitorDTO.Wishlist = _wishlist.Select(book => BookDTO.FromModel(book)).ToList();
-
                 DialogResult = true;
                 Close();
             }

@@ -152,4 +152,15 @@ public class Book : ISerializable
 
         return sb.ToString();
     }
+
+    public string DisplayAuthors
+    {
+        get
+        {
+            if (Authors == null || !Authors.Any())
+                return "";
+
+            return string.Join(", ", Authors.Select(a => $"{a.Name} {a.Lastname}"));
+        }
+    }
 }
