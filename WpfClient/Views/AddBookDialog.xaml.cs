@@ -20,7 +20,7 @@ namespace WpfClient
             _isEditMode = false;
             AllAuthors = authors ?? new ObservableCollection<AuthorDTO>();
 
-            CmbAuthors.ItemsSource = AllAuthors;
+            LstAuthors.ItemsSource = AllAuthors;
             CmbGenre.ItemsSource = Enum.GetValues(typeof(Genre)).Cast<Genre>();
         }
 
@@ -35,7 +35,7 @@ namespace WpfClient
             Title = "Izmeni knjigu";
             BtnSave.Content = "Sačuvaj izmene";
 
-            CmbAuthors.ItemsSource = AllAuthors;
+            LstAuthors.ItemsSource = AllAuthors;
             CmbGenre.ItemsSource = Enum.GetValues(typeof(Genre)).Cast<Genre>();
 
             TxtIsbn.Text = bookToEdit.Isbn;
@@ -47,10 +47,21 @@ namespace WpfClient
             TxtPages.Text = bookToEdit.NumberOfPages.ToString();
             TxtPublisher.Text = bookToEdit.Publisher?.Name ?? "";
 
-            var author = bookToEdit.Authors?.FirstOrDefault();
-            if (author != null)
+            // Preselect autore
+            if (bookToEdit.Authors != null && bookToEdit.Authors.Any())
             {
-                CmbAuthors.SelectedItem = AllAuthors.FirstOrDefault(a => a.IdCard == author.IdCard);
+                foreach (var author in bookToEdit.Authors)
+                {
+                    var authorToSelect = AllAuthors.FirstOrDefault(a => a.IdCard == author.IdCard);
+                    if (authorToSelect != null)
+                    {
+                        var index = AllAuthors.IndexOf(authorToSelect);
+                        if (index >= 0)
+                        {
+                            LstAuthors.SelectedItems.Add(authorToSelect);
+                        }
+                    }
+                }
             }
         }
 
@@ -93,10 +104,10 @@ namespace WpfClient
                     return;
                 }
 
-                var selectedAuthor = CmbAuthors.SelectedItem as AuthorDTO;
-                if (selectedAuthor == null)
+                var selectedAuthors = LstAuthors.SelectedItems.Cast<AuthorDTO>().ToList();
+                if (selectedAuthors.Count == 0)
                 {
-                    MessageBox.Show("Morate izabrati autora!", "Greška",
+                    MessageBox.Show("Morate izabrati bar jednog autora!", "Greška",
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -110,7 +121,7 @@ namespace WpfClient
                     Price = price,
                     NumberOfPages = pages,
                     Publisher = new PublisherDTO { Name = TxtPublisher.Text.Trim() },
-                    Authors = new System.Collections.Generic.List<AuthorDTO> { selectedAuthor }
+                    Authors = selectedAuthors
                 };
 
                 var (isValid, errorMessage) = Book.Validate();
