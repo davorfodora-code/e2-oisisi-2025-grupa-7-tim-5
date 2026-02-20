@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public enum Genre
 {
@@ -79,13 +78,11 @@ public class Book : ISerializable
         PublicationYear = values[3];
         Price = double.Parse(values[4]);
 
-        // Proveri da li postoji kolona za broj stranica
         if (values.Length > 5)
         {
             NumberOfPages = int.Parse(values[5]);
         }
 
-        // Učitavanje autora (ako postoji kolona 6)
         Authors = new List<Author>();
         if (values.Length > 6 && !string.IsNullOrEmpty(values[6]))
         {
@@ -104,7 +101,6 @@ public class Book : ISerializable
             }
         }
 
-        // Učitavanje izdavača (ako postoji)
         Publisher = new Publisher();
         if (values.Length > 8)
         {
@@ -143,7 +139,17 @@ public class Book : ISerializable
         sb.Append("GODINA: " + PublicationYear + ", ");
         sb.Append("CENA: " + Price + ", ");
         sb.Append("BROJ STRANA: " + NumberOfPages + ", ");
-        sb.Append("AUTORI: " + (Authors != null ? Authors.Count.ToString() : "0"));
+
+        if (Authors != null && Authors.Any())
+        {
+            string imenaAutora = string.Join(", ", Authors.Select(a => a.Name + " " + a.Lastname));
+            sb.Append("AUTORI: " + imenaAutora);
+        }
+        else
+        {
+            sb.Append("AUTORI: Nema autora");
+        }
+
         return sb.ToString();
     }
 }
