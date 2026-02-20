@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public enum Genre
@@ -65,11 +66,7 @@ public class Book : ISerializable
         Name = values[1];
 
         string genreValue = values[2];
-        if (genreValue == "zanr")
-        {
-            Genre = Genre.Roman;
-        }
-        else if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
+        if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
         {
             Genre = parsedGenre;
         }
@@ -81,23 +78,58 @@ public class Book : ISerializable
 
         PublicationYear = values[3];
         Price = double.Parse(values[4]);
+
+        // Proveri da li postoji kolona za broj stranica
+        if (values.Length > 5)
+        {
+            NumberOfPages = int.Parse(values[5]);
+        }
+
+        // Učitavanje autora (ako postoji kolona 6)
+        Authors = new List<Author>();
+        if (values.Length > 6 && !string.IsNullOrEmpty(values[6]))
+        {
+            var authorEntries = values[6].Split(';', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var entry in authorEntries)
+            {
+                var parts = entry.Split(',');
+                if (parts.Length == 2)
+                {
+                    Authors.Add(new Author
+                    {
+                        IdCard = parts[0],
+                        Name = parts[1]
+                    });
+                }
+            }
+        }
+
+        // Učitavanje izdavača (ako postoji)
         Publisher = new Publisher();
-        Publisher.Id = int.Parse(values[5]);
-        Publisher.Name = values[6];
+        if (values.Length > 8)
+        {
+            Publisher.Id = int.Parse(values[7]);
+            Publisher.Name = values[8];
+        }
     }
 
     public string[] ToCSV()
     {
+        string authorsString = Authors != null && Authors.Any()
+            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name}"))
+            : "";
+
         string[] values =
         {
-           Isbn,
-           Name,
-           Genre.ToString(),
-           PublicationYear,
-           Price.ToString(),
-           NumberOfPages.ToString(),
-           Publisher.Id.ToString(),
-           Publisher.Name
+            Isbn ?? "",
+            Name ?? "",
+            Genre.ToString(),
+            PublicationYear ?? "",
+            Price.ToString(),
+            NumberOfPages.ToString(),
+            authorsString,
+            Publisher?.Id.ToString() ?? "0",
+            Publisher?.Name ?? ""
         };
         return values;
     }
@@ -111,6 +143,7 @@ public class Book : ISerializable
         sb.Append("GODINA: " + PublicationYear + ", ");
         sb.Append("CENA: " + Price + ", ");
         sb.Append("BROJ STRANA: " + NumberOfPages + ", ");
+        sb.Append("AUTORI: " + (Authors != null ? Authors.Count.ToString() : "0"));
         return sb.ToString();
     }
 }

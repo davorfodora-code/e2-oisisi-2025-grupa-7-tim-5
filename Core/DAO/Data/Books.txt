@@ -1,5 +1,6 @@
-NK11|Orlovi rano slecu|NaučnaFantastika|2024|10|0|0|0
-asdasd|asdasd|Pripovetka|1111|123|0|0|0
-123123|asdasd|Esej|123123|123|0|0|123
-11111111111|11111111111|Esej|111|11|0|11|0
-asdasdasd|123123|Poezija|123123|123|123|1|Mirko
+NK11|Orlovi rano slecu|NaučnaFantastika|2024|10|0||0|
+asdasd|asdasd|Pripovetka|1111|123|0||0|
+123123|asdasd|Esej|123123|123|0||0|
+11111111111|11111111111|Esej|111|11|0||0|
+asdasdasd|123123|Poezija|123123|123|123||0|
+123|123|Esej|123123|123|123|01199102,Milos;123123,123|1|Mirko
