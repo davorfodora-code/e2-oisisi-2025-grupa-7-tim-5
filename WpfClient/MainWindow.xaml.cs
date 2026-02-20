@@ -20,6 +20,8 @@ namespace WpfClient
         private ObservableCollection<AuthorDTO> _authors;
         private BookController _bookController;
         private ObservableCollection<BookDTO> _books;
+        private PublisherDAO _publisherDao;
+        private ObservableCollection<PublisherDTO> _publishers;
 
         public MainWindow()
         {
@@ -32,6 +34,7 @@ namespace WpfClient
             var publisherDAO = new PublisherDAO();
             var authorDAO = new AuthorDAO();
 
+            _publisherDao = publisherDAO;
             _authorController = new AuthorController(authorDAO);
             _bookController = new BookController(bookDAO, publisherDAO);
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
@@ -39,6 +42,7 @@ namespace WpfClient
             _visitors = new ObservableCollection<VisitorDTO>();
             _authors = new ObservableCollection<AuthorDTO>();
             _books = new ObservableCollection<BookDTO>();
+            _publishers = new ObservableCollection<PublisherDTO>();
 
             VisitorsGrid.ItemsSource = _visitors;
             AuthorsGrid.ItemsSource = _authors;
@@ -47,6 +51,7 @@ namespace WpfClient
             LoadVisitors();
             LoadAuthors();
             LoadBooks();
+            LoadPublishers();
         }
 
         private void InitializeStatusBar()
@@ -127,6 +132,18 @@ namespace WpfClient
             BooksGrid.ItemsSource = _books;
         }
 
+        private void LoadPublishers()
+        {
+            var publisherModels = _publisherDao.GetAllPublishers();
+            _publishers = new ObservableCollection<PublisherDTO>();
+
+            foreach (var publisher in publisherModels)
+            {
+                var dto = PublisherDTO.FromModel(publisher);
+                _publishers.Add(dto);
+            }
+        }
+
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
             LoadVisitors();
@@ -176,7 +193,7 @@ namespace WpfClient
                 }
                 else if (tabName == "Knjige")
                 {
-                    var dialog = new AddBookDialog(_authors);
+                    var dialog = new AddBookDialog(_authors, _publishers);
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _bookController.CreateBook(dialog.Book);
@@ -280,7 +297,7 @@ namespace WpfClient
                     return;
                 }
 
-                var dialog = new AddBookDialog(selectedBook, _authors);
+                var dialog = new AddBookDialog(selectedBook, _authors, _publishers);
 
                 if (dialog.ShowDialog() == true)
                 {
@@ -421,7 +438,7 @@ namespace WpfClient
 
         private void BtnSearch_Click(object? sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void TxtSearch_KeyDown(object? sender, KeyEventArgs e)
@@ -440,12 +457,12 @@ namespace WpfClient
 
         private void MenuItem_Click(object? sender, RoutedEventArgs e)
         {
-            
+
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            
+
         }
 
         protected override void OnClosed(EventArgs e)
@@ -456,12 +473,12 @@ namespace WpfClient
 
         private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e)
         {
-            
+
         }
 
         private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void FileNew_Click(object sender, RoutedEventArgs e)

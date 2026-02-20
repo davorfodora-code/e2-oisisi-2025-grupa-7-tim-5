@@ -12,30 +12,35 @@ namespace WpfClient
         private bool _isEditMode;
         private BookDTO? _originalBook;
         public ObservableCollection<AuthorDTO> AllAuthors { get; set; }
+        public ObservableCollection<PublisherDTO> AllPublishers { get; set; }
 
-        public AddBookDialog(ObservableCollection<AuthorDTO> authors)
+        public AddBookDialog(ObservableCollection<AuthorDTO> authors, ObservableCollection<PublisherDTO> publishers)
         {
             InitializeComponent();
 
             _isEditMode = false;
             AllAuthors = authors ?? new ObservableCollection<AuthorDTO>();
+            AllPublishers = publishers ?? new ObservableCollection<PublisherDTO>();
 
             LstAuthors.ItemsSource = AllAuthors;
+            CmbPublisher.ItemsSource = AllPublishers;
             CmbGenre.ItemsSource = Enum.GetValues(typeof(Genre)).Cast<Genre>();
         }
 
-        public AddBookDialog(BookDTO bookToEdit, ObservableCollection<AuthorDTO> authors)
+        public AddBookDialog(BookDTO bookToEdit, ObservableCollection<AuthorDTO> authors, ObservableCollection<PublisherDTO> publishers)
         {
             InitializeComponent();
 
             _isEditMode = true;
             _originalBook = bookToEdit;
             AllAuthors = authors ?? new ObservableCollection<AuthorDTO>();
+            AllPublishers = publishers ?? new ObservableCollection<PublisherDTO>();
 
             Title = "Izmeni knjigu";
             BtnSave.Content = "Sačuvaj izmene";
 
             LstAuthors.ItemsSource = AllAuthors;
+            CmbPublisher.ItemsSource = AllPublishers;
             CmbGenre.ItemsSource = Enum.GetValues(typeof(Genre)).Cast<Genre>();
 
             TxtIsbn.Text = bookToEdit.Isbn;
@@ -45,9 +50,16 @@ namespace WpfClient
             TxtPublicationYear.Text = bookToEdit.PublicationYear;
             TxtPrice.Text = bookToEdit.Price.ToString();
             TxtPages.Text = bookToEdit.NumberOfPages.ToString();
-            TxtPublisher.Text = bookToEdit.Publisher?.Name ?? "";
 
-            // Preselect autore
+            if (bookToEdit.Publisher != null && !string.IsNullOrWhiteSpace(bookToEdit.Publisher.Name))
+            {
+                var publisherToSelect = AllPublishers.FirstOrDefault(p => p.Name == bookToEdit.Publisher.Name);
+                if (publisherToSelect != null)
+                {
+                    CmbPublisher.SelectedItem = publisherToSelect;
+                }
+            }
+
             if (bookToEdit.Authors != null && bookToEdit.Authors.Any())
             {
                 foreach (var author in bookToEdit.Authors)
@@ -55,14 +67,20 @@ namespace WpfClient
                     var authorToSelect = AllAuthors.FirstOrDefault(a => a.IdCard == author.IdCard);
                     if (authorToSelect != null)
                     {
-                        var index = AllAuthors.IndexOf(authorToSelect);
-                        if (index >= 0)
-                        {
-                            LstAuthors.SelectedItems.Add(authorToSelect);
-                        }
+                        LstAuthors.SelectedItems.Add(authorToSelect);
                     }
                 }
             }
+        }
+
+        public AddBookDialog(ObservableCollection<AuthorDTO> authors)
+            : this(authors, new ObservableCollection<PublisherDTO>())
+        {
+        }
+
+        public AddBookDialog(BookDTO bookToEdit, ObservableCollection<AuthorDTO> authors)
+            : this(bookToEdit, authors, new ObservableCollection<PublisherDTO>())
+        {
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -112,6 +130,14 @@ namespace WpfClient
                     return;
                 }
 
+                var selectedPublisher = CmbPublisher.SelectedItem as PublisherDTO;
+                if (selectedPublisher == null)
+                {
+                    MessageBox.Show("Morate izabrati izdavača!", "Greška",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 Book = new BookDTO
                 {
                     Isbn = TxtIsbn.Text.Trim(),
@@ -120,7 +146,7 @@ namespace WpfClient
                     PublicationYear = TxtPublicationYear.Text.Trim(),
                     Price = price,
                     NumberOfPages = pages,
-                    Publisher = new PublisherDTO { Name = TxtPublisher.Text.Trim() },
+                    Publisher = selectedPublisher, 
                     Authors = selectedAuthors
                 };
 
