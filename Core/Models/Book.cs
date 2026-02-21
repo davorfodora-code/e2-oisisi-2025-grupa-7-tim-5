@@ -45,7 +45,9 @@ public class Book : ISerializable
         PublicationYear = "";
     }
 
-    public Book(string isbn, string name, Genre genre, string publicationYear, double price, int numberOfPages, List<Author> authors, Publisher publisher, List<Visitor> visitorBoughtBook, List<Visitor> visitorWishList)
+    public Book(string isbn, string name, Genre genre, string publicationYear,
+                double price, int numberOfPages, List<Author> authors,
+                Publisher publisher, List<Visitor> visitorBoughtBook, List<Visitor> visitorWishList)
     {
         Isbn = isbn;
         Name = name;
@@ -53,35 +55,34 @@ public class Book : ISerializable
         PublicationYear = publicationYear;
         Price = price;
         NumberOfPages = numberOfPages;
-        Authors = authors;
-        Publisher = publisher;
-        VisitorBoughtBook = visitorBoughtBook;
-        VisitorWishList = visitorWishList;
+        Authors = authors ?? new List<Author>();
+        Publisher = publisher ?? new Publisher();
+        VisitorBoughtBook = visitorBoughtBook ?? new List<Visitor>();
+        VisitorWishList = visitorWishList ?? new List<Visitor>();
+    }
+
+    public Book(string isbn, string name, Genre genre, string publicationYear,
+                double price, int numberOfPages, List<Author> authors, Publisher publisher)
+        : this(isbn, name, genre, publicationYear, price, numberOfPages, authors, publisher,
+               new List<Visitor>(), new List<Visitor>())
+    {
     }
 
     public void FromCSV(string[] values)
     {
+        if (values.Length < 7) return;
+
         Isbn = values[0];
         Name = values[1];
 
-        string genreValue = values[2];
-        if (Enum.TryParse<Genre>(genreValue, true, out Genre parsedGenre))
-        {
+        if (Enum.TryParse<Genre>(values[2], true, out Genre parsedGenre))
             Genre = parsedGenre;
-        }
         else
-        {
             Genre = Genre.Roman;
-            Console.WriteLine($"Upozorenje: Nevažeći žanr '{genreValue}'. Postavljeno na {Genre.Roman}");
-        }
 
         PublicationYear = values[3];
         Price = double.Parse(values[4]);
-
-        if (values.Length > 5)
-        {
-            NumberOfPages = int.Parse(values[5]);
-        }
+        NumberOfPages = int.Parse(values[5]);
 
         Authors = new List<Author>();
         if (values.Length > 6 && !string.IsNullOrEmpty(values[6]))
@@ -90,12 +91,13 @@ public class Book : ISerializable
             foreach (var entry in authorEntries)
             {
                 var parts = entry.Split(',');
-                if (parts.Length == 2)
+                if (parts.Length >= 3)
                 {
                     Authors.Add(new Author
                     {
                         IdCard = parts[0],
-                        Name = parts[1]
+                        Name = parts[1],
+                        Lastname = parts[2]
                     });
                 }
             }
@@ -104,7 +106,8 @@ public class Book : ISerializable
         Publisher = new Publisher();
         if (values.Length > 8)
         {
-            Publisher.Id = int.Parse(values[7]);
+            if (int.TryParse(values[7], out int id))
+                Publisher.Id = id;
             Publisher.Name = values[8];
         }
     }
@@ -112,7 +115,7 @@ public class Book : ISerializable
     public string[] ToCSV()
     {
         string authorsString = Authors != null && Authors.Any()
-            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name}"))
+            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name},{a.Lastname}"))
             : "";
 
         string[] values =
@@ -121,7 +124,7 @@ public class Book : ISerializable
             Name ?? "",
             Genre.ToString(),
             PublicationYear ?? "",
-            Price.ToString(),
+            Price.ToString("0.##"),
             NumberOfPages.ToString(),
             authorsString,
             Publisher?.Id.ToString() ?? "0",
@@ -139,28 +142,9 @@ public class Book : ISerializable
         sb.Append("GODINA: " + PublicationYear + ", ");
         sb.Append("CENA: " + Price + ", ");
         sb.Append("BROJ STRANA: " + NumberOfPages + ", ");
-
-        if (Authors != null && Authors.Any())
-        {
-            string imenaAutora = string.Join(", ", Authors.Select(a => a.Name + " " + a.Lastname));
-            sb.Append("AUTORI: " + imenaAutora);
-        }
-        else
-        {
-            sb.Append("AUTORI: Nema autora");
-        }
-
+        sb.Append("AUTORI: " + (Authors != null && Authors.Any()
+            ? string.Join(", ", Authors.Select(a => a.Name + " " + a.Lastname))
+            : "Nema autora"));
         return sb.ToString();
-    }
-
-    public string DisplayAuthors
-    {
-        get
-        {
-            if (Authors == null || !Authors.Any())
-                return "";
-
-            return string.Join(", ", Authors.Select(a => $"{a.Name} {a.Lastname}"));
-        }
     }
 }
