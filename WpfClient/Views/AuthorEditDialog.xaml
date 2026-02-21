@@ -88,36 +88,76 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Knjige" FontSize="14" Padding="10">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+           <TabItem Header="Knjige" FontSize="14" Padding="10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                Background="#F8F9FA"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                CornerRadius="5"
+                Padding="10"
+                Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" 
-                               Text="Knjige autora" 
-                               FontSize="16" 
-                               FontWeight="Bold" 
-                               Margin="0,0,0,10"/>
+                <TextBlock Grid.Column="0"
+                           Text="Dodaj knjigu:"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
 
-                    <DataGrid Grid.Row="1" 
-                              x:Name="BooksGrid"
-                              AutoGenerateColumns="False"
-                              IsReadOnly="True"
-                              Margin="0,0,0,10"
-                              RowHeight="30"
-                              BorderBrush="#E0E0E0"
-                              BorderThickness="1">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="150"/>
-                            <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="*"/>
-                            <DataGridTextColumn Header="Godina izdanja" Binding="{Binding PublicationYear}" Width="120"/>
-                            <DataGridTextColumn Header="Žanr" Binding="{Binding Genre}" Width="150"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
+                <ComboBox Grid.Column="1"
+                          x:Name="CmbAvailableBooks"
+                          DisplayMemberPath="Name"
+                          Margin="0,0,10,0"
+                          Height="30"/>
+
+                <Button Grid.Column="2"
+                        x:Name="BtnAddBook"
+                        Content="Dodaj"
+                        Width="80"
+                        Height="30"
+                        Click="BtnAddBook_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid Grid.Row="1" 
+                  x:Name="BooksGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="0,0,0,10"
+                  RowHeight="35"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="150"/>
+                <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Godina" Binding="{Binding PublicationYear}" Width="100"/>
+                <DataGridTextColumn Header="Žanr" Binding="{Binding Genre}" Width="120"/>
+                <DataGridTemplateColumn Header="Akcija" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Ukloni"
+                                    Click="BtnRemoveBook_Click"
+                                    Padding="5,2"
+                                    FontSize="11"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</TabItem>
         </TabControl>
 
         <StackPanel Grid.Row="1" 
