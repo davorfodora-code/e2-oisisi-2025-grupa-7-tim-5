@@ -159,7 +159,9 @@ namespace WpfClient
                 }
                 else if (tabName == "Autori")
                 {
-                    var dialog = new AddAuthorDialog();
+                    var dialog = new AddAuthorDialog(); 
+                    dialog.Owner = this;
+
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _authorController.AddAuthor(dialog.Author);
@@ -247,26 +249,41 @@ namespace WpfClient
             }
             else if (tabName == "Autori")
             {
-                var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
-                if (selectedAuthor == null)
+                var selectedAuthorDto = AuthorsGrid.SelectedItem as AuthorDTO;
+                if (selectedAuthorDto == null)
                 {
                     MessageBox.Show("Izaberite autora za izmenu", "Upozorenje",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                var dialog = new AddAuthorDialog(selectedAuthor);
+                var originalAuthor = _authorController.GetAllAuthors()
+                    .FirstOrDefault(a => a.IdCard == selectedAuthorDto.IdCard);
+
+                if (originalAuthor == null)
+                {
+                    MessageBox.Show("Autor nije pronađen!", "Greška",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+ 
+                var dialog = new AuthorEditDialog(selectedAuthorDto, originalAuthor, _bookController);
+                dialog.Owner = this;
+
                 if (dialog.ShowDialog() == true)
                 {
-                    var result = _authorController.UpdateAuthor(dialog.Author);
+                    var result = _authorController.UpdateAuthor(dialog.AuthorDTO);
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(result.Message, "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadAuthors();
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(result.Message, "Greška",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
