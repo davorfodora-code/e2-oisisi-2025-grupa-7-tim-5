@@ -66,7 +66,22 @@ namespace Core.Controllers
                 return (false, errorMessage);
             }
 
+            // Prvo nadji postojećeg visitora
+            var existingVisitor = _visitorDAO.GetVisitorByMemebershipId(dto.MembershipNumber);
+            if (existingVisitor == null)
+                return (false, "Visitor not found!");
+
+            // Kreiraj novog visitora iz DTO, ali sačuvaj postojeće podatke
             var visitor = dto.ToModel();
+
+            // Sačuvaj važne podatke iz postojećeg
+            visitor.Purchases = existingVisitor.Purchases;
+            visitor.DateOfBirth = existingVisitor.DateOfBirth;
+            visitor.MembershipYear = existingVisitor.MembershipYear;
+            visitor.ContactPhone = existingVisitor.ContactPhone;
+            visitor.Email = existingVisitor.Email;
+            visitor.AverageReview = existingVisitor.AverageReview;
+
             var result = _visitorDAO.UpdateVisitor(visitor);
 
             if (result == null)

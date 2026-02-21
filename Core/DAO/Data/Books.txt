@@ -1,1 +1,1 @@
-Isbn|Naziv|Poezija|1989|101|100|KK-11-22,Davor,Fodora;ID-1-9999,Nikola,Nikolasevic|1|Mirko
+Isbn|Naziv|Poezija|1989|101|100|ID-1-9999,Nikola,Nikolasevic;KK-11-22,Davor,Fodora|1|Mirko

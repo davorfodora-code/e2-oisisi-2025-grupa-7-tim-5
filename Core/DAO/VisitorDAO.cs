@@ -71,20 +71,20 @@ namespace Core.DAO
         {
             Visitor? oldVisitor = GetVisitorByMemebershipId(v.MembershipNumber);
             if (oldVisitor == null) return null;
+
             oldVisitor.Name = v.Name;
             oldVisitor.LastName = v.LastName;
             oldVisitor.Address = v.Address;
-            oldVisitor.Wishlist = v.Wishlist;
+            oldVisitor.Wishlist = v.Wishlist;  // Ovo je dobro
             oldVisitor.Purchases = v.Purchases;
             oldVisitor.Status = v.Status;
             oldVisitor.AverageReview = v.AverageReview;
             oldVisitor.DateOfBirth = v.DateOfBirth;
             oldVisitor.MembershipYear = v.MembershipYear;
-            oldVisitor.MembershipNumber = v.MembershipNumber;
             oldVisitor.ContactPhone = v.ContactPhone;
             oldVisitor.Email = v.Email;
-            storage.Save(visitors);
 
+            storage.Save(visitors);
             return oldVisitor;
         }
 

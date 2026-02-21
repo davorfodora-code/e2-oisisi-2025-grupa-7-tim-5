@@ -185,9 +185,9 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Ukloni"
-                                                Click="BtnRemoveFromWishlist_Click"
-                                                Padding="5,2"
-                                                FontSize="11"/>
+                        Click="BtnRemoveFromWishlist_Click"
+                        Padding="5,2"
+                        FontSize="11"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
