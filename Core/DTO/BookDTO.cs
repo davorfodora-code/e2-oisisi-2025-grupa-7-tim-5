@@ -67,7 +67,12 @@ namespace Core.DTO
                 PublicationYear = book.PublicationYear,
                 Price = book.Price,
                 NumberOfPages = book.NumberOfPages,
-                Authors = book.Authors?.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
+                Authors = book.Authors?.Select(a => new AuthorDTO
+                {
+                    IdCard = a.IdCard,
+                    Name = a.Name,
+                    Lastname = a.Lastname
+                }).ToList() ?? new List<AuthorDTO>(),
                 Publisher = book.Publisher != null ? PublisherDTO.FromModel(book.Publisher) : new PublisherDTO(),
                 VisitorBoughtBook = book.VisitorBoughtBook?.Select(VisitorDTO.FromModel).ToList() ?? new List<VisitorDTO>(),
                 VisitorWishList = book.VisitorWishList?.Select(VisitorDTO.FromModel).ToList() ?? new List<VisitorDTO>()

@@ -74,7 +74,11 @@ namespace Core.DTO
                 Email = author.Email,
                 IdCard = author.IdCard,
                 ExperienceLength = author.ExperienceLength,
-                BookList = author.BookList?.Select(BookDTO.FromModel).ToList() ?? new List<BookDTO>()
+                BookList = author.BookList?.Select(b => new BookDTO
+                {
+                    Isbn = b.Isbn,
+                    Name = b.Name
+                }).ToList() ?? new List<BookDTO>()
             };
         }
     }

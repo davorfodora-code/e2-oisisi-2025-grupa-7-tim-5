@@ -21,6 +21,9 @@ namespace WpfClient
         private BookController _bookController;
         private ObservableCollection<BookDTO> _books;
 
+        private PublisherController _publisherController;
+        private ObservableCollection<PublisherDTO> _publishers;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,16 +32,21 @@ namespace WpfClient
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
             var bookDAO = new BookDAO();
-            var publisherDAO = new PublisherDAO();
+            var publisherDAO = new PublisherDAO(); 
+
             var authorDAO = new AuthorDAO();
 
             _authorController = new AuthorController(authorDAO);
             _bookController = new BookController(bookDAO, publisherDAO);
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
 
+            _publisherController = new PublisherController(publisherDAO);
+
             _visitors = new ObservableCollection<VisitorDTO>();
             _authors = new ObservableCollection<AuthorDTO>();
             _books = new ObservableCollection<BookDTO>();
+
+            _publishers = new ObservableCollection<PublisherDTO>();
 
             VisitorsGrid.ItemsSource = _visitors;
             AuthorsGrid.ItemsSource = _authors;
@@ -47,6 +55,7 @@ namespace WpfClient
             LoadVisitors();
             LoadAuthors();
             LoadBooks();
+            LoadPublishers();
         }
 
         private void InitializeStatusBar()
@@ -126,6 +135,26 @@ namespace WpfClient
 
             BooksGrid.ItemsSource = _books;
         }
+        private void LoadPublishers()
+        {
+            if (_publisherController == null)
+            {
+                System.Diagnostics.Debug.WriteLine("PublisherController je null!");
+                return;
+            }
+
+            var publisherModels = _publisherController.GetAllPublishers();
+            System.Diagnostics.Debug.WriteLine($"LoadPublishers: dobijeno {publisherModels.Count} izdavača");
+
+            _publishers.Clear();
+
+            foreach (var publisher in publisherModels)
+            {
+                var dto = PublisherDTO.FromModel(publisher);
+                _publishers.Add(dto);
+                System.Diagnostics.Debug.WriteLine($"Dodat izdavač: {dto.Id} - {dto.Name}");
+            }
+        }
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
@@ -159,7 +188,7 @@ namespace WpfClient
                 }
                 else if (tabName == "Autori")
                 {
-                    var dialog = new AddAuthorDialog(); 
+                    var dialog = new AddAuthorDialog();
                     dialog.Owner = this;
 
                     if (dialog.ShowDialog() == true)
@@ -178,7 +207,16 @@ namespace WpfClient
                 }
                 else if (tabName == "Knjige")
                 {
-                    var dialog = new AddBookDialog(_authors);
+                    if (_publishers == null || _publishers.Count == 0)
+                    {
+                        MessageBox.Show("Nema učitanih izdavača! Prvo dodajte izdavače.", "Upozorenje",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    System.Diagnostics.Debug.WriteLine($"Otvaram dialog sa {_authors.Count} autora i {_publishers.Count} izdavača");
+
+                    var dialog = new AddBookDialog(_authors, _publishers);
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _bookController.CreateBook(dialog.Book);
@@ -267,13 +305,15 @@ namespace WpfClient
                     return;
                 }
 
- 
                 var dialog = new AuthorEditDialog(selectedAuthorDto, originalAuthor, _bookController);
                 dialog.Owner = this;
 
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _authorController.UpdateAuthor(dialog.AuthorDTO);
+
+                    LoadBooks();
+
                     if (result.Success)
                     {
                         MessageBox.Show(result.Message, "Uspešno",
@@ -297,7 +337,14 @@ namespace WpfClient
                     return;
                 }
 
-                var dialog = new AddBookDialog(selectedBook, _authors);
+                if (_publishers == null || _publishers.Count == 0)
+                {
+                    MessageBox.Show("Nema učitanih izdavača!", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new AddBookDialog(selectedBook, _authors, _publishers);
 
                 if (dialog.ShowDialog() == true)
                 {
@@ -438,7 +485,6 @@ namespace WpfClient
 
         private void BtnSearch_Click(object? sender, RoutedEventArgs e)
         {
-  
             if (MainTabs.SelectedItem is TabItem selectedTab &&
                 selectedTab.Header.ToString() != "Posetioci")
             {
@@ -449,7 +495,6 @@ namespace WpfClient
 
             if (string.IsNullOrWhiteSpace(searchQuery))
             {
-
                 LoadVisitors();
                 return;
             }
@@ -489,12 +534,12 @@ namespace WpfClient
 
         private void MenuItem_Click(object? sender, RoutedEventArgs e)
         {
-            
+
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            
+
         }
 
         protected override void OnClosed(EventArgs e)
@@ -505,12 +550,12 @@ namespace WpfClient
 
         private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e)
         {
-            
+
         }
 
         private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
 
         private void FileNew_Click(object sender, RoutedEventArgs e)

@@ -1,2 +1,3 @@
-01199102|Milos|Cvjeticanin|08.04.1993.|0628883121|cvjeticanin3@gmail.com|7
-123123|123|123|07.02.2026.|123123|123123|123
+KK-11-22|Davor|Fodora|08.02.2026.|088897123|davor@gmail.com|1|Ulica|11|||Srbija|Isbn,Naziv
+Id kartica|Milos|Markovic|13.02.2026.|123|123@gmail.com|1|Ulicanska|99|||Srbija|
+ID-1-9999|Nikola|Nikolasevic|30.01.2026.|099999999|nikola@gmail.com|5|Ulica|11|||Srbija|Isbn,Naziv

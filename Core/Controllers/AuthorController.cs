@@ -31,7 +31,6 @@ namespace Core.Controllers
             return _authorDAO.GetAllAuthors();
         }
 
-        // Dodavanje autora
         public (bool Success, string Message) AddAuthor(AuthorDTO dto)
         {
             var (isValid, errorMessage) = dto.Validate();
@@ -84,10 +83,32 @@ namespace Core.Controllers
             return (true, "Author deleted successfully!");
         }
 
-        // Provera da li autor postoji 
         public bool ExistsIdCard(string idCard)
         {
             return _authorDAO.GetAuthorByIdCard(idCard) != null;
+        }
+
+        public (bool Success, string Message) UpdateAuthorWithBooks(AuthorDTO dto, List<BookDTO> updatedBooks)
+        {
+            var (isValid, errorMessage) = dto.Validate();
+            if (!isValid)
+            {
+                return (false, errorMessage);
+            }
+
+            var author = dto.ToModel();
+            var result = _authorDAO.UpdateAuthor(author);
+
+            if (result == null)
+                return (false, "Author not found!");
+
+            foreach (var bookDto in updatedBooks)
+            {
+
+            }
+
+            NotifyObservers();
+            return (true, "Author updated successfully!");
         }
     }
 }
