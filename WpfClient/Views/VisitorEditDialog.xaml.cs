@@ -215,42 +215,38 @@ namespace WpfClient
                 MessageBox.Show(ex.ToString(), "Greška (Dodaj)", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void BtnRemoveFromWishlist_Click(object sender, RoutedEventArgs e)
+        private void BtnDeleteFromWishlist_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var bookToRemove = button?.DataContext as BookDTO;
-
-            if (bookToRemove == null) return;
+            var selectedBook = WishlistBooksGrid.SelectedItem as BookDTO;
+            if (selectedBook == null) return;
 
             var result = MessageBox.Show(
-                $"Da li ste sigurni da želite da uklonite knjigu '{bookToRemove.Name}' iz liste želja?",
+                $"Da li ste sigurni da želite da uklonite knjigu '{selectedBook.Name}' iz liste želja?",
                 "Potvrda",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
-            if (result == MessageBoxResult.Yes)
-            {
-                // Ukloni iz wishlist
-                _wishlist.Remove(bookToRemove);
+            if (result != MessageBoxResult.Yes) return;
 
-                // Vrati u dostupne SAMO ako nije kupljena
-                bool isPurchased = _purchases.Any(p => p.Book != null && p.Book.Isbn == bookToRemove.Isbn);
-                if (!isPurchased && !_availableBooks.Any(b => b.Isbn == bookToRemove.Isbn))
-                    _availableBooks.Add(bookToRemove);
+            // ukloni iz wishlist
+            _wishlist.Remove(selectedBook);
 
-                // Osveži prikaz
-              
-                WishlistBooksGrid.ItemsSource = null;
-                WishlistBooksGrid.ItemsSource = _wishlist;
-            }
+            // vrati u available ako već nije kupljena
+            if (!_availableBooks.Any(b => b.Isbn == selectedBook.Isbn))
+                _availableBooks.Add(selectedBook);
+
+            WishlistBooksGrid.ItemsSource = null;
+            WishlistBooksGrid.ItemsSource = _wishlist;
+
+            BtnDeleteFromWishlist.IsEnabled = false;
+            BtnPurchase.IsEnabled = false;
         }
 
         private void WishlistBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var btn = FindName("BtnPurchase") as Button;
-            if (btn != null)
-                btn.IsEnabled = WishlistBooksGrid.SelectedItem != null;
+            bool hasSelection = WishlistBooksGrid.SelectedItem != null;
+            BtnPurchase.IsEnabled = hasSelection;
+            BtnDeleteFromWishlist.IsEnabled = hasSelection;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

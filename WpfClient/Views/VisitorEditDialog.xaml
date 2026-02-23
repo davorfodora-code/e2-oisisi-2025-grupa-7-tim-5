@@ -132,17 +132,14 @@
         Padding="10"
         Margin="0,0,0,10">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
+             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0"
-                   Text="Lista želja"
-                   FontWeight="SemiBold"
-                   VerticalAlignment="Center"
-                   Margin="0,0,10,0"/>
 
         <Button Grid.Column="1"
                 x:Name="BtnAddToWishlist"
@@ -159,17 +156,25 @@
                 Height="30"
                 IsEnabled="False"
                 Click="BtnPurchase_Click"/>
+
+         <Button Grid.Column="3" 
+             x:Name="BtnDeleteFromWishlist"
+              Content="Obriši"
+             Width="90"
+             Height="30"
+             Margin="10,0,10,0"
+            IsEnabled="False"
+             Click="BtnDeleteFromWishlist_Click"/>
     </Grid>
 </Border>
 
-                    <TextBlock Grid.Row="1"
-                               Text="Lista želja"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="0,0,0,10"/>
+                    
 
                     <DataGrid Grid.Row="2"
                               x:Name="WishlistBooksGrid"
+                               SelectionMode="Single"
+          SelectionUnit="FullRow"
+          SelectionChanged="WishlistBooksGrid_SelectionChanged"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
                               BorderBrush="#E0E0E0"
@@ -180,16 +185,7 @@
                             <DataGridTextColumn Header="Naziv" Binding="{Binding Name}" Width="*"/>
                             <DataGridTextColumn Header="Autor(i)" Binding="{Binding DisplayAuthors}" Width="*"/>
                             <DataGridTextColumn Header="Cena" Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="100"/>
-                            <DataGridTemplateColumn Header="Akcija" Width="80">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="Ukloni"
-                        Click="BtnRemoveFromWishlist_Click"
-                        Padding="5,2"
-                        FontSize="11"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                           
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
