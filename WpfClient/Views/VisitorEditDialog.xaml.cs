@@ -51,7 +51,7 @@ namespace WpfClient
             TxtCity.Text = _originalVisitor.Address?.City ?? "";
             TxtCountry.Text = _originalVisitor.Address?.Country ?? "";
 
-            CmbStatus.SelectedIndex = VisitorDTO.Status == "R" ? 0 : 1;
+           
         }
 
         private void LoadAllBooks()
@@ -61,13 +61,23 @@ namespace WpfClient
                 .ToList();
 
             _availableBooks.Clear();
+
+            var purchasedIsbns = _purchases
+                .Where(p => p.Book != null)
+                .Select(p => p.Book.Isbn)
+                .ToHashSet();
+
+            var wishlistIsbns = _wishlist
+                .Select(b => b.Isbn)
+                .ToHashSet();
+
             foreach (var book in allBooks)
             {
-                _availableBooks.Add(book);
+                if (!wishlistIsbns.Contains(book.Isbn) && !purchasedIsbns.Contains(book.Isbn))
+                    _availableBooks.Add(book);
             }
 
-            CmbAvailableBooks.ItemsSource = _availableBooks;
-            CmbAvailableBooks.DisplayMemberPath = "Name";
+          
         }
 
         private void LoadWishlist()
@@ -131,8 +141,7 @@ namespace WpfClient
             }
 
             // Osveži ComboBox
-            CmbAvailableBooks.ItemsSource = null;
-            CmbAvailableBooks.ItemsSource = _availableBooks;
+         
         }
 
         private void LoadPurchasedBooks()
@@ -155,36 +164,56 @@ namespace WpfClient
 
         private void BtnAddToWishlist_Click(object sender, RoutedEventArgs e)
         {
-            var selectedBook = CmbAvailableBooks.SelectedItem as BookDTO;
-
-            if (selectedBook == null)
+            try
             {
-                MessageBox.Show("Izaberite knjigu za dodavanje!", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+                // knjige koje mogu u wishlist: nisu ni u wishlist, ni u purchased
+                var purchasedIsbns = _purchases
+                    .Where(p => p.Book != null)
+                    .Select(p => p.Book.Isbn)
+                    .ToHashSet();
 
-            if (_wishlist.Any(b => b.Isbn == selectedBook.Isbn))
+                var wishlistIsbns = _wishlist
+                    .Select(b => b.Isbn)
+                    .ToHashSet();
+
+                var candidates = _availableBooks
+                    .Where(b => !wishlistIsbns.Contains(b.Isbn) && !purchasedIsbns.Contains(b.Isbn))
+                    .ToList();
+
+                if (!candidates.Any())
+                {
+                    MessageBox.Show("Nema dostupnih knjiga za dodavanje u listu želja.", "Informacija",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                var dlg = new WishlistAddDialog(candidates)
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+
+                bool? ok = dlg.ShowDialog();
+                if (ok != true || dlg.SelectedBook == null) return;
+
+                var selectedBook = dlg.SelectedBook;
+
+                if (_wishlist.Any(b => b.Isbn == selectedBook.Isbn))
+                    return;
+
+                _wishlist.Add(selectedBook);
+
+                var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
+                if (inAvailable != null)
+                    _availableBooks.Remove(inAvailable);
+
+                WishlistBooksGrid.ItemsSource = null;
+                WishlistBooksGrid.ItemsSource = _wishlist;
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Ova knjiga je već u listi želja!", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                MessageBox.Show(ex.ToString(), "Greška (Dodaj)", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            // Dodaj u wishlist (kompletna knjiga sa svim podacima)
-            _wishlist.Add(selectedBook);
-
-            // Ukloni iz dostupnih
-            _availableBooks.Remove(selectedBook);
-
-            // Osveži prikaz
-            CmbAvailableBooks.ItemsSource = null;
-            CmbAvailableBooks.ItemsSource = _availableBooks;
-            WishlistBooksGrid.ItemsSource = null;
-            WishlistBooksGrid.ItemsSource = _wishlist;
-
-            MessageBox.Show($"Knjiga '{selectedBook.Name}' je dodata u listu želja!", "Uspešno",
-                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void BtnRemoveFromWishlist_Click(object sender, RoutedEventArgs e)
@@ -205,23 +234,23 @@ namespace WpfClient
                 // Ukloni iz wishlist
                 _wishlist.Remove(bookToRemove);
 
-                // Vrati u dostupne (sa svim podacima)
-                _availableBooks.Add(bookToRemove);
+                // Vrati u dostupne SAMO ako nije kupljena
+                bool isPurchased = _purchases.Any(p => p.Book != null && p.Book.Isbn == bookToRemove.Isbn);
+                if (!isPurchased && !_availableBooks.Any(b => b.Isbn == bookToRemove.Isbn))
+                    _availableBooks.Add(bookToRemove);
 
                 // Osveži prikaz
-                CmbAvailableBooks.ItemsSource = null;
-                CmbAvailableBooks.ItemsSource = _availableBooks;
+              
                 WishlistBooksGrid.ItemsSource = null;
                 WishlistBooksGrid.ItemsSource = _wishlist;
             }
         }
 
-        private void CmbStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WishlistBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (CmbStatus.SelectedItem is ComboBoxItem item)
-            {
-                VisitorDTO.Status = item.Tag.ToString() == "R" ? "R" : "V";
-            }
+            var btn = FindName("BtnPurchase") as Button;
+            if (btn != null)
+                btn.IsEnabled = WishlistBooksGrid.SelectedItem != null;
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -284,10 +313,8 @@ namespace WpfClient
             DialogResult = false;
             Close();
         }
-        private void WishlistBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BtnPurchase.IsEnabled = WishlistBooksGrid.SelectedItem != null;
-        }
+
+       
 
         private void BtnPurchase_Click(object sender, RoutedEventArgs e)
         {
@@ -326,22 +353,21 @@ namespace WpfClient
             // 1) ukloni iz wishlist
             _wishlist.Remove(selectedBook);
 
-            // 2) vrati u dostupne (da može opet da se doda u wishlist kasnije)
-            if (!_availableBooks.Any(b => b.Isbn == selectedBook.Isbn))
-                _availableBooks.Add(selectedBook);
-
-            // 3) dodaj u kupljene
+            // 2) dodaj u kupljene
             _purchases.Add(purchase);
 
-            // 4) osveži prikaze (kod tebe se ovako radi i u drugim metodama)
-            PurchasedBooksGrid.ItemsSource = null;
-            PurchasedBooksGrid.ItemsSource = _purchases;
+            // 3) ukloni iz dostupnih (da se ne pojavljuje više) - i NE vraćaj kupljeno u available
+            var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
+            if (inAvailable != null)
+                _availableBooks.Remove(inAvailable);
+
+            // 4) osveži prikaze
+           
 
             WishlistBooksGrid.ItemsSource = null;
             WishlistBooksGrid.ItemsSource = _wishlist;
 
-            CmbAvailableBooks.ItemsSource = null;
-            CmbAvailableBooks.ItemsSource = _availableBooks;
+           
 
             // 5) preračunaj potrošeno
             CalculateTotalSpent();

@@ -68,12 +68,7 @@
                         <Label Grid.Row="8" Grid.Column="0" Content="Država:" FontWeight="SemiBold"/>
                         <TextBox Grid.Row="8" Grid.Column="1" x:Name="TxtCountry" Margin="5"/>
 
-                        <Label Grid.Row="9" Grid.Column="0" Content="Status:" FontWeight="SemiBold"/>
-                        <ComboBox Grid.Row="9" Grid.Column="1" x:Name="CmbStatus" Margin="5" 
-                                  SelectionChanged="CmbStatus_SelectionChanged">
-                            <ComboBoxItem Content="Redovan" Tag="R"/>
-                            <ComboBoxItem Content="VIP" Tag="V"/>
-                        </ComboBox>
+                      
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -120,7 +115,7 @@
                 </Grid>
             </TabItem>
 
-
+   
             <TabItem Header="Želje" FontSize="14" Padding="10">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -129,49 +124,43 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0"
-                            Background="#F8F9FA"
-                            BorderBrush="#E0E0E0"
-                            BorderThickness="1"
-                            CornerRadius="5"
-                            Padding="10"
-                            Margin="0,0,0,10">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                   <Border Grid.Row="0"
+        Background="#F8F9FA"
+        BorderBrush="#E0E0E0"
+        BorderThickness="1"
+        CornerRadius="5"
+        Padding="10"
+        Margin="0,0,0,10">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0"
-                                       Text="Dodaj knjigu u listu želja:"
-                                       FontWeight="SemiBold"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,10,0"/>
+        <TextBlock Grid.Column="0"
+                   Text="Lista želja"
+                   FontWeight="SemiBold"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0"/>
 
-                            <ComboBox Grid.Column="1"
-                                      x:Name="CmbAvailableBooks"
-                                      Margin="0,0,10,0"
-                                      Height="30"/>
+        <Button Grid.Column="1"
+                x:Name="BtnAddToWishlist"
+                Content="Dodaj"
+                Width="90"
+                Height="30"
+                Margin="0,0,10,0"
+                Click="BtnAddToWishlist_Click"/>
 
-                            <Button Grid.Column="2"
-                                    x:Name="BtnAddToWishlist"
-                                    Content="Dodaj"
-                                    Width="80"
-                                    Height="30"
-                                    Margin="0,0,10,0"
-                                    Click="BtnAddToWishlist_Click"/>
-
-                            <Button Grid.Column="3"
-                                    x:Name="BtnPurchase"
-                                    Content="Kupovina"
-                                    Width="90"
-                                    Height="30"
-                                    IsEnabled="False"
-                                    Click="BtnPurchase_Click"/>
-                        </Grid>
-                    </Border>
+        <Button Grid.Column="2"
+                x:Name="BtnPurchase"
+                Content="Kupovina"
+                Width="100"
+                Height="30"
+                IsEnabled="False"
+                Click="BtnPurchase_Click"/>
+    </Grid>
+</Border>
 
                     <TextBlock Grid.Row="1"
                                Text="Lista želja"
@@ -183,7 +172,6 @@
                               x:Name="WishlistBooksGrid"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
-                              SelectionChanged="WishlistBooksGrid_SelectionChanged"
                               BorderBrush="#E0E0E0"
                               BorderThickness="1"
                               RowHeight="35">
