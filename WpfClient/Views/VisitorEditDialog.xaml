@@ -120,7 +120,7 @@
                 </Grid>
             </TabItem>
 
-   
+
             <TabItem Header="Želje" FontSize="14" Padding="10">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -141,6 +141,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0"
@@ -159,7 +160,16 @@
                                     Content="Dodaj"
                                     Width="80"
                                     Height="30"
+                                    Margin="0,0,10,0"
                                     Click="BtnAddToWishlist_Click"/>
+
+                            <Button Grid.Column="3"
+                                    x:Name="BtnPurchase"
+                                    Content="Kupovina"
+                                    Width="90"
+                                    Height="30"
+                                    IsEnabled="False"
+                                    Click="BtnPurchase_Click"/>
                         </Grid>
                     </Border>
 
@@ -173,6 +183,7 @@
                               x:Name="WishlistBooksGrid"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
+                              SelectionChanged="WishlistBooksGrid_SelectionChanged"
                               BorderBrush="#E0E0E0"
                               BorderThickness="1"
                               RowHeight="35">

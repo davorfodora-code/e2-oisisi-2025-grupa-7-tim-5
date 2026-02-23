@@ -284,5 +284,69 @@ namespace WpfClient
             DialogResult = false;
             Close();
         }
+        private void WishlistBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnPurchase.IsEnabled = WishlistBooksGrid.SelectedItem != null;
+        }
+
+        private void BtnPurchase_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedBook = WishlistBooksGrid.SelectedItem as BookDTO;
+            if (selectedBook == null) return;
+
+            var dlg = new PurchaseDialog(selectedBook.Isbn, selectedBook.Name)
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            bool? ok = dlg.ShowDialog();
+            if (ok != true) return;
+
+            // napravi Purchase i prebaci knjigu iz wishlist u purchased
+            var purchase = new Purchase
+            {
+                Book = new Book
+                {
+                    Isbn = selectedBook.Isbn,
+                    Name = selectedBook.Name,
+                    Price = selectedBook.Price,
+                    Authors = selectedBook.Authors?.Select(a => new Author
+                    {
+                        IdCard = a.IdCard,
+                        Name = a.Name,
+                        Lastname = a.Lastname
+                    }).ToList()
+                },
+                Review = dlg.Review,
+                DateOfPurchase = DateOnly.FromDateTime(dlg.DateOfPurchase),
+                Comment = ""
+            };
+
+            // 1) ukloni iz wishlist
+            _wishlist.Remove(selectedBook);
+
+            // 2) vrati u dostupne (da može opet da se doda u wishlist kasnije)
+            if (!_availableBooks.Any(b => b.Isbn == selectedBook.Isbn))
+                _availableBooks.Add(selectedBook);
+
+            // 3) dodaj u kupljene
+            _purchases.Add(purchase);
+
+            // 4) osveži prikaze (kod tebe se ovako radi i u drugim metodama)
+            PurchasedBooksGrid.ItemsSource = null;
+            PurchasedBooksGrid.ItemsSource = _purchases;
+
+            WishlistBooksGrid.ItemsSource = null;
+            WishlistBooksGrid.ItemsSource = _wishlist;
+
+            CmbAvailableBooks.ItemsSource = null;
+            CmbAvailableBooks.ItemsSource = _availableBooks;
+
+            // 5) preračunaj potrošeno
+            CalculateTotalSpent();
+
+            BtnPurchase.IsEnabled = false;
+        }
     }
 }
