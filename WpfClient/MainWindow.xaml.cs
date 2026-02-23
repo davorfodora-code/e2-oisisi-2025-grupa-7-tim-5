@@ -502,7 +502,7 @@ namespace WpfClient
             var tab = MainTabs.SelectedItem as TabItem;
             string header = tab?.Header?.ToString() ?? "";
 
-            // ✅ ako je upit prazan -> vrati originalne podatke
+            
             if (string.IsNullOrWhiteSpace(q))
             {
                 VisitorsGrid.ItemsSource = _visitors;

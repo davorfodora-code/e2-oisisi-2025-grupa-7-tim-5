@@ -19,7 +19,7 @@ namespace WpfClient
             TxtIsbn.Text = isbn;
             TxtNaziv.Text = naziv;
 
-            // zabrani budući datum (po želji)
+            // zabrani budući datum
             DpDatum.DisplayDateEnd = DateTime.Today;
 
             ValidateForm();

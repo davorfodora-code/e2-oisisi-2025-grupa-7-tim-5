@@ -84,7 +84,6 @@ namespace WpfClient
         {
             _wishlist.Clear();
 
-            // Prvo iz originalnog modela (Visitor)
             if (_originalVisitor.Wishlist != null)
             {
                 foreach (var book in _originalVisitor.Wishlist)
@@ -117,7 +116,7 @@ namespace WpfClient
                 }
             }
 
-            // Zatim iz DTO (VisitorDTO.Wishlist)
+    
             if (VisitorDTO.Wishlist != null)
             {
                 foreach (var book in VisitorDTO.Wishlist)
@@ -140,7 +139,7 @@ namespace WpfClient
                 }
             }
 
-            // Osveži ComboBox
+
          
         }
 
