@@ -1,2 +1,2 @@
-Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||R|0|Isbn,Naziv|
+Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||R|0||Isbn,Naziv,05.02.2026.
 Nemanja|Elor||Dunavska|13|Novi Sad|Novi Sad|Srbija|||CK-1-0002||V|0||

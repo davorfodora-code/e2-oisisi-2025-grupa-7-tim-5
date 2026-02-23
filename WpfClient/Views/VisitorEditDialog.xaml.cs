@@ -154,12 +154,30 @@ namespace WpfClient
             {
                 double total = _purchases.Sum(p => p.Book?.Price ?? 0);
                 TxtTotalSpent.Text = $"{total:C}";
+
+                // prosek ocene (uzmi samo validne 1..5)
+                var reviews = _purchases
+                    .Select(p => p.Review)
+                    .Where(r => r >= 1 && r <= 5)
+                    .ToList();
+
+                if (reviews.Any())
+                {
+                    double avg = reviews.Average();
+                    TxtAverageReview.Text = avg.ToString("0.00");
+                }
+                else
+                {
+                    TxtAverageReview.Text = "-";
+                }
             }
             else
             {
                 TxtTotalSpent.Text = "0 RSD";
+                TxtAverageReview.Text = "-";
             }
         }
+
 
         private void BtnAddToWishlist_Click(object sender, RoutedEventArgs e)
         {
