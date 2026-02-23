@@ -80,16 +80,20 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-
-            
-
-                    <Button Grid.Column="1"
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="Auto"/>
+    <ColumnDefinition Width="*"/>
+</Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"
             x:Name="BtnCancelPurchase"
             Content="Poništi kupovinu"
             Width="140"
             Height="30"
             IsEnabled="False"
-            Click="BtnCancelPurchase_Click"/>
+            HorizontalAlignment="Left"
+            Click="BtnCancelPurchase_Click" VerticalAlignment="Center"/>
+            </Grid>
 
                     <DataGrid Grid.Row="1" 
                               x:Name="PurchasedBooksGrid"
@@ -141,10 +145,11 @@ SelectionUnit="FullRow"
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
              <ColumnDefinition Width="Auto"/>
+             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
       
            
@@ -154,7 +159,7 @@ SelectionUnit="FullRow"
                 Content="Dodaj"
                 Width="90"
                 Height="30"
-                Margin="0,0,10,0"
+                Margin="10,0,0,0"
                 Click="BtnAddToWishlist_Click"/>
 
         <Button Grid.Column="1"
@@ -162,6 +167,7 @@ SelectionUnit="FullRow"
                 Content="Kupovina"
                 Width="100"
                 Height="30"
+                Margin="10,0,0,0"
                 IsEnabled="False"
                 Click="BtnPurchase_Click"/>
 
@@ -170,7 +176,7 @@ SelectionUnit="FullRow"
               Content="Obriši"
              Width="90"
              Height="30"
-             Margin="10,0,10,0"
+             Margin="10,0,0,0"
             IsEnabled="False"
              Click="BtnDeleteFromWishlist_Click"/>
         
