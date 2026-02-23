@@ -1,2 +1,3 @@
 Isbn|Naziv|Poezija|1989|101|100|ID-1-9999,Nikola,Nikolasevic;KK-11-22,Davor,Fodora|1|Mirko
 ISBN2|NAZIV2|Pripovetka|2026|76687|22|Id kartica,Milos,Markovic|1|Mirko
+ISBN3|Na Drini cuprija|Esej|2016|200|25|Id kartica,Milos,Markovic;ID-1-9999,Nikola,Nikolasevic|1|Mirko
