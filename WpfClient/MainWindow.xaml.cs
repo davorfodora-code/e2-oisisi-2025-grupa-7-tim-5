@@ -13,6 +13,9 @@ namespace WpfClient
 {
     public partial class MainWindow : Window
     {
+        private List<VisitorDTO> _allVisitors = new();
+        private List<AuthorDTO> _allAuthors = new();
+        private List<BookDTO> _allBooks = new();
         private VisitorController _visitorController;
         private ObservableCollection<VisitorDTO> _visitors;
         private DispatcherTimer _timer = new DispatcherTimer();
@@ -48,14 +51,20 @@ namespace WpfClient
 
             _publishers = new ObservableCollection<PublisherDTO>();
 
+
+
             VisitorsGrid.ItemsSource = _visitors;
             AuthorsGrid.ItemsSource = _authors;
             BooksGrid.ItemsSource = _books;
+
+
 
             LoadVisitors();
             LoadAuthors();
             LoadBooks();
             LoadPublishers();
+
+
         }
 
         private void InitializeStatusBar()
@@ -483,38 +492,35 @@ namespace WpfClient
             }
         }
 
-        private void BtnSearch_Click(object? sender, RoutedEventArgs e)
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (MainTabs.SelectedItem is TabItem selectedTab &&
-                selectedTab.Header.ToString() != "Posetioci")
+            string q = TxtSearch.Text ?? "";
+
+            var tab = MainTabs.SelectedItem as TabItem;
+            string header = tab?.Header?.ToString() ?? "";
+
+            if (header.Equals("Posetioci", StringComparison.OrdinalIgnoreCase))
             {
+                var filtered = VisitorSearch.Filter(_allVisitors, q).ToList();
+                VisitorsGrid.ItemsSource = null;
+                VisitorsGrid.ItemsSource = filtered;
                 return;
             }
 
-            string searchQuery = TxtSearch.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(searchQuery))
+            if (header.Equals("Autori", StringComparison.OrdinalIgnoreCase))
             {
-                LoadVisitors();
+                var filtered = AuthorSearch.Filter(_allAuthors, q).ToList();
+                AuthorsGrid.ItemsSource = null;
+                AuthorsGrid.ItemsSource = filtered;
                 return;
             }
 
-            try
+            if (header.Equals("Knjige", StringComparison.OrdinalIgnoreCase))
             {
-                var searchResults = _visitorController.SearchVisitorsDTO(searchQuery);
-
-                _visitors.Clear();
-                foreach (var visitor in searchResults)
-                {
-                    _visitors.Add(visitor);
-                }
-
-                StatusBarTabName.Text = $"Pronađeno: {searchResults.Count} posetilaca";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Greška pri pretrazi: {ex.Message}", "Greška",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                var filtered = BookSearch.Filter(_allBooks, q).ToList();
+                BooksGrid.ItemsSource = null;
+                BooksGrid.ItemsSource = filtered;
+                return;
             }
         }
 
