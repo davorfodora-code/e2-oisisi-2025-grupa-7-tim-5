@@ -73,7 +73,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Kupljene" FontSize="14" Padding="10">
+            <TabItem Header="Kupljene" FontSize="14" Padding="10" Height="39" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -81,14 +81,21 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" 
-                               Text="Kupljene knjige" 
-                               FontSize="16" 
-                               FontWeight="Bold" 
-                               Margin="0,0,0,10"/>
+            
+
+                    <Button Grid.Column="1"
+            x:Name="BtnCancelPurchase"
+            Content="Poništi kupovinu"
+            Width="140"
+            Height="30"
+            IsEnabled="False"
+            Click="BtnCancelPurchase_Click"/>
 
                     <DataGrid Grid.Row="1" 
                               x:Name="PurchasedBooksGrid"
+                              SelectionChanged="PurchasedBooksGrid_SelectionChanged"
+SelectionMode="Single"
+SelectionUnit="FullRow"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
                               Margin="0,0,0,10"
@@ -139,9 +146,10 @@
             <ColumnDefinition Width="Auto"/>
              <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+      
+           
 
-
-        <Button Grid.Column="1"
+        <Button Grid.Column="0"
                 x:Name="BtnAddToWishlist"
                 Content="Dodaj"
                 Width="90"
@@ -149,7 +157,7 @@
                 Margin="0,0,10,0"
                 Click="BtnAddToWishlist_Click"/>
 
-        <Button Grid.Column="2"
+        <Button Grid.Column="1"
                 x:Name="BtnPurchase"
                 Content="Kupovina"
                 Width="100"
@@ -157,7 +165,7 @@
                 IsEnabled="False"
                 Click="BtnPurchase_Click"/>
 
-         <Button Grid.Column="3" 
+         <Button Grid.Column="2" 
              x:Name="BtnDeleteFromWishlist"
               Content="Obriši"
              Width="90"
@@ -165,6 +173,7 @@
              Margin="10,0,10,0"
             IsEnabled="False"
              Click="BtnDeleteFromWishlist_Click"/>
+        
     </Grid>
 </Border>
 

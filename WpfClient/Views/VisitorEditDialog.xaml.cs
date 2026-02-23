@@ -248,6 +248,47 @@ namespace WpfClient
             BtnPurchase.IsEnabled = hasSelection;
             BtnDeleteFromWishlist.IsEnabled = hasSelection;
         }
+        private void PurchasedBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnCancelPurchase.IsEnabled = PurchasedBooksGrid.SelectedItem != null;
+        }
+        private void BtnCancelPurchase_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPurchase = PurchasedBooksGrid.SelectedItem as Purchase;
+            if (selectedPurchase == null) return;
+
+            var result = MessageBox.Show(
+                "Da li ste sigurni da želite da poništite kupovinu?",
+                "Poništi kupovinu",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes) return;
+
+            // 1) ukloni iz kupljenih
+            _purchases.Remove(selectedPurchase);
+
+            // 2) prebaci u wishlist
+            if (selectedPurchase.Book != null)
+            {
+                var bookDto = BookDTO.FromModel(selectedPurchase.Book);
+
+                if (!_wishlist.Any(b => b.Isbn == bookDto.Isbn))
+                    _wishlist.Add(bookDto);
+            }
+
+            // 3) osveži prikaze
+            PurchasedBooksGrid.ItemsSource = null;
+            PurchasedBooksGrid.ItemsSource = _purchases;
+
+            WishlistBooksGrid.ItemsSource = null;
+            WishlistBooksGrid.ItemsSource = _wishlist;
+
+            // 4) preračunaj potrošeno
+            CalculateTotalSpent();
+
+            BtnCancelPurchase.IsEnabled = false;
+        }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
