@@ -46,9 +46,15 @@ namespace WpfClient
             bool isbnOk = !string.IsNullOrWhiteSpace(TxtIsbn.Text);
             bool nazivOk = !string.IsNullOrWhiteSpace(TxtNaziv.Text);
 
-            bool ocenaOk =
-                int.TryParse(TxtOcena.Text, NumberStyles.Integer, CultureInfo.InvariantCulture, out int oc)
-                && oc >= 1 && oc <= 5;
+            bool ocenaParsed = int.TryParse(TxtOcena.Text, NumberStyles.Integer,
+                CultureInfo.InvariantCulture, out int oc);
+
+            bool ocenaOk = ocenaParsed && oc >= 1 && oc <= 5;
+
+           
+            TxtOcenaError.Visibility = ocenaOk || string.IsNullOrWhiteSpace(TxtOcena.Text)
+                ? Visibility.Collapsed
+                : Visibility.Visible;
 
             bool datumOk = DpDatum.SelectedDate.HasValue;
 
