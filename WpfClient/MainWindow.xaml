@@ -141,8 +141,7 @@
                      Width="200"
                      Height="28"
                      Padding="6"
-                     KeyDown="TxtSearch_KeyDown"
-                     TextChanged="TxtSearch_TextChanged"/>
+                     KeyDown="TxtSearch_KeyDown"/>
 
                     <Button x:Name="BtnSearch"
                     Width="35"

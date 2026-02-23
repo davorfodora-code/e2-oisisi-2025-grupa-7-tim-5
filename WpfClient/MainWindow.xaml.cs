@@ -115,6 +115,7 @@ namespace WpfClient
             }
 
             VisitorsGrid.ItemsSource = _visitors;
+            _allVisitors = _visitors.ToList();
         }
 
         private void LoadAuthors()
@@ -129,6 +130,7 @@ namespace WpfClient
             }
 
             AuthorsGrid.ItemsSource = _authors;
+            _allAuthors = _authors.ToList();
         }
 
         private void LoadBooks()
@@ -143,6 +145,7 @@ namespace WpfClient
             }
 
             BooksGrid.ItemsSource = _books;
+            _allBooks = _books.ToList();
         }
         private void LoadPublishers()
         {
@@ -499,38 +502,45 @@ namespace WpfClient
             var tab = MainTabs.SelectedItem as TabItem;
             string header = tab?.Header?.ToString() ?? "";
 
+            // ✅ ako je upit prazan -> vrati originalne podatke
+            if (string.IsNullOrWhiteSpace(q))
+            {
+                VisitorsGrid.ItemsSource = _visitors;
+                AuthorsGrid.ItemsSource = _authors;
+                BooksGrid.ItemsSource = _books;
+                return;
+            }
+
             if (header.Equals("Posetioci", StringComparison.OrdinalIgnoreCase))
             {
                 var filtered = VisitorSearch.Filter(_allVisitors, q).ToList();
-                VisitorsGrid.ItemsSource = null;
-                VisitorsGrid.ItemsSource = filtered;
+                VisitorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<VisitorDTO>(filtered);
                 return;
             }
 
             if (header.Equals("Autori", StringComparison.OrdinalIgnoreCase))
             {
                 var filtered = AuthorSearch.Filter(_allAuthors, q).ToList();
-                AuthorsGrid.ItemsSource = null;
-                AuthorsGrid.ItemsSource = filtered;
+                AuthorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<AuthorDTO>(filtered);
                 return;
             }
 
             if (header.Equals("Knjige", StringComparison.OrdinalIgnoreCase))
             {
                 var filtered = BookSearch.Filter(_allBooks, q).ToList();
-                BooksGrid.ItemsSource = null;
-                BooksGrid.ItemsSource = filtered;
+                BooksGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<BookDTO>(filtered);
                 return;
             }
         }
 
-        private void TxtSearch_KeyDown(object? sender, KeyEventArgs e)
+
+        private void TxtSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
-            {
+            if (e.Key == System.Windows.Input.Key.Enter)
                 BtnSearch_Click(sender, e);
-            }
         }
+
+       
 
         private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
