@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Core.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Core.SearchUtils
+public static class BookSearch
 {
-    internal class BookSearchFilter
+    public static IEnumerable<BookDTO> Filter(IEnumerable<BookDTO> source, string query)
     {
+        if (string.IsNullOrWhiteSpace(query))
+            return source;
+
+        string q = query.Trim();
+
+        bool ContainsCI(string text) =>
+            (text ?? "").IndexOf(q, StringComparison.OrdinalIgnoreCase) >= 0;
+
+        return source.Where(b => ContainsCI(b.Name) || ContainsCI(b.Isbn));
     }
 }
