@@ -161,32 +161,8 @@ namespace WpfClient
             _allPublishers = _publishers.ToList();
         }
 
-        private void BtnPublisherSearch_Click(object sender, RoutedEventArgs e)
-        {
-            string query = TxtPublisherSearch.Text?.Trim() ?? "";
 
-            if (string.IsNullOrWhiteSpace(query))
-            {
-                PublishersGrid.ItemsSource = _publishers;
-                return;
-            }
 
-            var filtered = _allPublishers.Where(p =>
-                p.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                (p.Manager != null &&
-                 $"{p.Manager.Name} {p.Manager.Lastname}".Contains(query, StringComparison.OrdinalIgnoreCase)) ||
-                p.Authors.Any(a =>
-                    $"{a.Name} {a.Lastname}".Contains(query, StringComparison.OrdinalIgnoreCase))
-            ).ToList();
-
-            PublishersGrid.ItemsSource = new ObservableCollection<PublisherDTO>(filtered);
-        }
-
-        private void TxtPublisherSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Enter)
-                BtnPublisherSearch_Click(sender, e);
-        }
 
         private void PublishersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -640,6 +616,30 @@ namespace WpfClient
                 var filtered = BookSearch.Filter(_allBooks, q).ToList();
                 BooksGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<BookDTO>(filtered);
                 return;
+            }
+        }
+
+        private void BtnSetPublisherManager_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SetPublisherManager(_publishers, _authors);
+            dialog.Owner = this;
+
+            if (dialog.ShowDialog() == true)
+            {
+                var updatedPublisher = dialog.GetUpdatedPublisher();
+                var result = _publisherController.UpdatePublisher(updatedPublisher.ToModel());
+
+                if (result != null)
+                {
+                    MessageBox.Show("Šef izdavača je uspešno postavljen!", "Uspešno",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadPublishers();
+                }
+                else
+                {
+                    MessageBox.Show("Došlo je do greške prilikom postavljanja šefa.",
+                        "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

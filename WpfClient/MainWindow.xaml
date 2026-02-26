@@ -260,8 +260,10 @@
                 <DataGrid x:Name="AuthorsGrid"
                   ItemsSource="{Binding Authors}"
                   SelectedItem="{Binding SelectedAuthor, Mode=TwoWay}"
-                  AutoGenerateColumns="False"
+                 AutoGenerateColumns="False"
                   IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
                   Margin="10"
                   BorderBrush="#E0E0E0"
                   BorderThickness="1"
@@ -306,44 +308,16 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0" 
-                Background="#F5F5F5" 
-                Padding="8" 
-                CornerRadius="4" 
-                Margin="0,0,0,10">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" 
-                           Text="Pretraga:" 
-                           VerticalAlignment="Center" 
-                           Margin="0,0,10,0"/>
-
-                            <TextBox Grid.Column="1" 
-                         x:Name="TxtPublisherSearch" 
-                         Height="28" 
-                         Padding="6"
-                         KeyDown="TxtPublisherSearch_KeyDown"/>
-
-                            <Button Grid.Column="2" 
-                        x:Name="BtnPublisherSearch"
-                        Width="35" 
-                        Height="28" 
-                        Margin="5,0,0,0" 
-                        Click="BtnPublisherSearch_Click">
-                                <Image Source="/Icons/magnifier.png" Width="16" Height="16"/>
-                            </Button>
-                        </Grid>
-                    </Border>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                        <Button x:Name="BtnSetPublisherManager" 
+                    Content="Postavi šefa izdavača" 
+                    Width="150" 
+                    Height="30"
+                    Click="BtnSetPublisherManager_Click"/>
+                    </StackPanel>
 
                     <DataGrid Grid.Row="1"
                   x:Name="PublishersGrid"
-                  ItemsSource="{Binding Publishers}"
-                  SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
                   BorderBrush="#E0E0E0"
@@ -354,29 +328,12 @@
                   RowHeight="30"
                   HeadersVisibility="Column"
                   VerticalGridLinesBrush="#E0E0E0"
-                  HorizontalGridLinesBrush="#E0E0E0"
-                  SelectionChanged="PublishersGrid_SelectionChanged">
+                  HorizontalGridLinesBrush="#E0E0E0">
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"
-                                    Binding="{Binding Id}"
-                                    Width="50"/>
-
-                            <DataGridTextColumn Header="Naziv izdavača"
-                                    Binding="{Binding Name}"
-                                    Width="2*"/>
-
-                            <DataGridTextColumn Header="Menadžer"
-                                    Binding="{Binding DisplayManager}"
-                                    Width="1.5*"/>
-
-                            <DataGridTextColumn Header="Broj autora"
-                                    Binding="{Binding AuthorsCount}"
-                                    Width="100"/>
-
-                            <DataGridTextColumn Header="Broj knjiga"
-                                    Binding="{Binding BooksCount}"
-                                    Width="100"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                            <DataGridTextColumn Header="Naziv izdavača" Binding="{Binding Name}" Width="2*"/>
+                            <DataGridTextColumn Header="Menadžer" Binding="{Binding DisplayManager}" Width="2*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
