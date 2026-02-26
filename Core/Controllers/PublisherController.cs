@@ -34,7 +34,7 @@ namespace Core.Controllers
 
         public Publisher UpdatePublisher(Publisher publisher)
         {
-            return _publisherDao.UpdateAddress(publisher);
+            return _publisherDao.UpdatePublisher(publisher);
         }
 
         public Publisher RemovePublisher(Publisher publisher)

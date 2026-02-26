@@ -8,11 +8,20 @@ namespace Core.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
-        public AuthorDTO Manager { get; set; } = new AuthorDTO();
+        public AuthorDTO? Manager { get; set; } = null;
         public List<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
         public List<BookDTO> Books { get; set; } = new List<BookDTO>();
 
-        public string DisplayManager => Manager != null ? $"{Manager.Name} {Manager.Lastname}" : "";
+        public string DisplayManager
+        {
+            get
+            {
+                if (Manager == null) return "";
+                if (string.IsNullOrEmpty(Manager.Name) && string.IsNullOrEmpty(Manager.Lastname)) return "";
+                return $"{Manager.Name} {Manager.Lastname}".Trim();
+            }
+        }
+
         public int AuthorsCount => Authors?.Count ?? 0;
         public int BooksCount => Books?.Count ?? 0;
 
@@ -20,13 +29,6 @@ namespace Core.DTO
         {
             if (string.IsNullOrWhiteSpace(Name))
                 return (false, "Publisher name is required.");
-
-            if (Manager == null)
-                return (false, "Publisher must have a manager.");
-
-            var managerValid = Manager.Validate();
-            if (!managerValid.IsValid)
-                return managerValid;
 
             if (Authors == null || Authors.Count == 0)
                 return (false, "Publisher must have at least one author.");
@@ -47,26 +49,39 @@ namespace Core.DTO
             {
                 Id = this.Id,
                 Name = this.Name,
-                Manager = this.Manager.ToModel(),
-                Authors = this.Authors.Select(a => a.ToModel()).ToList() ?? new List<Author>(),
-                Books = this.Books?.Select(b => b.ToModel()).ToList() ?? new List<Book>()
+
+                // 🔥 OVO JE KLJUČNA ISPRAVKA
+                Manager = this.Manager != null
+                          ? this.Manager.ToModel()
+                          : null,
+
+                Authors = this.Authors != null
+                          ? this.Authors.Select(a => a.ToModel()).ToList()
+                          : new List<Author>(),
+
+                Books = this.Books != null
+                        ? this.Books.Select(b => b.ToModel()).ToList()
+                        : new List<Book>()
             };
         }
-
 
         public static PublisherDTO FromModel(Publisher publisher)
         {
-         
+            if (publisher == null) return new PublisherDTO();
 
-            return new PublisherDTO
+            var dto = new PublisherDTO
             {
                 Id = publisher.Id,
-                Name = publisher.Name,
-                Manager = AuthorDTO.FromModel(publisher.Manager),
-                Authors = publisher.Authors.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
+                Name = publisher.Name ?? "",
+                Authors = publisher.Authors?.Select(AuthorDTO.FromModel).ToList() ?? new List<AuthorDTO>(),
                 Books = publisher.Books?.Select(BookDTO.FromModel).ToList() ?? new List<BookDTO>()
             };
+
+            dto.Manager = publisher.Manager != null
+                          ? AuthorDTO.FromModel(publisher.Manager)
+                          : null;
+
+            return dto;
         }
     }
 }
-

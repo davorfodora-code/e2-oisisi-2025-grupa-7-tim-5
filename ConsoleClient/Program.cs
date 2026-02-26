@@ -248,7 +248,7 @@ namespace ConsoleClient
             v4.Purchases = new List<Purchase> { p4 };
 
             // ========== 7. DAO ==========
-            AuthorDAO authorDAO = new AuthorDAO();
+            AuthorDAO authorDAO = new AuthorDAO(null);
             foreach (var autor in sviAutori)
             {
                 authorDAO.AddAuthor(autor);

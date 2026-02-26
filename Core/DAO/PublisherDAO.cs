@@ -12,7 +12,7 @@ namespace Core.DAO
     {
         private readonly List<Publisher> publishers;
         private readonly Storage<Publisher> storage;
-        private readonly AuthorDAO _authorDAO;
+
         private int CreatePublisherID()
         {
             if (publishers.Count == 0)
@@ -20,26 +20,19 @@ namespace Core.DAO
                 return 1;
             }
 
-           
             var lastPublisher = publishers[publishers.Count - 1];
-
             return lastPublisher.Id + 1;
         }
 
         public PublisherDAO()
         {
-
             storage = new Storage<Publisher>("Publishers.txt");
             publishers = storage.Load();
-
-            _authorDAO = new AuthorDAO();
-
-            LinkAuthorsWithFullData();
         }
 
-        private void LinkAuthorsWithFullData()
+        public void LinkAuthorsWithFullData(AuthorDAO authorDAO)
         {
-            var allAuthors = _authorDAO.GetAllAuthors();
+            var allAuthors = authorDAO.GetAllAuthors();
 
             foreach (var publisher in publishers)
             {
@@ -79,22 +72,31 @@ namespace Core.DAO
             }
 
             p.Id = CreatePublisherID();
-            
+
             publishers.Add(p);
             storage.Save(publishers);
             return p;
         }
 
-        public Publisher? UpdateAddress(Publisher p)
+        public Publisher? UpdatePublisher(Publisher p)
         {
             Publisher? oldPublisher = FindPublisher(p.Id);
             if (oldPublisher == null)
                 return null;
 
             oldPublisher.Name = p.Name;
-            oldPublisher.Manager = p.Manager;
-            oldPublisher.Authors = p.Authors;
-            oldPublisher.Books = p.Books;
+            oldPublisher.Authors = p.Authors ?? new List<Author>();
+            oldPublisher.Books = p.Books ?? new List<Book>();
+
+            if (p.Manager != null &&
+                oldPublisher.Authors.Any(a => a.IdCard == p.Manager.IdCard))
+            {
+                oldPublisher.Manager = p.Manager;
+            }
+            else
+            {
+                oldPublisher.Manager = null;
+            }
 
             storage.Save(publishers);
             return oldPublisher;
@@ -111,12 +113,10 @@ namespace Core.DAO
             return publisher;
         }
 
-
         private Publisher? FindPublisher(int id)
         {
             return publishers.Find(p => p.Id == id);
         }
-
 
         public List<Publisher> GetAllPublishers()
         {
