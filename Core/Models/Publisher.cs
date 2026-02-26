@@ -44,12 +44,15 @@ public class Publisher : ISerializable
         if (values.Length > 2 && !string.IsNullOrEmpty(values[2]))
         {
             var managerParts = values[2].Split(',');
-            if (managerParts.Length == 2)
+            if (managerParts.Length == 5)
             {
                 Manager = new Author
                 {
                     IdCard = managerParts[0],
-                    Name = managerParts[1]
+                    Name = managerParts[1],
+                    Lastname = managerParts[2],
+                    ExperienceLength = double.Parse(managerParts[3]),
+                    Email = managerParts[4]
                 };
             }
         }
@@ -61,12 +64,15 @@ public class Publisher : ISerializable
             foreach (var entry in authorEntries)
             {
                 var parts = entry.Split(',');
-                if (parts.Length == 2)
+                if (parts.Length == 5)
                 {
                     Authors.Add(new Author
                     {
                         IdCard = parts[0],
-                        Name = parts[1]
+                        Name = parts[1],
+                        Lastname = parts[2],
+                        ExperienceLength = double.Parse(parts[3]),
+                        Email = parts[4]
                     });
                 }
             }
@@ -93,14 +99,13 @@ public class Publisher : ISerializable
 
     public string[] ToCSV()
     {
-
-        string managerString = Manager != null ? $"{Manager.IdCard},{Manager.Name}" : "";
-
-
-        string authorsString = Authors != null && Authors.Any()
-            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name}"))
+        string managerString = Manager != null
+            ? $"{Manager.IdCard},{Manager.Name},{Manager.Lastname},{Manager.ExperienceLength},{Manager.Email}"
             : "";
 
+        string authorsString = Authors != null && Authors.Any()
+            ? string.Join(";", Authors.Select(a => $"{a.IdCard},{a.Name},{a.Lastname},{a.ExperienceLength},{a.Email}"))
+            : "";
 
         string booksString = Books != null && Books.Any()
             ? string.Join(";", Books.Select(b => $"{b.Isbn},{b.Name}"))
@@ -108,11 +113,11 @@ public class Publisher : ISerializable
 
         return new string[]
         {
-            Id.ToString(),
-            Name,
-            managerString,    
-            authorsString,
-            booksString
+        Id.ToString(),
+        Name,
+        managerString,
+        authorsString,
+        booksString
         };
     }
 

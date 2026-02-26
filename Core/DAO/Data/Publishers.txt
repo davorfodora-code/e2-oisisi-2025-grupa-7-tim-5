@@ -1,2 +1,2 @@
-1|Mirko|,||
-2|Milankovic|Id kartica,Milos|Id kartica,Milos|
+1|Mirko|ID-1-9999,Nikola,Nikolasevic,5,nikola@gmail.com|ID-1-9999,Nikola,Nikolasevic,5,nikola@gmail.com;Id kartica,Milos,Markovic,10,123@gmail.com|
+2|Milankovic|Id kartica,Milos,Markovic,10,123@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;Id kartica,Milos,Markovic,10,123@gmail.com;ID-1-9999,Nikola,Nikolasevic,5,nikola@gmail.com;ID-22-33,Ivor,Adamek,3,ivor@mail.com|

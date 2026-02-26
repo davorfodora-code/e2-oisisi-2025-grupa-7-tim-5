@@ -12,7 +12,7 @@ namespace Core.DAO
     {
         private readonly List<Publisher> publishers;
         private readonly Storage<Publisher> storage;
-
+        private readonly AuthorDAO _authorDAO;
         private int CreatePublisherID()
         {
             if (publishers.Count == 0)
@@ -31,6 +31,42 @@ namespace Core.DAO
 
             storage = new Storage<Publisher>("Publishers.txt");
             publishers = storage.Load();
+
+            _authorDAO = new AuthorDAO();
+
+            LinkAuthorsWithFullData();
+        }
+
+        private void LinkAuthorsWithFullData()
+        {
+            var allAuthors = _authorDAO.GetAllAuthors();
+
+            foreach (var publisher in publishers)
+            {
+                if (publisher.Manager != null && !string.IsNullOrEmpty(publisher.Manager.IdCard))
+                {
+                    var fullManager = allAuthors.FirstOrDefault(a => a.IdCard == publisher.Manager.IdCard);
+                    if (fullManager != null)
+                        publisher.Manager = fullManager;
+                }
+
+                if (publisher.Authors != null && publisher.Authors.Any())
+                {
+                    var fullAuthors = new List<Author>();
+                    foreach (var author in publisher.Authors)
+                    {
+                        if (!string.IsNullOrEmpty(author.IdCard))
+                        {
+                            var fullAuthor = allAuthors.FirstOrDefault(a => a.IdCard == author.IdCard);
+                            if (fullAuthor != null)
+                                fullAuthors.Add(fullAuthor);
+                            else
+                                fullAuthors.Add(author);
+                        }
+                    }
+                    publisher.Authors = fullAuthors;
+                }
+            }
         }
 
         public Publisher AddPublisher(Publisher p)
