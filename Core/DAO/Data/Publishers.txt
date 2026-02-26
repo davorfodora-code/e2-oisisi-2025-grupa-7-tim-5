@@ -1,1 +1,2 @@
-1|Mirko|ID002,Misa;ID001,Ivo|
+1|Mirko|,||
+2|Milankovic|Id kartica,Milos|Id kartica,Milos|

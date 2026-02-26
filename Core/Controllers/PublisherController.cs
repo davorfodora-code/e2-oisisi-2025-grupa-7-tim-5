@@ -26,5 +26,20 @@ namespace Core.Controllers
                 .Select(PublisherDTO.FromModel)
                 .ToList();
         }
+
+        public Publisher AddPublisher(Publisher publisher)
+        {
+            return _publisherDao.AddPublisher(publisher);
+        }
+
+        public Publisher UpdatePublisher(Publisher publisher)
+        {
+            return _publisherDao.UpdateAddress(publisher);
+        }
+
+        public Publisher RemovePublisher(Publisher publisher)
+        {
+            return _publisherDao.RemovePublisher(publisher);
+        }
     }
 }

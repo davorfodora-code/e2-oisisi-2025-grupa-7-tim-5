@@ -1,4 +1,4 @@
-KK-11-22|Davor|Fodora|08.02.2026.|088897123|davor@gmail.com|1|Ulica|11|||Srbija|Isbn,Naziv
+KK-11-22|Davor|Fodora|08.02.2026.|088897123|davor@gmail.com|1|Ulica|11|||Srbija|ISBN2,NAZIV2
 Id kartica|Milos|Markovic|13.02.2026.|123|123@gmail.com|1|Ulicanska|99|||Srbija|
 ID-1-9999|Nikola|Nikolasevic|30.01.2026.|099999999|nikola@gmail.com|5|Ulica|11|||Srbija|Isbn,Naziv
 ID-22-33|Ivor|Adamek|20.02.2026.|060876484|ivor@mail.com|3|Drinska|3|Novi Sad|Novi Sad|Srbija|

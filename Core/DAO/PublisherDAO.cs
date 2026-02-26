@@ -55,9 +55,10 @@ namespace Core.DAO
             if (oldPublisher == null)
                 return null;
 
-            oldPublisher.Id = p.Id;
             oldPublisher.Name = p.Name;
-
+            oldPublisher.Manager = p.Manager;
+            oldPublisher.Authors = p.Authors;
+            oldPublisher.Books = p.Books;
 
             storage.Save(publishers);
             return oldPublisher;
