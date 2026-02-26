@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Core.DTO;
 
 namespace WpfClient
@@ -24,7 +22,6 @@ namespace WpfClient
             _isEditMode = false;
             Title = "Dodaj izdavača";
 
-            CmbManager.ItemsSource = AllAuthors;
             LstAuthors.ItemsSource = AllAuthors;
         }
 
@@ -35,28 +32,24 @@ namespace WpfClient
             _isEditMode = true;
             _originalPublisher = publisherToEdit;
             Title = "Izmeni izdavača";
-            BtnOk.Content = "Sačuvaj izmene";
 
-            CmbManager.ItemsSource = AllAuthors;
             LstAuthors.ItemsSource = AllAuthors;
-
             TxtName.Text = publisherToEdit.Name;
+        }
 
-            if (publisherToEdit.Manager != null)
+        private void LstAuthors_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_isEditMode && _originalPublisher.Authors != null)
             {
-                var manager = AllAuthors.FirstOrDefault(a =>
-                    a.IdCard == publisherToEdit.Manager.IdCard);
-                if (manager != null)
-                    CmbManager.SelectedItem = manager;
-            }
+                var authorIds = _originalPublisher.Authors.Select(a => a.IdCard).ToHashSet();
 
-            if (publisherToEdit.Authors != null && publisherToEdit.Authors.Any())
-            {
-                var authorIds = publisherToEdit.Authors.Select(a => a.IdCard).ToHashSet();
-                foreach (var author in AllAuthors)
+                for (int i = 0; i < LstAuthors.Items.Count; i++)
                 {
-                    if (authorIds.Contains(author.IdCard))
+                    var author = LstAuthors.Items[i] as AuthorDTO;
+                    if (author != null && authorIds.Contains(author.IdCard))
+                    {
                         LstAuthors.SelectedItems.Add(author);
+                    }
                 }
             }
         }
@@ -70,14 +63,8 @@ namespace WpfClient
                 return;
             }
 
-            if (CmbManager.SelectedItem == null)
-            {
-                MessageBox.Show("Morate izabrati menadžera!", "Greška",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (LstAuthors.SelectedItems.Count == 0)
+            var selectedAuthors = LstAuthors.SelectedItems.Cast<AuthorDTO>().ToList();
+            if (selectedAuthors.Count == 0)
             {
                 MessageBox.Show("Morate izabrati bar jednog autora!", "Greška",
                     MessageBoxButton.OK, MessageBoxImage.Error);
@@ -88,8 +75,8 @@ namespace WpfClient
             {
                 Id = _isEditMode ? _originalPublisher.Id : 0,
                 Name = TxtName.Text.Trim(),
-                Manager = (AuthorDTO)CmbManager.SelectedItem,
-                Authors = LstAuthors.SelectedItems.Cast<AuthorDTO>().ToList()
+                Manager = _isEditMode ? _originalPublisher.Manager : null,
+                Authors = selectedAuthors
             };
 
             DialogResult = true;

@@ -7,74 +7,77 @@
         WindowStartupLocation="CenterOwner"
         Background="White">
 
-	<Grid Margin="20">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0"
-                   Text="Izdavač"
-                   FontSize="24"
-                   FontWeight="Bold"
+        <TextBlock Grid.Row="0" 
+                   Text="Izdavač" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
                    Margin="0,0,0,20"/>
 
-		<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-			<StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
 
-				<TextBlock Text="Informacije"
-                           FontSize="18"
-                           FontWeight="SemiBold"
+                <TextBlock Text="Informacije" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
                            Margin="0,0,0,15"/>
 
-				<Grid Margin="0,0,0,15">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="120"/>
-						<ColumnDefinition Width="*"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-					<TextBlock Grid.Row="0" Grid.Column="0" Text="Naziv:" VerticalAlignment="Center"/>
-					<TextBox Grid.Row="0" Grid.Column="1" x:Name="TxtName" Padding="5" Margin="0,0,0,10"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Naziv:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="TxtName" Padding="5" Margin="0,0,0,10"/>
+                </Grid>
 
-					<TextBlock Grid.Row="1" Grid.Column="0" Text="Menadžer:" VerticalAlignment="Center"/>
-					<ComboBox Grid.Row="1" Grid.Column="1" x:Name="CmbManager"
-                              DisplayMemberPath="FullName" Padding="5" Margin="0,0,0,10"/>
-				</Grid>
-
-				<TextBlock Text="Autori"
-                           FontSize="18"
-                           FontWeight="SemiBold"
+                <TextBlock Text="Autori" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
                            Margin="0,15,0,10"/>
 
-				<ListBox x:Name="LstAuthors"
-                         SelectionMode="Extended"
-                         DisplayMemberPath="FullName"
-                         Height="200"
-                         BorderBrush="#CCCCCC"
-                         BorderThickness="1"/>
-			</StackPanel>
-		</ScrollViewer>
+                <ListBox x:Name="LstAuthors" 
+                         SelectionMode="Multiple"
+                         BorderBrush="#CCCCCC" 
+                         BorderThickness="1"
+                         Height="250"
+                         Loaded="LstAuthors_Loaded">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding FullName}" 
+                                      IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                      Margin="2"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
 
-		<StackPanel Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left" 
                     Margin="0,20,0,0">
-			<Button x:Name="BtnOk"
-                    Content="Sačuvaj izmene"
-                    Width="120"
-                    Height="35"
+            <Button x:Name="BtnOk" 
+                    Content="Sačuvaj" 
+                    Width="100" 
+                    Height="35" 
                     Margin="0,0,10,0"
                     Click="BtnOk_Click"/>
-			<Button x:Name="BtnCancel"
-                    Content="Otkaži"
-                    Width="100"
+            <Button x:Name="BtnCancel" 
+                    Content="Otkaži" 
+                    Width="100" 
                     Height="35"
                     Click="BtnCancel_Click"/>
-		</StackPanel>
-	</Grid>
+        </StackPanel>
+    </Grid>
 </Window>

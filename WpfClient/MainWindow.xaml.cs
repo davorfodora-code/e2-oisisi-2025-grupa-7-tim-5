@@ -36,9 +36,10 @@ namespace WpfClient
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
             var bookDAO = new BookDAO();
-            var publisherDAO = new PublisherDAO(); 
+            var publisherDAO = new PublisherDAO();
+            var authorDAO = new AuthorDAO(publisherDAO);
 
-            var authorDAO = new AuthorDAO();
+            publisherDAO.LinkAuthorsWithFullData(authorDAO);
 
             _authorController = new AuthorController(authorDAO);
             _bookController = new BookController(bookDAO, publisherDAO);
@@ -158,7 +159,7 @@ namespace WpfClient
                 _publishers.Add(dto);
             }
 
-            _allPublishers = _publishers.ToList();
+            PublishersGrid.Items.Refresh();
         }
 
 
@@ -383,7 +384,8 @@ namespace WpfClient
                     {
                         MessageBox.Show(result.Message, "Uspešno",
                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadAuthors();
+                        LoadAuthors(); 
+                        LoadPublishers(); 
                     }
                     else
                     {
@@ -532,6 +534,7 @@ namespace WpfClient
                         MessageBox.Show(deleteResult.Message, "Uspešno",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadAuthors();
+                        LoadPublishers();
                     }
                     else
                     {
@@ -627,18 +630,30 @@ namespace WpfClient
             if (dialog.ShowDialog() == true)
             {
                 var updatedPublisher = dialog.GetUpdatedPublisher();
-                var result = _publisherController.UpdatePublisher(updatedPublisher.ToModel());
 
-                if (result != null)
+                // Prvo nađi originalnog izdavača iz baze
+                var publisherModel = _publisherController.GetAllPublishers()
+                    .FirstOrDefault(p => p.Id == updatedPublisher.Id);
+
+                if (publisherModel != null)
                 {
-                    MessageBox.Show("Šef izdavača je uspešno postavljen!", "Uspešno",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadPublishers();
-                }
-                else
-                {
-                    MessageBox.Show("Došlo je do greške prilikom postavljanja šefa.",
-                        "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Ažuriraj menadžera
+                    publisherModel.Manager = updatedPublisher.Manager?.ToModel();
+
+                    // Sačuvaj promene
+                    var result = _publisherController.UpdatePublisher(publisherModel);
+
+                    if (result != null)
+                    {
+                        MessageBox.Show("Šef izdavača je uspešno postavljen!", "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadPublishers();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Došlo je do greške prilikom postavljanja šefa.",
+                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }

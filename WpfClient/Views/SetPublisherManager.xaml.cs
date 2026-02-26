@@ -58,7 +58,15 @@ namespace WpfClient
                 return;
             }
 
-            _selectedPublisher.Manager = selectedAuthor;
+            _selectedPublisher.Manager = new AuthorDTO
+            {
+                IdCard = selectedAuthor.IdCard,
+                Name = selectedAuthor.Name,
+                Lastname = selectedAuthor.Lastname,
+                ExperienceLength = selectedAuthor.ExperienceLength,
+                Email = selectedAuthor.Email
+            };
+
             DialogResult = true;
             Close();
         }
