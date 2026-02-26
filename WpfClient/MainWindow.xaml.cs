@@ -26,6 +26,7 @@ namespace WpfClient
 
         private PublisherController _publisherController;
         private ObservableCollection<PublisherDTO> _publishers;
+        private List<PublisherDTO> _allPublishers = new();
 
         public MainWindow()
         {
@@ -48,16 +49,12 @@ namespace WpfClient
             _visitors = new ObservableCollection<VisitorDTO>();
             _authors = new ObservableCollection<AuthorDTO>();
             _books = new ObservableCollection<BookDTO>();
-
             _publishers = new ObservableCollection<PublisherDTO>();
 
-
-
+            PublishersGrid.ItemsSource = _publishers;
             VisitorsGrid.ItemsSource = _visitors;
             AuthorsGrid.ItemsSource = _authors;
             BooksGrid.ItemsSource = _books;
-
-
 
             LoadVisitors();
             LoadAuthors();
@@ -150,22 +147,49 @@ namespace WpfClient
         private void LoadPublishers()
         {
             if (_publisherController == null)
-            {
-                System.Diagnostics.Debug.WriteLine("PublisherController je null!");
                 return;
-            }
 
             var publisherModels = _publisherController.GetAllPublishers();
-            System.Diagnostics.Debug.WriteLine($"LoadPublishers: dobijeno {publisherModels.Count} izdavača");
-
             _publishers.Clear();
 
             foreach (var publisher in publisherModels)
             {
                 var dto = PublisherDTO.FromModel(publisher);
                 _publishers.Add(dto);
-                System.Diagnostics.Debug.WriteLine($"Dodat izdavač: {dto.Id} - {dto.Name}");
             }
+
+            _allPublishers = _publishers.ToList();
+        }
+
+        private void BtnPublisherSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string query = TxtPublisherSearch.Text?.Trim() ?? "";
+
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                PublishersGrid.ItemsSource = _publishers;
+                return;
+            }
+
+            var filtered = _allPublishers.Where(p =>
+                p.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                (p.Manager != null &&
+                 $"{p.Manager.Name} {p.Manager.Lastname}".Contains(query, StringComparison.OrdinalIgnoreCase)) ||
+                p.Authors.Any(a =>
+                    $"{a.Name} {a.Lastname}".Contains(query, StringComparison.OrdinalIgnoreCase))
+            ).ToList();
+
+            PublishersGrid.ItemsSource = new ObservableCollection<PublisherDTO>(filtered);
+        }
+
+        private void TxtPublisherSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+                BtnPublisherSearch_Click(sender, e);
+        }
+
+        private void PublishersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
@@ -195,6 +219,27 @@ namespace WpfClient
                         else
                         {
                             MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                else if (tabName == "Izdavači")
+                {
+                    var dialog = new PublisherEditDialog(_authors);
+                    dialog.Owner = this;
+
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var result = _publisherController.AddPublisher(dialog.Publisher.ToModel());
+                        if (result != null)
+                        {
+                            MessageBox.Show("Izdavač je uspešno dodat!", "Uspešno",
+                                MessageBoxButton.OK, MessageBoxImage.Information);
+                            LoadPublishers();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Došlo je do greške prilikom dodavanja izdavača.",
+                                "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -294,6 +339,38 @@ namespace WpfClient
                     else
                     {
                         MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Izdavači")
+            {
+                var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
+                if (selectedPublisher == null)
+                {
+                    MessageBox.Show("Izaberite izdavača za izmenu", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new PublisherEditDialog(selectedPublisher, _authors);
+                dialog.Owner = this;
+
+                if (dialog.ShowDialog() == true)
+                {
+                    var publisherModel = dialog.Publisher.ToModel();
+                    var result = _publisherController.UpdatePublisher(publisherModel);
+
+                    if (result != null)
+                    {
+                        MessageBox.Show("Izdavač je uspešno izmenjen!", "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadPublishers();
+                        LoadBooks();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Došlo je do greške prilikom izmene izdavača.",
+                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -417,6 +494,39 @@ namespace WpfClient
                     {
                         MessageBox.Show(deleteResult.Message, "Greška",
                             MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            else if (tabName == "Izdavači")
+            {
+                var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
+                if (selectedPublisher == null)
+                {
+                    MessageBox.Show("Izaberite izdavača za brisanje", "Upozorenje",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show(
+                    $"Da li ste sigurni da želite da obrišete izdavača:\n{selectedPublisher.Name}?",
+                    "Potvrda brisanja",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    var deleteResult = _publisherController.RemovePublisher(selectedPublisher.ToModel());
+                    if (deleteResult != null)
+                    {
+                        MessageBox.Show("Izdavač je uspešno obrisan!", "Uspešno",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadPublishers();
+                        LoadBooks();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Došlo je do greške prilikom brisanja izdavača.",
+                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -610,6 +720,10 @@ namespace WpfClient
             BtnDelete_Click(sender, e);
         }
 
+        private void OpenIzdavaci_Click(object sender, RoutedEventArgs e)
+        {
+            MainTabs.SelectedIndex = 3;
+        }
         private void HelpAbout_Click(object sender, RoutedEventArgs e)
         {
             var aboutWindow = new AboutWindow();
