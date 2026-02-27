@@ -27,7 +27,7 @@ namespace WpfClient
         private PublisherController _publisherController;
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
-
+        private VisitorDAO _visitorDAO;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +38,7 @@ namespace WpfClient
             var bookDAO = new BookDAO();
             var publisherDAO = new PublisherDAO();
             var authorDAO = new AuthorDAO(publisherDAO);
+            _visitorDAO = new VisitorDAO(purchaseDAO);
 
             publisherDAO.LinkAuthorsWithFullData(authorDAO);
 
@@ -278,6 +279,23 @@ namespace WpfClient
             }
         }
 
+        private void ShowVisitorsForAuthor_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+            if (selectedAuthor != null)
+            {
+                // Pretpostavka je da imaš pristup listi svih posetilaca u DAO ili servisu
+                var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
+
+                var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
+                win.Owner = this; // Opciono, da bi bio centriran u odnosu na glavni prozor
+                win.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Molimo izaberite autora iz tabele.");
+            }
+        }
         private void BtnEdit_Click(object? sender, RoutedEventArgs e)
         {
             var selectedTab = MainTabs?.SelectedItem as TabItem;
@@ -631,16 +649,13 @@ namespace WpfClient
             {
                 var updatedPublisher = dialog.GetUpdatedPublisher();
 
-                // Prvo nađi originalnog izdavača iz baze
                 var publisherModel = _publisherController.GetAllPublishers()
                     .FirstOrDefault(p => p.Id == updatedPublisher.Id);
 
                 if (publisherModel != null)
                 {
-                    // Ažuriraj menadžera
                     publisherModel.Manager = updatedPublisher.Manager?.ToModel();
 
-                    // Sačuvaj promene
                     var result = _publisherController.UpdatePublisher(publisherModel);
 
                     if (result != null)
@@ -743,6 +758,26 @@ namespace WpfClient
         {
             var aboutWindow = new AboutWindow();
             aboutWindow.ShowDialog();
+        }
+
+        // Promeni ime metode da bude identično onom u Error Listi
+        private void BtnShowVisitorsByAuthor_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
+            if (selectedAuthor != null)
+            {
+                // Uzimamo sve posetioce
+                var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
+
+                // Otvaramo NOVI prozor i šaljemo mu podatke
+                var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
+                win.Owner = this;
+                win.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Molimo izaberite autora iz tabele.");
+            }
         }
     }
 }

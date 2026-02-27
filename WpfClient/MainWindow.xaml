@@ -133,7 +133,6 @@
                         <Image Source="/Icons/delete-user.png"
                        Width="16" Height="16"/>
                     </Button>
-
                 </StackPanel>
 
 
@@ -257,14 +256,26 @@
             </TabItem>
 
             <TabItem Header="Autori">
-                <DataGrid x:Name="AuthorsGrid"
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+                        <Button x:Name="BtnShowVisitorsByAuthor" 
+                    Content="Autor-Posetioci" 
+                    Width="120" 
+                    Height="30"
+                    Click="BtnShowVisitorsByAuthor_Click"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="1"
+                  x:Name="AuthorsGrid"
                   ItemsSource="{Binding Authors}"
                   SelectedItem="{Binding SelectedAuthor, Mode=TwoWay}"
-                 AutoGenerateColumns="False"
+                  AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  SelectionMode="Single"
-                  SelectionUnit="FullRow"
-                  Margin="10"
                   BorderBrush="#E0E0E0"
                   BorderThickness="1"
                   RowBackground="White"
@@ -276,29 +287,25 @@
                   HorizontalGridLinesBrush="#E0E0E0"
                   SelectionChanged="AuthorsGrid_SelectionChanged">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ime"
-                        Binding="{Binding Name}"
-                        Width="*"/>
-
-                        <DataGridTextColumn Header="Prezime"
-                        Binding="{Binding Lastname}"
-                        Width="*"/>
-
-                        <DataGridTextColumn Header="Lična karta"
-                        Binding="{Binding IdCard}"
-                        Width="120"/>
-
-                        <DataGridTextColumn Header="Datum rođenja"
-                        Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
-                        Width="120"/>
-
-                        <DataGridTextColumn Header="Email"
-                        Binding="{Binding Email}"
-                        Width="2*"/>
-                    </DataGrid.Columns>
-
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ime"
+                                    Binding="{Binding Name}"
+                                    Width="*"/>
+                            <DataGridTextColumn Header="Prezime"
+                                    Binding="{Binding Lastname}"
+                                    Width="*"/>
+                            <DataGridTextColumn Header="Lična karta"
+                                    Binding="{Binding IdCard}"
+                                    Width="120"/>
+                            <DataGridTextColumn Header="Datum rođenja"
+                                    Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
+                                    Width="120"/>
+                            <DataGridTextColumn Header="Email"
+                                    Binding="{Binding Email}"
+                                    Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
 
             <TabItem Header="Izdavači">

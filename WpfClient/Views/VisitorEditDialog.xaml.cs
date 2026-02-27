@@ -319,7 +319,7 @@ namespace WpfClient
                     return;
                 }
 
-                // Ažuriraj DTO
+                // Ažuriraj DTO osnovne podatke
                 VisitorDTO.Name = TxtName.Text.Trim();
                 VisitorDTO.LastName = TxtLastName.Text.Trim();
 
@@ -332,7 +332,26 @@ namespace WpfClient
                 VisitorDTO.Address.Country = TxtCountry.Text.Trim();
 
                 // Ažuriraj Wishlist u DTO (sa kompletnim podacima)
-                VisitorDTO.Wishlist = _wishlist.ToList();
+                VisitorDTO.Wishlist = _wishlist.Select(book => new BookDTO
+                {
+                    Isbn = book.Isbn,
+                    Name = book.Name,
+                    Genre = book.Genre,
+                    PublicationYear = book.PublicationYear,
+                    Price = book.Price,
+                    NumberOfPages = book.NumberOfPages,
+                    Publisher = book.Publisher != null ? new PublisherDTO
+                    {
+                        Id = book.Publisher.Id,
+                        Name = book.Publisher.Name
+                    } : new PublisherDTO(),
+                    Authors = book.Authors?.Select(a => new AuthorDTO
+                    {
+                        IdCard = a.IdCard,
+                        Name = a.Name,
+                        Lastname = a.Lastname
+                    }).ToList() ?? new System.Collections.Generic.List<AuthorDTO>()
+                }).ToList();
 
                 // Ažuriraj originalni model
                 _originalVisitor.Name = VisitorDTO.Name;
@@ -361,7 +380,6 @@ namespace WpfClient
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

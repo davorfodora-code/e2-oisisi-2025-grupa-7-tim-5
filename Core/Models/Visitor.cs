@@ -59,20 +59,31 @@ public class Visitor : ISerializable
 
     public string[] ToCSV()
     {
-        string wishlistString = string.Join(";", Wishlist.Select(book => $"{book.Isbn},{book.Name}"));
+        string wishlistString = string.Join(";", Wishlist.Select(book =>
+        {
+            if (book.Authors != null && book.Authors.Count > 0)
+            {
+                string authorsPart = string.Join("|", book.Authors.Select(a => $"{a.IdCard},{a.Name},{a.Lastname}"));
+                return $"{book.Isbn},{book.Name},{authorsPart}";
+            }
+            else
+            {
+                return $"{book.Isbn},{book.Name}";
+            }
+        }));
+
         string purchasesString = string.Join(";", Purchases.Select(purchase => $"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.}"));
 
-        // VAŽNO: Serijalizuj svaki deo adrese kao posebno polje
         string[] Values =
         {
             Name,
             LastName,
             DateOfBirth,
-            Address?.Street ?? "",      // Street
-            Address?.Number ?? "",      // Number
-            Address?.City ?? "",        // City
-            Address?.State ?? "",       // State
-            Address?.Country ?? "",     // Country
+            Address?.Street ?? "",
+            Address?.Number ?? "",
+            Address?.City ?? "",
+            Address?.State ?? "",
+            Address?.Country ?? "",
             ContactPhone,
             Email,
             MembershipNumber,
@@ -97,7 +108,6 @@ public class Visitor : ISerializable
         LastName = values[1];
         DateOfBirth = values[2];
 
-        // Čitaj adresu iz pojedinačnih polja
         Address = new Address
         {
             Street = values[3] ?? "",
@@ -113,7 +123,6 @@ public class Visitor : ISerializable
         MembershipYear = values[11];
         Status = values[12];
 
-        // Safe parsing za AverageReview
         if (!string.IsNullOrWhiteSpace(values[13]) && double.TryParse(values[13], out double avgReview))
         {
             AverageReview = avgReview;
@@ -124,33 +133,51 @@ public class Visitor : ISerializable
         }
 
         // Wishlist
+        Wishlist = new List<Book>();
         if (values.Length > 14 && !string.IsNullOrWhiteSpace(values[14]))
         {
-            var wishlistEntries = values[14].Split(';');
-            Wishlist = new List<Book>();
+            var wishlistEntries = values[14].Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (var entry in wishlistEntries)
             {
                 var parts = entry.Split(',');
-                if (parts.Length == 2)
+                if (parts.Length >= 2)
                 {
-                    Wishlist.Add(new Book
+                    var book = new Book
                     {
                         Isbn = parts[0],
                         Name = parts[1]
-                    });
+                    };
+
+                    // Ako postoje i autori (format: ISBN,NAME,AUTHOR1|AUTHOR2|...)
+                    if (parts.Length > 2)
+                    {
+                        book.Authors = new List<Author>();
+                        var authorEntries = parts[2].Split('|', StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var authorEntry in authorEntries)
+                        {
+                            var authorParts = authorEntry.Split(',');
+                            if (authorParts.Length >= 3)
+                            {
+                                book.Authors.Add(new Author
+                                {
+                                    IdCard = authorParts[0],
+                                    Name = authorParts[1],
+                                    Lastname = authorParts[2]
+                                });
+                            }
+                        }
+                    }
+
+                    Wishlist.Add(book);
                 }
             }
         }
-        else
-        {
-            Wishlist = new List<Book>();
-        }
 
         // Purchases
+        Purchases = new List<Purchase>();
         if (values.Length > 15 && !string.IsNullOrWhiteSpace(values[15]))
         {
-            var purchaseEntries = values[15].Split(';');
-            Purchases = new List<Purchase>();
+            var purchaseEntries = values[15].Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (var entry in purchaseEntries)
             {
                 var parts = entry.Split(',');
@@ -167,10 +194,6 @@ public class Visitor : ISerializable
                     });
                 }
             }
-        }
-        else
-        {
-            Purchases = new List<Purchase>();
         }
     }
 
