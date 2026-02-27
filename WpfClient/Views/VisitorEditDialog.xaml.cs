@@ -282,10 +282,8 @@ namespace WpfClient
 
             if (result != MessageBoxResult.Yes) return;
 
-            // 1) ukloni iz kupljenih
             _purchases.Remove(selectedPurchase);
 
-            // 2) prebaci u wishlist
             if (selectedPurchase.Book != null)
             {
                 var bookDto = BookDTO.FromModel(selectedPurchase.Book);
@@ -294,14 +292,11 @@ namespace WpfClient
                     _wishlist.Add(bookDto);
             }
 
-            // 3) osveži prikaze
             PurchasedBooksGrid.ItemsSource = null;
             PurchasedBooksGrid.ItemsSource = _purchases;
 
             WishlistBooksGrid.ItemsSource = null;
             WishlistBooksGrid.ItemsSource = _wishlist;
-
-            // 4) preračunaj potrošeno
             CalculateTotalSpent();
 
             BtnCancelPurchase.IsEnabled = false;
@@ -310,8 +305,7 @@ namespace WpfClient
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                // Validacija
+            { 
                 if (string.IsNullOrWhiteSpace(TxtName.Text) || string.IsNullOrWhiteSpace(TxtLastName.Text))
                 {
                     MessageBox.Show("Ime i prezime su obavezni!", "Greška",
@@ -319,7 +313,6 @@ namespace WpfClient
                     return;
                 }
 
-                // Ažuriraj DTO osnovne podatke
                 VisitorDTO.Name = TxtName.Text.Trim();
                 VisitorDTO.LastName = TxtLastName.Text.Trim();
 
@@ -331,7 +324,6 @@ namespace WpfClient
                 VisitorDTO.Address.City = TxtCity.Text.Trim();
                 VisitorDTO.Address.Country = TxtCountry.Text.Trim();
 
-                // Ažuriraj Wishlist u DTO (sa kompletnim podacima)
                 VisitorDTO.Wishlist = _wishlist.Select(book => new BookDTO
                 {
                     Isbn = book.Isbn,
@@ -353,7 +345,6 @@ namespace WpfClient
                     }).ToList() ?? new System.Collections.Generic.List<AuthorDTO>()
                 }).ToList();
 
-                // Ažuriraj originalni model
                 _originalVisitor.Name = VisitorDTO.Name;
                 _originalVisitor.LastName = VisitorDTO.LastName;
                 _originalVisitor.Address = VisitorDTO.Address.ToModel();
@@ -370,7 +361,8 @@ namespace WpfClient
                     }).ToList()
                 }).ToList();
                 _originalVisitor.Status = VisitorDTO.Status;
-
+                MessageBox.Show($"Wishlist u dijalogu pre save: {_wishlist.Count} knjiga\n" +
+                string.Join("\n", _wishlist.Select(b => b.Name)));
                 DialogResult = true;
                 Close();
             }
@@ -401,8 +393,6 @@ namespace WpfClient
 
             bool? ok = dlg.ShowDialog();
             if (ok != true) return;
-
-            // napravi Purchase i prebaci knjigu iz wishlist u purchased
             var purchase = new Purchase
             {
                 Book = new Book
@@ -422,26 +412,14 @@ namespace WpfClient
                 Comment = ""
             };
 
-            // 1) ukloni iz wishlist
             _wishlist.Remove(selectedBook);
-
-            // 2) dodaj u kupljene
             _purchases.Add(purchase);
 
-            // 3) ukloni iz dostupnih (da se ne pojavljuje više) - i NE vraćaj kupljeno u available
             var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
             if (inAvailable != null)
                 _availableBooks.Remove(inAvailable);
-
-            // 4) osveži prikaze
-           
-
             WishlistBooksGrid.ItemsSource = null;
             WishlistBooksGrid.ItemsSource = _wishlist;
-
-           
-
-            // 5) preračunaj potrošeno
             CalculateTotalSpent();
 
             BtnPurchase.IsEnabled = false;

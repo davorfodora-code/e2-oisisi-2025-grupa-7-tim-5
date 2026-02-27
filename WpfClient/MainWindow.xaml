@@ -9,7 +9,6 @@
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
 
-
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#F0F0F0">
             <MenuItem Header="File">
@@ -92,13 +91,11 @@
         </StatusBar>
 
         <Border DockPanel.Dock="Top"
-        Background="#F0F0F0"
-        Padding="6"
-        BorderBrush="#CCCCCC"
-        BorderThickness="0,0,0,1">
-
+                Background="#F0F0F0"
+                Padding="6"
+                BorderBrush="#CCCCCC"
+                BorderThickness="0,0,0,1">
             <Grid HorizontalAlignment="Stretch">
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -106,155 +103,153 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
-
                     <Button x:Name="BtnAdd"
-                    Click="BtnAdd_Click"
-                    Margin="0,0,8,0"
-                    Padding="8,4"
-                    Width="34">
+                            Click="BtnAdd_Click"
+                            Margin="0,0,8,0"
+                            Padding="8,4"
+                            Width="34">
                         <Image Source="pack://application:,,,/Icons/add-user.png"
-                       Width="16" Height="16"/>
+                               Width="16" Height="16"/>
                     </Button>
 
                     <Button x:Name="BtnEdit"
-                    Click="BtnEdit_Click"
-                    Margin="0,0,8,0"
-                    Padding="8,4"
-                    Width="33">
+                            Click="BtnEdit_Click"
+                            Margin="0,0,8,0"
+                            Padding="8,4"
+                            Width="33">
                         <Image Source="/Icons/edit-user.png"
-                       Width="16" Height="16"/>
+                               Width="16" Height="16"/>
                     </Button>
 
                     <Button x:Name="BtnDelete"
-                    Click="BtnDelete_Click"
-                    Margin="0,0,24,0"
-                    Padding="8,4"
-                    Width="33">
+                            Click="BtnDelete_Click"
+                            Margin="0,0,24,0"
+                            Padding="8,4"
+                            Width="33">
                         <Image Source="/Icons/delete-user.png"
-                       Width="16" Height="16"/>
+                               Width="16" Height="16"/>
                     </Button>
                 </StackPanel>
-
 
                 <StackPanel Orientation="Horizontal"
-                    Grid.Column="2"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center">
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
 
                     <TextBox x:Name="TxtSearch"
-                     Width="200"
-                     Height="28"
-                     Padding="6"
-                     KeyDown="TxtSearch_KeyDown"/>
+                             Width="200"
+                             Height="28"
+                             Padding="6"
+                             KeyDown="TxtSearch_KeyDown"
+                             TextChanged="TxtSearch_TextChanged"/>
 
                     <Button x:Name="BtnSearch"
-                    Width="35"
-                    Height="28"
-                    Margin="5,0,0,0"
-                    Click="BtnSearch_Click">
-
+                            Width="35"
+                            Height="28"
+                            Margin="5,0,0,0"
+                            Click="BtnSearch_Click">
                         <Image Source="/Icons/magnifier.png"
-                       Width="16"
-                       Height="16"/>
+                               Width="16"
+                               Height="16"/>
                     </Button>
-
                 </StackPanel>
-
             </Grid>
-
         </Border>
 
-
-
-
-
         <TabControl x:Name="MainTabs"
-            SelectionChanged="MainTabs_SelectionChanged"
-            Margin="10"
-            Background="White"
-            BorderBrush="#E0E0E0"
-            BorderThickness="1">
+                    SelectionChanged="MainTabs_SelectionChanged"
+                    Margin="10"
+                    Background="White"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1">
 
+            <!-- ===== TAB KNJIGE ===== -->
             <TabItem Header="Knjige">
-                <DataGrid x:Name="BooksGrid"
-                  ItemsSource="{Binding Books}"
-                  SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Margin="10"
-                  BorderBrush="#E0E0E0"
-                  BorderThickness="1"
-                  RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA"
-                  FontSize="14"
-                  RowHeight="30"
-                  HeadersVisibility="Column"
-                  VerticalGridLinesBrush="#E0E0E0"
-                  HorizontalGridLinesBrush="#E0E0E0">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ISBN"
-                        Binding="{Binding Isbn}"
-                        Width="120"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                HorizontalAlignment="Left" Margin="0,0,0,10">
+                        <Button x:Name="BtnCompareBooks"
+                                Content="Poredi knjige"
+                                Width="120"
+                                Height="30"
+                                Click="BtnCompareBooks_Click"/>
+                    </StackPanel>
 
-                        <DataGridTextColumn Header="Naziv"
-                        Binding="{Binding Name}"
-                        Width="2*"/>
-
-                        <DataGridTextColumn Header="Cena"
-                        Binding="{Binding Price, StringFormat='{}{0:C}'}"
-                        Width="100"/>
-
-                        <DataGridTextColumn Header="Godina"
-                        Binding="{Binding PublicationYear}"
-                        Width="80"/>
-
-                        <DataGridTextColumn Header="Žanr"
-                        Binding="{Binding Genre}"
-                        Width="*"/>
-                    </DataGrid.Columns>
-
-                </DataGrid>
+                    <DataGrid Grid.Row="1"
+                              x:Name="BooksGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              BorderBrush="#E0E0E0"
+                              BorderThickness="1"
+                              RowBackground="White"
+                              AlternatingRowBackground="#F8F9FA"
+                              FontSize="14"
+                              RowHeight="30"
+                              HeadersVisibility="Column"
+                              VerticalGridLinesBrush="#E0E0E0"
+                              HorizontalGridLinesBrush="#E0E0E0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ISBN"
+                                               Binding="{Binding Isbn}"
+                                               Width="120"/>
+                            <DataGridTextColumn Header="Naziv"
+                                               Binding="{Binding Name}"
+                                               Width="2*"/>
+                            <DataGridTextColumn Header="Cena"
+                                               Binding="{Binding Price, StringFormat='{}{0:C}'}"
+                                               Width="100"/>
+                            <DataGridTextColumn Header="Godina"
+                                               Binding="{Binding PublicationYear}"
+                                               Width="80"/>
+                            <DataGridTextColumn Header="Žanr"
+                                               Binding="{Binding Genre}"
+                                               Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
 
-
+            <!-- ===== TAB POSETIOCI ===== -->
             <TabItem Header="Posetioci">
                 <DataGrid x:Name="VisitorsGrid"
-          ItemsSource="{Binding Visitors}"
-          SelectedItem="{Binding SelectedVisitor, Mode=TwoWay}"
-          AutoGenerateColumns="False"
-          IsReadOnly="True"
-          Margin="10"
-          BorderBrush="#E0E0E0"
-          BorderThickness="1"
-          RowBackground="White"
-          AlternatingRowBackground="#F8F9FA"
-          FontSize="14"
-          RowHeight="30"
-          HeadersVisibility="Column"
-          VerticalGridLinesBrush="#E0E0E0"
-          HorizontalGridLinesBrush="#E0E0E0">
-
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Margin="10"
+                          BorderBrush="#E0E0E0"
+                          BorderThickness="1"
+                          RowBackground="White"
+                          AlternatingRowBackground="#F8F9FA"
+                          FontSize="14"
+                          RowHeight="30"
+                          HeadersVisibility="Column"
+                          VerticalGridLinesBrush="#E0E0E0"
+                          HorizontalGridLinesBrush="#E0E0E0">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Broj članske karte" 
-                            Binding="{Binding MembershipNumber}" 
-                            Width="150"/>
-                        <DataGridTextColumn Header="Ime" 
-                            Binding="{Binding Name}" 
-                            Width="100"/>
-                        <DataGridTextColumn Header="Prezime" 
-                            Binding="{Binding LastName}" 
-                            Width="120"/>
-                        <DataGridTextColumn Header="Adresa" 
-                            Binding="{Binding DisplayAddress}" 
-                            Width="250"/>
-                        <DataGridTextColumn Header="Status" 
-                            Binding="{Binding DisplayStatus}" 
-                            Width="100"/>
+                        <DataGridTextColumn Header="Broj članske karte"
+                                           Binding="{Binding MembershipNumber}"
+                                           Width="150"/>
+                        <DataGridTextColumn Header="Ime"
+                                           Binding="{Binding Name}"
+                                           Width="100"/>
+                        <DataGridTextColumn Header="Prezime"
+                                           Binding="{Binding LastName}"
+                                           Width="120"/>
+                        <DataGridTextColumn Header="Adresa"
+                                           Binding="{Binding DisplayAddress}"
+                                           Width="250"/>
+                        <DataGridTextColumn Header="Status"
+                                           Binding="{Binding DisplayStatus}"
+                                           Width="100"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
 
+            <!-- ===== TAB AUTORI ===== -->
             <TabItem Header="Autori">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
@@ -262,52 +257,51 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button x:Name="BtnShowVisitorsByAuthor" 
-                    Content="Autor-Posetioci" 
-                    Width="120" 
-                    Height="30"
-                    Click="BtnShowVisitorsByAuthor_Click"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                HorizontalAlignment="Left" Margin="0,0,0,10">
+                        <Button x:Name="BtnShowVisitorsByAuthor"
+                                Content="Autor-Posetioci"
+                                Width="120"
+                                Height="30"
+                                Click="BtnShowVisitorsByAuthor_Click"/>
                     </StackPanel>
 
                     <DataGrid Grid.Row="1"
-                  x:Name="AuthorsGrid"
-                  ItemsSource="{Binding Authors}"
-                  SelectedItem="{Binding SelectedAuthor, Mode=TwoWay}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  BorderBrush="#E0E0E0"
-                  BorderThickness="1"
-                  RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA"
-                  FontSize="14"
-                  RowHeight="30"
-                  HeadersVisibility="Column"
-                  VerticalGridLinesBrush="#E0E0E0"
-                  HorizontalGridLinesBrush="#E0E0E0"
-                  SelectionChanged="AuthorsGrid_SelectionChanged">
-
+                              x:Name="AuthorsGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              BorderBrush="#E0E0E0"
+                              BorderThickness="1"
+                              RowBackground="White"
+                              AlternatingRowBackground="#F8F9FA"
+                              FontSize="14"
+                              RowHeight="30"
+                              HeadersVisibility="Column"
+                              VerticalGridLinesBrush="#E0E0E0"
+                              HorizontalGridLinesBrush="#E0E0E0"
+                              SelectionChanged="AuthorsGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Ime"
-                                    Binding="{Binding Name}"
-                                    Width="*"/>
+                                               Binding="{Binding Name}"
+                                               Width="*"/>
                             <DataGridTextColumn Header="Prezime"
-                                    Binding="{Binding Lastname}"
-                                    Width="*"/>
+                                               Binding="{Binding Lastname}"
+                                               Width="*"/>
                             <DataGridTextColumn Header="Lična karta"
-                                    Binding="{Binding IdCard}"
-                                    Width="120"/>
+                                               Binding="{Binding IdCard}"
+                                               Width="120"/>
                             <DataGridTextColumn Header="Datum rođenja"
-                                    Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
-                                    Width="120"/>
+                                               Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
+                                               Width="120"/>
                             <DataGridTextColumn Header="Email"
-                                    Binding="{Binding Email}"
-                                    Width="2*"/>
+                                               Binding="{Binding Email}"
+                                               Width="2*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
 
+            <!-- ===== TAB IZDAVACI ===== -->
             <TabItem Header="Izdavači">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
@@ -315,28 +309,28 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button x:Name="BtnSetPublisherManager" 
-                    Content="Postavi šefa izdavača" 
-                    Width="150" 
-                    Height="30"
-                    Click="BtnSetPublisherManager_Click"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                                HorizontalAlignment="Left" Margin="0,0,0,10">
+                        <Button x:Name="BtnSetPublisherManager"
+                                Content="Postavi šefa izdavača"
+                                Width="150"
+                                Height="30"
+                                Click="BtnSetPublisherManager_Click"/>
                     </StackPanel>
 
                     <DataGrid Grid.Row="1"
-                  x:Name="PublishersGrid"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  BorderBrush="#E0E0E0"
-                  BorderThickness="1"
-                  RowBackground="White"
-                  AlternatingRowBackground="#F8F9FA"
-                  FontSize="14"
-                  RowHeight="30"
-                  HeadersVisibility="Column"
-                  VerticalGridLinesBrush="#E0E0E0"
-                  HorizontalGridLinesBrush="#E0E0E0">
-
+                              x:Name="PublishersGrid"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              BorderBrush="#E0E0E0"
+                              BorderThickness="1"
+                              RowBackground="White"
+                              AlternatingRowBackground="#F8F9FA"
+                              FontSize="14"
+                              RowHeight="30"
+                              HeadersVisibility="Column"
+                              VerticalGridLinesBrush="#E0E0E0"
+                              HorizontalGridLinesBrush="#E0E0E0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                             <DataGridTextColumn Header="Naziv izdavača" Binding="{Binding Name}" Width="2*"/>
@@ -347,7 +341,5 @@
             </TabItem>
 
         </TabControl>
-
-
     </DockPanel>
 </Window>

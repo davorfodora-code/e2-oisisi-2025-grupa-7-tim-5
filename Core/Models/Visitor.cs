@@ -57,13 +57,14 @@ public class Visitor : ISerializable
         Wishlist = new List<Book>();
     }
 
+
     public string[] ToCSV()
     {
         string wishlistString = string.Join(";", Wishlist.Select(book =>
         {
             if (book.Authors != null && book.Authors.Count > 0)
             {
-                string authorsPart = string.Join("|", book.Authors.Select(a => $"{a.IdCard},{a.Name},{a.Lastname}"));
+                string authorsPart = string.Join("|", book.Authors.Select(a => $"{a.IdCard}~{a.Name}~{a.Lastname}"));
                 return $"{book.Isbn},{book.Name},{authorsPart}";
             }
             else
@@ -72,7 +73,8 @@ public class Visitor : ISerializable
             }
         }));
 
-        string purchasesString = string.Join(";", Purchases.Select(purchase => $"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.}"));
+        string purchasesString = string.Join(";", Purchases.Select(purchase =>
+            $"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.}"));
 
         string[] Values =
         {
@@ -124,74 +126,85 @@ public class Visitor : ISerializable
         Status = values[12];
 
         if (!string.IsNullOrWhiteSpace(values[13]) && double.TryParse(values[13], out double avgReview))
-        {
             AverageReview = avgReview;
-        }
         else
-        {
             AverageReview = 0.0;
-        }
 
-        // Wishlist
         Wishlist = new List<Book>();
         if (values.Length > 14 && !string.IsNullOrWhiteSpace(values[14]))
         {
             var wishlistEntries = values[14].Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (var entry in wishlistEntries)
             {
-                var parts = entry.Split(',');
-                if (parts.Length >= 2)
-                {
-                    var book = new Book
-                    {
-                        Isbn = parts[0],
-                        Name = parts[1]
-                    };
+                int firstComma = entry.IndexOf(',');
+                if (firstComma < 0) continue;
 
-                    // Ako postoje i autori (format: ISBN,NAME,AUTHOR1|AUTHOR2|...)
-                    if (parts.Length > 2)
+                int secondComma = entry.IndexOf(',', firstComma + 1);
+
+                string isbn = entry.Substring(0, firstComma);
+                string bookName;
+                string authorsPart = "";
+
+                if (secondComma < 0)
+                {
+                    bookName = entry.Substring(firstComma + 1);
+                }
+                else
+                {
+                    bookName = entry.Substring(firstComma + 1, secondComma - firstComma - 1);
+                    authorsPart = entry.Substring(secondComma + 1);
+                }
+
+                var book = new Book { Isbn = isbn, Name = bookName, Authors = new List<Author>() };
+
+                if (!string.IsNullOrWhiteSpace(authorsPart))
+                {
+                    var authorEntries = authorsPart.Split('|', StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var authorEntry in authorEntries)
                     {
-                        book.Authors = new List<Author>();
-                        var authorEntries = parts[2].Split('|', StringSplitOptions.RemoveEmptyEntries);
-                        foreach (var authorEntry in authorEntries)
+                        var ap = authorEntry.Split('~');
+                        if (ap.Length >= 3)
                         {
-                            var authorParts = authorEntry.Split(',');
-                            if (authorParts.Length >= 3)
+                            book.Authors.Add(new Author
                             {
-                                book.Authors.Add(new Author
-                                {
-                                    IdCard = authorParts[0],
-                                    Name = authorParts[1],
-                                    Lastname = authorParts[2]
-                                });
-                            }
+                                IdCard = ap[0],
+                                Name = ap[1],
+                                Lastname = ap[2]
+                            });
                         }
                     }
-
-                    Wishlist.Add(book);
                 }
+
+                Wishlist.Add(book);
             }
         }
 
-        // Purchases
         Purchases = new List<Purchase>();
         if (values.Length > 15 && !string.IsNullOrWhiteSpace(values[15]))
         {
             var purchaseEntries = values[15].Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (var entry in purchaseEntries)
             {
-                var parts = entry.Split(',');
-                if (parts.Length == 3)
+                int firstComma = entry.IndexOf(',');
+                int lastComma = entry.LastIndexOf(',');
+
+                if (firstComma < 0 || lastComma <= firstComma) continue;
+
+                string isbn = entry.Substring(0, firstComma);
+                string dateStr = entry.Substring(lastComma + 1);
+                string bookName = entry.Substring(firstComma + 1, lastComma - firstComma - 1);
+
+                if (DateOnly.TryParse(dateStr, out DateOnly date))
                 {
                     Purchases.Add(new Purchase
                     {
-                        Book = new Book
-                        {
-                            Isbn = parts[0],
-                            Name = parts[1]
-                        },
-                        DateOfPurchase = DateOnly.Parse(parts[2])
+                        Book = new Book { Isbn = isbn, Name = bookName },
+                        DateOfPurchase = date
                     });
+                }
+                else
+                {
+                    Console.WriteLine($"WARN: Ne mogu da parsiram datum '{dateStr}' za kupovinu '{isbn}'");
                 }
             }
         }
@@ -205,13 +218,9 @@ public class Visitor : ISerializable
         sb.Append($"Date of birth: {DateOfBirth}, ");
 
         if (Address != null)
-        {
             sb.Append($"Address: {Address.Street} {Address.Number}, {Address.City}, ");
-        }
         else
-        {
             sb.Append($"Address: N/A, ");
-        }
 
         sb.Append($"Contact phone: {ContactPhone}, ");
         sb.Append($"Email: {Email}, ");

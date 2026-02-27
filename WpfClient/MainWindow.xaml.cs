@@ -116,7 +116,24 @@ namespace WpfClient
             VisitorsGrid.ItemsSource = _visitors;
             _allVisitors = _visitors.ToList();
         }
+        private void BtnCompareBooks_Click(object sender, RoutedEventArgs e)
+        {
+            var allVisitors = _visitorDAO
+                .GetAllVisitors()
+                .Select(VisitorDTO.FromModel)
+                .ToList();
 
+            if (_allBooks == null || _allBooks.Count == 0)
+            {
+                MessageBox.Show("Nema učitanih knjiga u sistemu.", "Upozorenje",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var win = new BookCompareWindow(_allBooks, allVisitors);
+            win.Owner = this;
+            win.ShowDialog();
+        }
         private void LoadAuthors()
         {
             var authorModels = _authorController.GetAllAuthors();
@@ -284,11 +301,10 @@ namespace WpfClient
             var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
             if (selectedAuthor != null)
             {
-                // Pretpostavka je da imaš pristup listi svih posetilaca u DAO ili servisu
                 var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
 
                 var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
-                win.Owner = this; // Opciono, da bi bio centriran u odnosu na glavni prozor
+                win.Owner = this; 
                 win.ShowDialog();
             }
             else
@@ -760,16 +776,13 @@ namespace WpfClient
             aboutWindow.ShowDialog();
         }
 
-        // Promeni ime metode da bude identično onom u Error Listi
         private void BtnShowVisitorsByAuthor_Click(object sender, RoutedEventArgs e)
         {
             var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
             if (selectedAuthor != null)
             {
-                // Uzimamo sve posetioce
                 var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
 
-                // Otvaramo NOVI prozor i šaljemo mu podatke
                 var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
                 win.Owner = this;
                 win.ShowDialog();

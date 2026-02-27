@@ -30,19 +30,16 @@ namespace WpfClient
                 BookDAO bookDAO = new BookDAO();
                 var allBooks = bookDAO.GetAllBooks();
 
-                // Pronalazimo ISBN-ove knjiga koje je pisao taj autor
                 var authorBookIsbns = allBooks
                     .Where(b => b.Authors != null && b.Authors.Any(a => a.IdCard == _selectedAuthor.IdCard))
                     .Select(b => b.Isbn)
                     .ToList();
 
-                // Filtriramo posetioce
                 _filteredVisitors = _allVisitors.Where(v =>
                     v.Wishlist != null && v.Wishlist.Any(wishBook => authorBookIsbns.Contains(wishBook.Isbn))
                 ).ToList();
 
                 VisitorsGrid.ItemsSource = _filteredVisitors;
-                // TxtAuthorInfo mora biti ime TextBlock-a u tvom XAML-u novog prozora
                 TxtAuthorInfo.Text = $"Autor: {_selectedAuthor.Name} {_selectedAuthor.Lastname} (Pronađeno: {_filteredVisitors.Count})";
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
