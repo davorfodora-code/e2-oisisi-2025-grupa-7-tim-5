@@ -5,91 +5,107 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="Sajam knjiga"
+        Title="{DynamicResource App_Title}"
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
 <Grid>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#F0F0F0">
-            <MenuItem Header="File">
-                <MenuItem Header="New" Click="FileNew_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/plus.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Save" Click="FileSave_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/diskette.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator/>
-                <MenuItem Header="Open">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/share.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                    <MenuItem Header="Posetioci" Click="OpenPosetioci_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/Icons/multiple-users-silhouette.png" Width="16" Height="16"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Knjige" Click="OpenKnjige_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/Icons/open-book.png" Width="16" Height="16"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Autori" Click="OpenAutori_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/Icons/author.png" Width="16" Height="16"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Izdavači" Click="OpenIzdavaci_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/Icons/publisher.png" Width="16" Height="16"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+
+    <MenuItem Header="{DynamicResource Menu_File}">
+        <MenuItem Header="{DynamicResource Menu_New}" Click="FileNew_Click">
+            <MenuItem.Icon>
+                <Image Source="/Icons/plus.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header="{DynamicResource Menu_Save}" Click="FileSave_Click">
+            <MenuItem.Icon>
+                <Image Source="/Icons/diskette.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <Separator/>
+
+        <MenuItem Header="{DynamicResource Menu_Open}">
+            <MenuItem.Icon>
+                <Image Source="/Icons/share.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+
+            <MenuItem Header="{DynamicResource Menu_Visitors}" Click="OpenPosetioci_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Icons/multiple-users-silhouette.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem Header="Edit">
-                <MenuItem Header="Edit" Click="EditEdit_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/edit-user.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Delete" Click="EditDelete_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/delete-user.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+            <MenuItem Header="{DynamicResource Menu_Books}" Click="OpenKnjige_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Icons/open-book.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem Header="Help">
-                <MenuItem Header="About" Click="HelpAbout_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/Icons/information-button.png" Width="16" Height="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+            <MenuItem Header="{DynamicResource Menu_Authors}" Click="OpenAutori_Click">
+                <MenuItem.Icon>
+                    <Image Source="/Icons/author.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
             </MenuItem>
-        </Menu>
+
+            <MenuItem Header="{DynamicResource Menu_Publishers}" Click="OpenIzdavaci_Click">
+                <MenuItem.Icon>
+                    <!-- ako nemaš publisher.png, obriši ovaj Image ili dodaj fajl -->
+                    <Image Source="/Icons/publisher.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+    </MenuItem>
+
+    <MenuItem Header="{DynamicResource Menu_EditRoot}">
+        <MenuItem Header="{DynamicResource Menu_Edit}" Click="EditEdit_Click">
+            <MenuItem.Icon>
+                <Image Source="/Icons/edit-user.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+        </MenuItem>
+
+        <MenuItem Header="{DynamicResource Menu_Delete}" Click="EditDelete_Click">
+            <MenuItem.Icon>
+                <Image Source="/Icons/delete-user.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+        </MenuItem>
+    </MenuItem>
+
+    <MenuItem Header="{DynamicResource Menu_HelpRoot}">
+        <MenuItem Header="{DynamicResource Menu_About}" Click="HelpAbout_Click">
+            <MenuItem.Icon>
+                <Image Source="/Icons/information-button.png" Width="16" Height="16"/>
+            </MenuItem.Icon>
+        </MenuItem>
+    </MenuItem>
+
+    <!-- opcionalno: jezik -->
+    <MenuItem Header="{DynamicResource Menu_Language}">
+        <MenuItem Header="Српски" Click="LangSr_Click"/>
+        <MenuItem Header="English" Click="LangEn_Click"/>
+    </MenuItem>
+
+</Menu>
 
         <StatusBar DockPanel.Dock="Bottom" Background="#F0F0F0">
             <StatusBarItem>
-                <TextBlock x:Name="StatusBarDate" Text="Datum: " Width="120"/>
+                <TextBlock x:Name="StatusBarDate" Text="{DynamicResource Status_Date}" Width="120"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
-                <TextBlock x:Name="StatusBarTime" Text="Vreme: " Width="100"/>
+               <TextBlock x:Name="StatusBarTime" Text="{DynamicResource Status_Time}" Width="100"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
-                <TextBlock x:Name="StatusBarAppName" Text="Sajam knjiga" Width="100"/>
+               <TextBlock x:Name="StatusBarAppName" Text="{DynamicResource App_Title}" Width="100"/>
             </StatusBarItem>
             <Separator/>
             <StatusBarItem>
-                <TextBlock x:Name="StatusBarTabName" Text="Tab: " Width="200"/>
+               <TextBlock x:Name="StatusBarTabName" Text="{DynamicResource Status_Tab}" Width="200"/>
             </StatusBarItem>
 
-           
   
         </StatusBar>
 
@@ -175,7 +191,7 @@
 
 
             <!-- ===== TAB KNJIGE ===== -->
-            <TabItem Header="Knjige">
+            <TabItem Header="{DynamicResource Tab_Books}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -185,7 +201,7 @@
                     <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
                         <Button x:Name="BtnCompareBooks"
-                                Content="Poredi knjige"
+                               Content="{DynamicResource Btn_CompareBooks}"
                                 Width="120"
                                 Height="30"
                                 Click="BtnCompareBooks_Click"/>
@@ -208,22 +224,38 @@
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ISBN"
-                                               Binding="{Binding Isbn}"
-                                               Width="120"/>
-                            <DataGridTextColumn Header="Naziv"
-                                               Binding="{Binding Name}"
-                                               Width="2*"/>
-                            <DataGridTextColumn Header="Cena"
-                                               Binding="{Binding Price, StringFormat='{}{0:C}'}"
-                                               Width="100"/>
-                            <DataGridTextColumn Header="Godina"
-                                               Binding="{Binding PublicationYear}"
-                                               Width="80"/>
-                            <DataGridTextColumn Header="Žanr"
-                                               Binding="{Binding Genre}"
-                                               Width="*"/>
-                        </DataGrid.Columns>
+
+    <DataGridTextColumn Binding="{Binding Isbn}" Width="120">
+        <DataGridTextColumn.Header>
+            <TextBlock Text="{DynamicResource Col_ISBN}" />
+        </DataGridTextColumn.Header>
+    </DataGridTextColumn>
+
+    <DataGridTextColumn Binding="{Binding Name}" Width="2*">
+        <DataGridTextColumn.Header>
+            <TextBlock Text="{DynamicResource Col_Name}" />
+        </DataGridTextColumn.Header>
+    </DataGridTextColumn>
+
+    <DataGridTextColumn Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="100">
+        <DataGridTextColumn.Header>
+            <TextBlock Text="{DynamicResource Col_Price}" />
+        </DataGridTextColumn.Header>
+    </DataGridTextColumn>
+
+    <DataGridTextColumn Binding="{Binding PublicationYear}" Width="80">
+        <DataGridTextColumn.Header>
+            <TextBlock Text="{DynamicResource Col_Year}" />
+        </DataGridTextColumn.Header>
+    </DataGridTextColumn>
+
+    <DataGridTextColumn Binding="{Binding Genre}" Width="*">
+        <DataGridTextColumn.Header>
+            <TextBlock Text="{DynamicResource Col_Genre}" />
+        </DataGridTextColumn.Header>
+    </DataGridTextColumn>
+
+</DataGrid.Columns>
 
                     </DataGrid>
                   
@@ -234,7 +266,7 @@
                    
 
             <!-- ===== TAB POSETIOCI ===== -->
-            <TabItem Header="Posetioci">
+            <TabItem Header="{DynamicResource Tab_Visitors}">
                 <DataGrid x:Name="VisitorsGrid"
                           AutoGenerateColumns="False"
                           IsReadOnly="True"
@@ -249,19 +281,19 @@
                           VerticalGridLinesBrush="#E0E0E0"
                           HorizontalGridLinesBrush="#E0E0E0">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Broj članske karte"
+                        <DataGridTextColumn Header="{DynamicResource Col_MembershipNumber}"
                                            Binding="{Binding MembershipNumber}"
                                            Width="150"/>
-                        <DataGridTextColumn Header="Ime"
+                        <DataGridTextColumn Header="{DynamicResource Col_FirstName}"
                                            Binding="{Binding Name}"
                                            Width="100"/>
-                        <DataGridTextColumn Header="Prezime"
+                        <DataGridTextColumn Header="{DynamicResource Col_LastName}"
                                            Binding="{Binding LastName}"
                                            Width="120"/>
-                        <DataGridTextColumn Header="Adresa"
+                        <DataGridTextColumn Header="{DynamicResource Col_Address}"
                                            Binding="{Binding DisplayAddress}"
                                            Width="250"/>
-                        <DataGridTextColumn Header="Status"
+                        <DataGridTextColumn Header="{DynamicResource Col_Status}"
                                            Binding="{Binding DisplayStatus}"
                                            Width="100"/>
                     </DataGrid.Columns>
@@ -270,7 +302,7 @@
             </TabItem>
 
             <!-- ===== TAB AUTORI ===== -->
-            <TabItem Header="Autori">
+            <TabItem Header="{DynamicResource Tab_Authors}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -280,7 +312,7 @@
                     <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
                         <Button x:Name="BtnShowVisitorsByAuthor"
-                                Content="Autor-Posetioci"
+                                Content="{DynamicResource Btn_ShowVisitorsByAuthor}"
                                 Width="120"
                                 Height="30"
                                 Click="BtnShowVisitorsByAuthor_Click"/>
@@ -301,19 +333,19 @@
                               HorizontalGridLinesBrush="#E0E0E0"
                               SelectionChanged="AuthorsGrid_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ime"
+                            <DataGridTextColumn Header="{DynamicResource Col_FirstName}"
                                                Binding="{Binding Name}"
                                                Width="*"/>
-                            <DataGridTextColumn Header="Prezime"
+                            <DataGridTextColumn Header="{DynamicResource Col_LastName}"
                                                Binding="{Binding Lastname}"
                                                Width="*"/>
-                            <DataGridTextColumn Header="Lična karta"
+                            <DataGridTextColumn Header="{DynamicResource Col_IdCard}"
                                                Binding="{Binding IdCard}"
                                                Width="120"/>
-                            <DataGridTextColumn Header="Datum rođenja"
+                            <DataGridTextColumn Header="{DynamicResource Col_DateOfBirth}"
                                                Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
                                                Width="120"/>
-                            <DataGridTextColumn Header="Email"
+                            <DataGridTextColumn Header="{DynamicResource Col_Email}"
                                                Binding="{Binding Email}"
                                                Width="2*"/>
                         </DataGrid.Columns>
@@ -322,7 +354,7 @@
             </TabItem>
 
             <!-- ===== TAB IZDAVACI ===== -->
-            <TabItem Header="Izdavači">
+            <TabItem Header="{DynamicResource Tab_Publishers}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -332,13 +364,13 @@
                     <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
                         <Button x:Name="BtnSetPublisherManager"
-                                Content="Postavi šefa izdavača"
+                                Content="{DynamicResource Btn_SetPublisherManager}"
                                 Width="150"
                                 Height="30"
                                 Click="BtnSetPublisherManager_Click"/>
 
                         <Button x:Name="BtnShowPublisherBooks"
-                                Content="Izdavač-Knjige"
+                               Content="{DynamicResource Btn_ShowPublisherBooks}"
                                 Width="120"
                                 Height="30"
                                 Margin="10,0,0,0"
@@ -359,9 +391,9 @@
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
-                            <DataGridTextColumn Header="Naziv izdavača" Binding="{Binding Name}" Width="2*"/>
-                            <DataGridTextColumn Header="Menadžer" Binding="{Binding DisplayManager}" Width="2*"/>
+                            <DataGridTextColumn Header="{DynamicResource Col_PublisherId}" Binding="{Binding Id}" Width="50"/>
+                            <DataGridTextColumn Header="{DynamicResource Col_PublisherName}" Binding="{Binding Name}" Width="2*"/>
+                            <DataGridTextColumn Header="{DynamicResource Col_Manager}" Binding="{Binding DisplayManager}" Width="2*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

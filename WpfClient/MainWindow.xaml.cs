@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using WpfClient.Localization;
 
 namespace WpfClient
 {
@@ -838,6 +839,15 @@ namespace WpfClient
             {
                 MessageBox.Show("Izaberite izdavača iz tabele.", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+        private void LangSr_Click(object sender, RoutedEventArgs e)
+        {
+            LanguageService.SetLanguage("sr");
+        }
+
+        private void LangEn_Click(object sender, RoutedEventArgs e)
+        {
+            LanguageService.SetLanguage("en");
         }
     }
 }
