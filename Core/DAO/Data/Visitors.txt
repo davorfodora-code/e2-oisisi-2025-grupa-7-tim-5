@@ -1,3 +1,3 @@
-Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||R|0|ISBN3,Na Drini cuprija,Id kartica~Milos~Markovic|ID-1-9999~Nikola~Nikolasevic;ISBN2,NAZIV2,Id kartica~Milos~Markovic|KK-11-22~Davor~Fodora|
+Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||R|0|ISBN2,NAZIV2,Id kartica~Milos~Markovic|KK-11-22~Davor~Fodora|ISBN3,Na Drini cuprija,13.02.2026.
 Nemanja|Elor||Dunavska|13|Novi Sad|Novi Sad|Srbija|||CK-1-0002||V|0||Isbn,Naziv,12.02.2026.
 Andjela|Prastalo||Savska|3|Zrenjanin|Zrenjanin|Srbija|||CK-2-0003||V|0||
