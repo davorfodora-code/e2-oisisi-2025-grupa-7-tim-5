@@ -13,6 +13,7 @@ namespace WpfClient
         private BookDTO? _originalBook;
         public ObservableCollection<AuthorDTO> AllAuthors { get; set; }
         public ObservableCollection<PublisherDTO> AllPublishers { get; set; }
+        private string L(string key) => (string)Application.Current.Resources[key];
 
         public AddBookDialog(ObservableCollection<AuthorDTO> authors, ObservableCollection<PublisherDTO> publishers)
         {
@@ -36,8 +37,8 @@ namespace WpfClient
             AllAuthors = authors ?? new ObservableCollection<AuthorDTO>();
             AllPublishers = publishers ?? new ObservableCollection<PublisherDTO>();
 
-            Title = "Izmeni knjigu";
-            BtnSave.Content = "Sačuvaj izmene";
+            Title = (string)Application.Current.Resources["EditBook_Title"];
+            BtnSave.Content = (string)Application.Current.Resources["Btn_SaveChanges"];
 
             LstAuthors.ItemsSource = AllAuthors;
             CmbPublisher.ItemsSource = AllPublishers;
@@ -89,35 +90,35 @@ namespace WpfClient
             {
                 if (string.IsNullOrWhiteSpace(TxtIsbn.Text))
                 {
-                    MessageBox.Show("ISBN je obavezan!", "Greška",
+                    MessageBox.Show(L("Msg_IsbnRequired"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TxtBookName.Text))
                 {
-                    MessageBox.Show("Naziv knjige je obavezan!", "Greška",
+                    MessageBox.Show(L("Msg_BookNameRequired"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 if (CmbGenre.SelectedItem == null)
                 {
-                    MessageBox.Show("Izaberite žanr knjige!", "Greška",
+                    MessageBox.Show(L("Msg_GenreRequired"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 if (!int.TryParse(TxtPages.Text, out int pages) || pages <= 0)
                 {
-                    MessageBox.Show("Broj stranica mora biti pozitivan ceo broj!", "Greška",
+                    MessageBox.Show(L("Msg_PagesPositiveInt"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 if (!double.TryParse(TxtPrice.Text, out double price) || price <= 0)
                 {
-                    MessageBox.Show("Cena mora biti pozitivan broj!", "Greška",
+                    MessageBox.Show(L("Msg_PricePositiveNumber"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -125,7 +126,7 @@ namespace WpfClient
                 var selectedAuthors = LstAuthors.SelectedItems.Cast<AuthorDTO>().ToList();
                 if (selectedAuthors.Count == 0)
                 {
-                    MessageBox.Show("Morate izabrati bar jednog autora!", "Greška",
+                    MessageBox.Show(L("Msg_AtLeastOneAuthor"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -133,7 +134,7 @@ namespace WpfClient
                 var selectedPublisher = CmbPublisher.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null)
                 {
-                    MessageBox.Show("Morate izabrati izdavača!", "Greška",
+                    MessageBox.Show(L("Msg_PublisherRequired"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -153,7 +154,7 @@ namespace WpfClient
                 var (isValid, errorMessage) = Book.Validate();
                 if (!isValid)
                 {
-                    MessageBox.Show(errorMessage, "Greška",
+                    MessageBox.Show(errorMessage, L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -163,8 +164,8 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Greška pri čuvanju knjige: {ex.Message}", "Greška",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{L("Msg_SaveBookError")} {ex.Message}", L("Dlg_ErrorTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

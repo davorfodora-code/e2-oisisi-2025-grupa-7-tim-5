@@ -18,6 +18,7 @@
     <sys:String x:Key="Menu_EditRoot">Edit</sys:String>
     <sys:String x:Key="Menu_HelpRoot">Help</sys:String>
     <sys:String x:Key="Menu_Delete">Delete</sys:String>
+    <sys:String x:Key="Menu_Edit">Edit</sys:String>
     <sys:String x:Key="Menu_About">About</sys:String>
     <sys:String x:Key="Menu_Language">Language</sys:String>
 
@@ -61,5 +62,23 @@
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
     <sys:String x:Key="Col_PublisherName">Publisher Name</sys:String>
     <sys:String x:Key="Col_Manager">Manager</sys:String>
+
+    <!-- ===== BOOKADD DIALOG ===== -->
+    <sys:String x:Key="AddBook_Title">Add book</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Name">Name:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_ISBN">ISBN:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Price">Price:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Year">Year:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Genre">Genre:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Publisher">Publisher:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Authors">Authors:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Pages">Number of pages:</sys:String>
+    <sys:String x:Key="AddBook_Gb_SelectAuthors"> Select authors</sys:String>
+
+    <sys:String x:Key="EditBook_Title">Edit book</sys:String>
+<sys:String x:Key="Btn_SaveChanges">Save changes</sys:String>
+
+    <sys:String x:Key="Btn_Save">Save</sys:String>
+    <sys:String x:Key="Btn_Cancel">Cancel</sys:String>
 
 </ResourceDictionary>

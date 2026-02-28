@@ -18,6 +18,7 @@
    <sys:String x:Key="Menu_EditRoot">Izmeni</sys:String>
     <sys:String x:Key="Menu_HelpRoot">Pomoć</sys:String>
     <sys:String x:Key="Menu_Delete">Obriši</sys:String>
+     <sys:String x:Key="Menu_Edit">Izmeni</sys:String>
     <sys:String x:Key="Menu_About">O aplikaciji</sys:String>
     <sys:String x:Key="Menu_Language">Jezik</sys:String>
 
@@ -61,5 +62,23 @@
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
     <sys:String x:Key="Col_PublisherName">Naziv izdavača</sys:String>
     <sys:String x:Key="Col_Manager">Menadžer</sys:String>
+
+    <!-- ===== BOOKADD DIALOG ===== -->
+    <sys:String x:Key="AddBook_Title">Dodaj knjigu</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Name">Naziv:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_ISBN">ISBN:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Price">Cena:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Year">Godina:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Genre">Žanr:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Publisher">Izdavač:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Authors">Autori:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Pages">Broj stranica:</sys:String>
+    <sys:String x:Key="AddBook_Gb_SelectAuthors">Izaberite autore</sys:String>
+
+    <sys:String x:Key="Btn_Save">Sačuvaj</sys:String>
+    <sys:String x:Key="Btn_Cancel">Otkaži</sys:String>
+
+    <sys:String x:Key="EditBook_Title">Izmeni knjigu</sys:String>
+    <sys:String x:Key="Btn_SaveChanges">Sačuvaj izmene</sys:String>
 
 </ResourceDictionary>
