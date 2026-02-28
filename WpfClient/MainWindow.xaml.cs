@@ -30,6 +30,11 @@ namespace WpfClient
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
         private VisitorDAO _visitorDAO;
+        private int SelectedTabIndex => MainTabs?.SelectedIndex ?? -1;
+        private const int TAB_BOOKS = 0;
+        private const int TAB_VISITORS = 1;
+        private const int TAB_AUTHORS = 2;
+        private const int TAB_PUBLISHERS = 3;
         public MainWindow()
         {
             InitializeComponent();
@@ -70,7 +75,7 @@ namespace WpfClient
 
         private void InitializeStatusBar()
         {
-            StatusBarAppName.Text = "Sajam knjiga";
+            StatusBarAppName.Text = L("App_Title");  
             UpdateTabName();
             UpdateDateTime();
 
@@ -88,20 +93,25 @@ namespace WpfClient
         private void UpdateDateTime()
         {
             var now = DateTime.Now;
-            StatusBarDate.Text = $"Datum: {now:dd.MM.yyyy}";
-            StatusBarTime.Text = $"Vreme: {now:HH:mm:ss}";
+
+            StatusBarDate.Text = $"{L("Status_Date")} {now:dd.MM.yyyy}";
+            StatusBarTime.Text = $"{L("Status_Time")} {now:HH:mm:ss}";
         }
 
         private void UpdateTabName()
         {
             if (MainTabs.SelectedItem is TabItem selectedTab)
             {
-                StatusBarTabName.Text = $"Tab: {selectedTab.Header}";
+                StatusBarTabName.Text = $"{L("Status_Tab")} {selectedTab.Header}";
             }
             else
             {
-                StatusBarTabName.Text = "Tab: N/A";
+                StatusBarTabName.Text = $"{L("Status_Tab")} N/A";
             }
+        }
+        private string L(string key)
+        {
+            return (string)Application.Current.Resources[key];
         }
 
         private void LoadVisitors()
@@ -196,10 +206,9 @@ namespace WpfClient
         {
             try
             {
-                var selectedTab = MainTabs?.SelectedItem as TabItem;
-                var tabName = selectedTab?.Header?.ToString();
+                int idx = MainTabs?.SelectedIndex ?? -1;
 
-                if (tabName == "Posetioci")
+                if (idx == TAB_VISITORS)
                 {
                     var dialog = new AddVisitorDialog();
                     if (dialog.ShowDialog() == true)
@@ -216,7 +225,7 @@ namespace WpfClient
                         }
                     }
                 }
-                else if (tabName == "Izdavači")
+                else if (idx == TAB_PUBLISHERS)
                 {
                     var dialog = new PublisherEditDialog(_authors);
                     dialog.Owner = this;
@@ -236,7 +245,7 @@ namespace WpfClient
                         }
                     }
                 }
-                else if (tabName == "Autori")
+                else if (idx == TAB_AUTHORS)
                 {
                     var dialog = new AddAuthorDialog();
                     dialog.Owner = this;
@@ -255,7 +264,7 @@ namespace WpfClient
                         }
                     }
                 }
-                else if (tabName == "Knjige")
+                else if (idx == TAB_BOOKS)
                 {
                     if (_publishers == null || _publishers.Count == 0)
                     {
@@ -328,10 +337,9 @@ namespace WpfClient
         }
         private void BtnEdit_Click(object? sender, RoutedEventArgs e)
         {
-            var selectedTab = MainTabs?.SelectedItem as TabItem;
-            var tabName = selectedTab?.Header?.ToString();
+            int idx = MainTabs?.SelectedIndex ?? -1;
 
-            if (tabName == "Posetioci")
+            if (idx == TAB_VISITORS)
             {
                 var selectedVisitorDto = VisitorsGrid.SelectedItem as VisitorDTO;
                 if (selectedVisitorDto == null)
@@ -367,7 +375,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Izdavači")
+            else if (idx == TAB_PUBLISHERS)
             {
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null)
@@ -398,7 +406,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Autori")
+            else if (idx == TAB_AUTHORS)
             {
                 var selectedAuthorDto = AuthorsGrid.SelectedItem as AuthorDTO;
                 if (selectedAuthorDto == null)
@@ -441,7 +449,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Knjige")
+            else if (idx == TAB_BOOKS)
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null)
@@ -485,10 +493,9 @@ namespace WpfClient
 
         private void BtnDelete_Click(object? sender, RoutedEventArgs e)
         {
-            var selectedTab = MainTabs?.SelectedItem as TabItem;
-            var tabName = selectedTab?.Header?.ToString();
+            int idx = MainTabs?.SelectedIndex ?? -1;
 
-            if (tabName == "Posetioci")
+            if (idx == TAB_VISITORS)
             {
                 var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
                 if (selectedVisitor == null)
@@ -522,7 +529,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Izdavači")
+            else if (idx == TAB_PUBLISHERS)
             {
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null)
@@ -555,7 +562,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Autori")
+            else if (idx == TAB_AUTHORS)
             {
                 var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
                 if (selectedAuthor == null)
@@ -590,7 +597,7 @@ namespace WpfClient
                     }
                 }
             }
-            else if (tabName == "Knjige")
+            else if (idx == TAB_BOOKS)
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null)
@@ -635,10 +642,9 @@ namespace WpfClient
         {
             string q = TxtSearch.Text ?? "";
 
-            var tab = MainTabs.SelectedItem as TabItem;
-            string header = tab?.Header?.ToString() ?? "";
+            int idx = MainTabs?.SelectedIndex ?? -1;
 
-            
+
             if (string.IsNullOrWhiteSpace(q))
             {
                 VisitorsGrid.ItemsSource = _visitors;
@@ -647,21 +653,21 @@ namespace WpfClient
                 return;
             }
 
-            if (header.Equals("Posetioci", StringComparison.OrdinalIgnoreCase))
+            if (idx == TAB_VISITORS)
             {
                 var filtered = VisitorSearch.Filter(_allVisitors, q).ToList();
                 VisitorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<VisitorDTO>(filtered);
                 return;
             }
 
-            if (header.Equals("Autori", StringComparison.OrdinalIgnoreCase))
+            if (idx == TAB_AUTHORS)
             {
                 var filtered = AuthorSearch.Filter(_allAuthors, q).ToList();
                 AuthorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<AuthorDTO>(filtered);
                 return;
             }
 
-            if (header.Equals("Knjige", StringComparison.OrdinalIgnoreCase))
+            if (idx == TAB_BOOKS)
             {
                 var filtered = BookSearch.Filter(_allBooks, q).ToList();
                 BooksGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<BookDTO>(filtered);
@@ -843,11 +849,17 @@ namespace WpfClient
         private void LangSr_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("sr");
+            StatusBarAppName.Text = L("App_Title");
+            UpdateDateTime();
+            UpdateTabName();
         }
 
         private void LangEn_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("en");
+            StatusBarAppName.Text = L("App_Title");
+            UpdateDateTime();
+            UpdateTabName();
         }
     }
 }
