@@ -1,13 +1,14 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Threading;
-using System.Windows.Controls;
-using Core.Controllers;
+﻿using Core.Controllers;
 using Core.DAO;
 using Core.DTO;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace WpfClient
 {
@@ -180,10 +181,9 @@ namespace WpfClient
             PublishersGrid.Items.Refresh();
         }
 
-
-
-
        
+
+
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
@@ -206,7 +206,7 @@ namespace WpfClient
                         var result = _visitorController.AddVisitor(dialog.Visitor);
                         if (result.Success)
                         {
-                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowToast("✓ Posetilac uspešno dodat!");  // Promenjeno
                             LoadVisitors();
                         }
                         else
@@ -225,8 +225,7 @@ namespace WpfClient
                         var result = _publisherController.AddPublisher(dialog.Publisher.ToModel());
                         if (result != null)
                         {
-                            MessageBox.Show("Izdavač je uspešno dodat!", "Uspešno",
-                                MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowToast("✓ Izdavač uspešno dodat!");  // Promenjeno
                             LoadPublishers();
                         }
                         else
@@ -246,7 +245,7 @@ namespace WpfClient
                         var result = _authorController.AddAuthor(dialog.Author);
                         if (result.Success)
                         {
-                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowToast("✓ Autor uspešno dodat!");  // Promenjeno
                             LoadAuthors();
                         }
                         else
@@ -264,15 +263,13 @@ namespace WpfClient
                         return;
                     }
 
-                    System.Diagnostics.Debug.WriteLine($"Otvaram dialog sa {_authors.Count} autora i {_publishers.Count} izdavača");
-
                     var dialog = new AddBookDialog(_authors, _publishers);
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _bookController.CreateBook(dialog.Book);
                         if (result.Success)
                         {
-                            MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ShowToast("✓ Knjiga uspešno dodata!");  // Promenjeno
                             LoadBooks();
                         }
                         else
@@ -294,6 +291,24 @@ namespace WpfClient
             }
         }
 
+       
+        private async void ShowToast(string message, int ms = 2500)
+        {
+            ToastText.Text = message;
+
+            Toast.Visibility = Visibility.Visible;
+
+            // fade in
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
+            Toast.BeginAnimation(OpacityProperty, fadeIn);
+
+            await Task.Delay(ms);
+
+            // fade out
+            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+            fadeOut.Completed += (_, __) => Toast.Visibility = Visibility.Collapsed;
+            Toast.BeginAnimation(OpacityProperty, fadeOut);
+        }
         private void ShowVisitorsForAuthor_Click(object sender, RoutedEventArgs e)
         {
             var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;

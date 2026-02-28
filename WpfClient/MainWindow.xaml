@@ -8,7 +8,7 @@
         Title="Sajam knjiga"
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
-
+<Grid>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#F0F0F0">
             <MenuItem Header="File">
@@ -88,6 +88,9 @@
             <StatusBarItem>
                 <TextBlock x:Name="StatusBarTabName" Text="Tab: " Width="200"/>
             </StatusBarItem>
+
+           
+  
         </StatusBar>
 
         <Border DockPanel.Dock="Top"
@@ -101,6 +104,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+               
 
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <Button x:Name="BtnAdd"
@@ -153,6 +157,12 @@
                                Height="16"/>
                     </Button>
                 </StackPanel>
+                  <StackPanel x:Name="ToastContainer" 
+                    VerticalAlignment="Bottom"     
+                    HorizontalAlignment="Right"     
+                    Margin="10"                     
+                    Panel.ZIndex="9999">
+                    </StackPanel>
             </Grid>
         </Border>
 
@@ -162,6 +172,7 @@
                     Background="White"
                     BorderBrush="#E0E0E0"
                     BorderThickness="1">
+
 
             <!-- ===== TAB KNJIGE ===== -->
             <TabItem Header="Knjige">
@@ -178,7 +189,10 @@
                                 Width="120"
                                 Height="30"
                                 Click="BtnCompareBooks_Click"/>
+                        
                     </StackPanel>
+                  
+                
 
                     <DataGrid Grid.Row="1"
                               x:Name="BooksGrid"
@@ -210,9 +224,14 @@
                                                Binding="{Binding Genre}"
                                                Width="*"/>
                         </DataGrid.Columns>
+
                     </DataGrid>
+                  
+                 
                 </Grid>
+                     
             </TabItem>
+                   
 
             <!-- ===== TAB POSETIOCI ===== -->
             <TabItem Header="Posetioci">
@@ -247,6 +266,7 @@
                                            Width="100"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
             </TabItem>
 
             <!-- ===== TAB AUTORI ===== -->
@@ -348,5 +368,25 @@
             </TabItem>
 
         </TabControl>
+      
+       
     </DockPanel>
+    <Border x:Name="Toast"
+                Background="#09e201"
+                CornerRadius="8"
+                Padding="12,8"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="15"
+                Opacity="0"
+                Visibility="Collapsed">
+            <TextBlock x:Name="ToastText"
+                       Foreground="White"
+                       FontSize="13"
+                       TextWrapping="Wrap"/>
+        </Border>
+
+        </Grid>
+
+
 </Window>
