@@ -361,8 +361,6 @@ namespace WpfClient
                     }).ToList()
                 }).ToList();
                 _originalVisitor.Status = VisitorDTO.Status;
-                MessageBox.Show($"Wishlist u dijalogu pre save: {_wishlist.Count} knjiga\n" +
-                string.Join("\n", _wishlist.Select(b => b.Name)));
                 DialogResult = true;
                 Close();
             }
