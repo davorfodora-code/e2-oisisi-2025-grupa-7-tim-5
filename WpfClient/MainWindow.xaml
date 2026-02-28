@@ -338,7 +338,6 @@
                               HeadersVisibility="Column"
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0">
-                              SelectionChanged="PublishersGrid_SelectionChanged"
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                             <DataGridTextColumn Header="Naziv izdavača" Binding="{Binding Name}" Width="2*"/>

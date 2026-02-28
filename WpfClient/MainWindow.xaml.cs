@@ -183,26 +183,7 @@ namespace WpfClient
 
 
 
-        private void PublishersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BtnShowPublisherBooks.IsEnabled = PublishersGrid.SelectedItem != null;
-        }
-
-        private void BtnShowPublisherBooks_Click(object sender, RoutedEventArgs e)
-        {
-            var publisher = PublishersGrid.SelectedItem as PublisherDTO;
-            if (publisher == null) return;
-
-            var books = GetBooksForPublisher(publisher);
-
-            var dlg = new PublisherBooksDialog(publisher, books)
-            {
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
-
-            dlg.ShowDialog();
-        }
+       
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
@@ -818,6 +799,31 @@ namespace WpfClient
                 .Where(b => b.Publisher != null &&
                             string.Equals(b.Publisher.Name, publisher.Name, StringComparison.OrdinalIgnoreCase))
                 .ToList();
+        }
+        private void PublishersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnShowPublisherBooks.IsEnabled = PublishersGrid.SelectedItem != null;
+        }
+
+        private void BtnShowPublisherBooks_Click(object sender, RoutedEventArgs e)
+        {
+            var publisher = PublishersGrid.SelectedItem as PublisherDTO;
+            if (publisher != null)
+            {
+                var books = GetBooksForPublisher(publisher);
+
+                var dlg = new PublisherBooksDialog(publisher, books)
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+
+                dlg.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Izaberite izdavača iz tabele.", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }
