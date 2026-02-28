@@ -22,6 +22,22 @@
     <sys:String x:Key="Menu_About">About</sys:String>
     <sys:String x:Key="Menu_Language">Language</sys:String>
 
+     <!-- ===== MESSAGES ===== -->
+    <sys:String x:Key="Msg_SelectEntityToEdit">Select a entity to edit.</sys:String>
+<sys:String x:Key="Msg_SelectEntityToDelete">Select a entity to delete.</sys:String>
+<sys:String x:Key="Msg_SelectEntityFromTable">Select a entity from the table.</sys:String>
+<sys:String x:Key="Msg_ConfirmDeleteEntity">Are you sure you want to delete entity?</sys:String>
+<sys:String x:Key="Toast_Added">Entity added successfully!</sys:String>
+<sys:String x:Key="Msg_OperationFailed">Operation failed.</sys:String>
+<sys:String x:Key="Toast_Updated">Entity updated successfully!</sys:String>
+<sys:String x:Key="Msg_SelectTab">Select one of the tabs!</sys:String>
+
+    <!-- ===== DIALOG TITLE ===== -->
+    <sys:String x:Key="Dlg_ErrorTitle">Error</sys:String>
+    <sys:String x:Key="Dlg_WarnTitle">Warning</sys:String>
+    <sys:String x:Key="Dlg_InfoTitle">Information</sys:String>
+    <sys:String x:Key="Dlg_ConfirmTitle">Confirmation</sys:String>
+
     <!-- ===== TABS ===== -->
     <sys:String x:Key="Tab_Books">Books</sys:String>
     <sys:String x:Key="Tab_Visitors">Visitors</sys:String>

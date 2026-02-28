@@ -26,15 +26,17 @@ namespace WpfClient
         private BookController _bookController;
         private ObservableCollection<BookDTO> _books;
 
+
+
         private PublisherController _publisherController;
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
         private VisitorDAO _visitorDAO;
-        private int SelectedTabIndex => MainTabs?.SelectedIndex ?? -1;
         private const int TAB_BOOKS = 0;
         private const int TAB_VISITORS = 1;
         private const int TAB_AUTHORS = 2;
         private const int TAB_PUBLISHERS = 3;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,6 +75,28 @@ namespace WpfClient
 
         }
 
+        private string L(string key)
+        {
+            return (string)Application.Current.Resources[key];
+        }
+        private string F(string key, params object[] args)
+    => string.Format(L(key), args);
+
+        private void MsgError(string msgKey)
+            => MessageBox.Show(L(msgKey), L("Dlg_ErrorTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Error);
+
+        private void MsgWarn(string msgKey)
+            => MessageBox.Show(L(msgKey), L("Dlg_WarnTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Warning);
+
+        private void MsgInfo(string msgKey)
+            => MessageBox.Show(L(msgKey), L("Dlg_InfoTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Information);
+
+        private MessageBoxResult MsgConfirm(string msgKey)
+            => MessageBox.Show(L(msgKey), L("Dlg_ConfirmTitle"),
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
         private void InitializeStatusBar()
         {
             StatusBarAppName.Text = L("App_Title");  
@@ -109,10 +133,8 @@ namespace WpfClient
                 StatusBarTabName.Text = $"{L("Status_Tab")} N/A";
             }
         }
-        private string L(string key)
-        {
-            return (string)Application.Current.Resources[key];
-        }
+
+       
 
         private void LoadVisitors()
         {
@@ -137,8 +159,7 @@ namespace WpfClient
 
             if (_allBooks == null || _allBooks.Count == 0)
             {
-                MessageBox.Show("Nema učitanih knjiga u sistemu.", "Upozorenje",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MsgWarn("Msg_OperationFailed");
                 return;
             }
 
@@ -216,7 +237,7 @@ namespace WpfClient
                         var result = _visitorController.AddVisitor(dialog.Visitor);
                         if (result.Success)
                         {
-                            ShowToast("✓ Posetilac uspešno dodat!"); 
+                            ShowToast(L("Toast_Added"));
                             LoadVisitors();
                         }
                         else
@@ -235,7 +256,7 @@ namespace WpfClient
                         var result = _publisherController.AddPublisher(dialog.Publisher.ToModel());
                         if (result != null)
                         {
-                            ShowToast("✓ Izdavač uspešno dodat!");
+                            ShowToast(L("Toast_Added"));
                             LoadPublishers();
                         }
                         else
@@ -255,7 +276,7 @@ namespace WpfClient
                         var result = _authorController.AddAuthor(dialog.Author);
                         if (result.Success)
                         {
-                            ShowToast("✓ Autor uspešno dodat!"); 
+                            ShowToast(L("Toast_Added"));
                             LoadAuthors();
                         }
                         else
@@ -268,8 +289,7 @@ namespace WpfClient
                 {
                     if (_publishers == null || _publishers.Count == 0)
                     {
-                        MessageBox.Show("Nema učitanih izdavača! Prvo dodajte izdavače.", "Upozorenje",
-                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MsgWarn("Msg_OperationFailed");
                         return;
                     }
 
@@ -279,7 +299,7 @@ namespace WpfClient
                         var result = _bookController.CreateBook(dialog.Book);
                         if (result.Success)
                         {
-                            ShowToast("✓ Knjiga uspešno dodata!"); 
+                            ShowToast(L("Toast_Added"));
                             LoadBooks();
                         }
                         else
@@ -290,8 +310,7 @@ namespace WpfClient
                 }
                 else
                 {
-                    MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
-                        "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MsgInfo("Msg_SelectTab");
                 }
             }
             catch (Exception ex)
@@ -332,7 +351,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Molimo izaberite autora iz tabele.");
+                MsgWarn("Msg_SelectEntityFromTable");
             }
         }
         private void BtnEdit_Click(object? sender, RoutedEventArgs e)
@@ -344,8 +363,7 @@ namespace WpfClient
                 var selectedVisitorDto = VisitorsGrid.SelectedItem as VisitorDTO;
                 if (selectedVisitorDto == null)
                 {
-                    MessageBox.Show("Izaberite posetioca za izmenu", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityFromTable");
                     return;
                 }
 
@@ -354,8 +372,7 @@ namespace WpfClient
 
                 if (originalVisitor == null)
                 {
-                    MessageBox.Show("Posetilac nije pronađen!", "Greška",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MsgError("Msg_OperationFailed");
                     return;
                 }
 
@@ -366,12 +383,12 @@ namespace WpfClient
                     var result = _visitorController.UpdateVisitor(dialog.VisitorDTO);
                     if (result.Success)
                     {
-                        ShowToast("Posetilac je uspesno izmenjen!");
+                        ShowToast(L("Toast_Updated"));
                         LoadVisitors();
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Došlo je do greške prilikom izmene Posetioca.", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MsgError("Msg_OperationFailed");
                     }
                 }
             }
@@ -380,8 +397,7 @@ namespace WpfClient
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null)
                 {
-                    MessageBox.Show("Izaberite izdavača za izmenu", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToEdit");
                     return;
                 }
 
@@ -395,14 +411,13 @@ namespace WpfClient
 
                     if (result != null)
                     {
-                        ShowToast("Izdavač je uspešno izmenjen!");
+                        ShowToast(L("Toast_Updated"));
                         LoadPublishers();
                         LoadBooks();
                     }
                     else
                     {
-                        MessageBox.Show("Došlo je do greške prilikom izmene izdavača.",
-                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MsgError("Msg_OperationFailed");
                     }
                 }
             }
@@ -411,8 +426,7 @@ namespace WpfClient
                 var selectedAuthorDto = AuthorsGrid.SelectedItem as AuthorDTO;
                 if (selectedAuthorDto == null)
                 {
-                    MessageBox.Show("Izaberite autora za izmenu", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToEdit");
                     return;
                 }
 
@@ -421,8 +435,7 @@ namespace WpfClient
 
                 if (originalAuthor == null)
                 {
-                    MessageBox.Show("Autor nije pronađen!", "Greška",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MsgError("Msg_OperationFailed");
                     return;
                 }
 
@@ -454,15 +467,13 @@ namespace WpfClient
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null)
                 {
-                    MessageBox.Show("Izaberite knjigu za izmenu", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToEdit");
                     return;
                 }
 
                 if (_publishers == null || _publishers.Count == 0)
                 {
-                    MessageBox.Show("Nema učitanih izdavača!", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgError("Msg_OperationFailed");
                     return;
                 }
 
@@ -473,8 +484,8 @@ namespace WpfClient
                     var result = _bookController.EditBook(dialog.Book);
                     if (result.Success)
                     {
-                        ShowToast("Knjiga je uspešno izmenjena.");
-                           
+                        ShowToast(L("Toast_Updated"));
+
                         LoadBooks();
                     }
                     else
@@ -486,8 +497,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
-                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                MsgInfo("Msg_SelectTab");
             }
         }
 
@@ -500,8 +510,7 @@ namespace WpfClient
                 var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
                 if (selectedVisitor == null)
                 {
-                    MessageBox.Show("Izaberite posetioca za brisanje", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToDelete");
                     return;
                 }
 
@@ -534,8 +543,7 @@ namespace WpfClient
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null)
                 {
-                    MessageBox.Show("Izaberite izdavača za brisanje", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToDelete");
                     return;
                 }
 
@@ -567,8 +575,7 @@ namespace WpfClient
                 var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
                 if (selectedAuthor == null)
                 {
-                    MessageBox.Show("Izaberite autora za brisanje", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToDelete");
                     return;
                 }
 
@@ -602,8 +609,7 @@ namespace WpfClient
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null)
                 {
-                    MessageBox.Show("Izaberite knjigu za brisanje", "Upozorenje",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MsgWarn("Msg_SelectEntityToDelete");
                     return;
                 }
 
@@ -633,8 +639,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Izaberite jedan od tabova: Posetioci, Autori ili Knjige",
-                    "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+                MsgInfo("Msg_SelectTab");
             }
         }
 
@@ -695,14 +700,12 @@ namespace WpfClient
 
                     if (result != null)
                     {
-                        MessageBox.Show("Šef izdavača je uspešno postavljen!", "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        MsgInfo("Toast_Updated");
                         LoadPublishers();
                     }
                     else
                     {
-                        MessageBox.Show("Došlo je do greške prilikom postavljanja šefa.",
-                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MsgError("Msg_OperationFailed");
                     }
                 }
             }
@@ -809,7 +812,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Molimo izaberite autora iz tabele.","Upozorenje",MessageBoxButton.OK, MessageBoxImage.Warning);
+                MsgWarn("Msg_SelectEntityFromTable");
             }
         }
         private List<BookDTO> GetBooksForPublisher(PublisherDTO publisher)
@@ -843,7 +846,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Izaberite izdavača iz tabele.", "Upozorenje", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MsgWarn("Msg_SelectEntityFromTable");
             }
         }
         private void LangSr_Click(object sender, RoutedEventArgs e)

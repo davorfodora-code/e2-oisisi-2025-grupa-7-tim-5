@@ -37,8 +37,8 @@ namespace WpfClient
             AllAuthors = authors ?? new ObservableCollection<AuthorDTO>();
             AllPublishers = publishers ?? new ObservableCollection<PublisherDTO>();
 
-            Title = (string)Application.Current.Resources["EditBook_Title"];
-            BtnSave.Content = (string)Application.Current.Resources["Btn_SaveChanges"];
+            Title = L("EditBook_Title");
+            BtnSave.Content = L("Btn_SaveChanges");
 
             LstAuthors.ItemsSource = AllAuthors;
             CmbPublisher.ItemsSource = AllPublishers;
@@ -164,8 +164,8 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{L("Msg_SaveBookError")} {ex.Message}", L("Dlg_ErrorTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Error);
+               MessageBox.Show($"{L("Msg_SaveBookError")} {ex.Message}", L("Dlg_ErrorTitle"),
+    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

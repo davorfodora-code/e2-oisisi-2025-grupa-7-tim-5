@@ -21,6 +21,23 @@
      <sys:String x:Key="Menu_Edit">Izmeni</sys:String>
     <sys:String x:Key="Menu_About">O aplikaciji</sys:String>
     <sys:String x:Key="Menu_Language">Jezik</sys:String>
+          
+          <!-- ===== PORUKE ===== -->
+    <sys:String x:Key="Msg_SelectEntityToEdit">Izaberite entitet za izmenu.</sys:String>
+    <sys:String x:Key="Msg_SelectEntityToDelete">Izaberite entitet za brisanje.</sys:String>
+    <sys:String x:Key="Msg_SelectEntityFromTable">Izaberite entitet iz tabele.</sys:String>
+    <sys:String x:Key="Toast_Added">Entitet uspešno dodat!</sys:String>
+    <sys:String x:Key="Toast_Updated">Entitetuspešno izmenjen!</sys:String>
+    <sys:String x:Key="Msg_OperationFailed">Operacija nije uspela.</sys:String>
+    <sys:String x:Key="Msg_ConfirmDeleteEntity">Da li ste sigurni da želite da obrišete entitet?</sys:String>
+    <sys:String x:Key="Msg_SelectTab">Izaberite jedan od tabova!</sys:String>
+
+
+    <!-- ===== Dialog title ===== -->
+    <sys:String x:Key="Dlg_ErrorTitle">Greška</sys:String>
+    <sys:String x:Key="Dlg_WarnTitle">Upozorenje</sys:String>
+    <sys:String x:Key="Dlg_InfoTitle">Informacija</sys:String>
+    <sys:String x:Key="Dlg_ConfirmTitle">Potvrda</sys:String>
 
     <!-- ===== TABS ===== -->
     <sys:String x:Key="Tab_Books">Knjige</sys:String>

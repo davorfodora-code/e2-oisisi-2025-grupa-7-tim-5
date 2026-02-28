@@ -1,5 +1,5 @@
 Isbn|Naziv|Poezija|1989|101|100|ID-1-9999,Nikola,Nikolasevic;ID-22-33,Ivor,Adamek|2|Milankovic
-ISBN2|NAZIV2|Pripovetka|2026|76687|22|Id kartica,Milos,Markovic;KK-11-22,Davor,Fodora|1|Mirko
+ISBN2|NAZIV5|Pripovetka|2026|76687|22|Id kartica,Milos,Markovic;KK-11-22,Davor,Fodora|1|Mirko
 ISBN3|Na Drini cuprija|Esej|2018|200|25|Id kartica,Milos,Markovic;ID-1-9999,Nikola,Nikolasevic|1|Mirko
 4rarad|afsasf|Drama|2019|2424|23|KK-11-22,Davor,Fodora|1|Mirko
 isbn7|Lazara majka karala|Horor|1890|45|24|ID-1-9999,Nikola,Nikolasevic;KK-11-22,Davor,Fodora|2|Milankovic
@@ -7,7 +7,6 @@ isbn9|nazivvv|Poezija|1242|24|24|ID-1-9999,Nikola,Nikolasevic|1|Mirko
 isbn10|gjfdjs|Poezija|2343|432|423|Id kartica,Milos,Markovic|2|Milankovic
 gsgsd|gdsg|Poezija|214|4242|23|KK-11-22,Davor,Fodora|1|Mirko
 hgkg|hkgk|Drama|3425|325|345326|KK-11-22,Davor,Fodora|2|Milankovic
-fdhh|hfdfhd|Esej|532|523|532|Id kartica,Milos,Markovic|2|Milankovic
 fhdhfd|hfdhfd|Pripovetka|43|53|53|KK-11-22,Davor,Fodora|2|Milankovic
 hfh|fhdhf|Poezija|3255|532|523|KK-11-22,Davor,Fodora|1|Mirko
 ggf|hfdhf|Poezija|2144|241|241|KK-11-22,Davor,Fodora|2|Milankovic
