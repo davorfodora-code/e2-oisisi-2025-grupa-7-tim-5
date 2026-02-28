@@ -206,7 +206,7 @@ namespace WpfClient
                         var result = _visitorController.AddVisitor(dialog.Visitor);
                         if (result.Success)
                         {
-                            ShowToast("✓ Posetilac uspešno dodat!");  // Promenjeno
+                            ShowToast("✓ Posetilac uspešno dodat!"); 
                             LoadVisitors();
                         }
                         else
@@ -225,7 +225,7 @@ namespace WpfClient
                         var result = _publisherController.AddPublisher(dialog.Publisher.ToModel());
                         if (result != null)
                         {
-                            ShowToast("✓ Izdavač uspešno dodat!");  // Promenjeno
+                            ShowToast("✓ Izdavač uspešno dodat!");
                             LoadPublishers();
                         }
                         else
@@ -245,7 +245,7 @@ namespace WpfClient
                         var result = _authorController.AddAuthor(dialog.Author);
                         if (result.Success)
                         {
-                            ShowToast("✓ Autor uspešno dodat!");  // Promenjeno
+                            ShowToast("✓ Autor uspešno dodat!"); 
                             LoadAuthors();
                         }
                         else
@@ -269,7 +269,7 @@ namespace WpfClient
                         var result = _bookController.CreateBook(dialog.Book);
                         if (result.Success)
                         {
-                            ShowToast("✓ Knjiga uspešno dodata!");  // Promenjeno
+                            ShowToast("✓ Knjiga uspešno dodata!"); 
                             LoadBooks();
                         }
                         else
@@ -298,13 +298,13 @@ namespace WpfClient
 
             Toast.Visibility = Visibility.Visible;
 
-            // fade in
+    
             var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
             Toast.BeginAnimation(OpacityProperty, fadeIn);
 
             await Task.Delay(ms);
 
-            // fade out
+   
             var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
             fadeOut.Completed += (_, __) => Toast.Visibility = Visibility.Collapsed;
             Toast.BeginAnimation(OpacityProperty, fadeOut);
@@ -357,12 +357,12 @@ namespace WpfClient
                     var result = _visitorController.UpdateVisitor(dialog.VisitorDTO);
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, "Uspešno", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ShowToast("Posetilac je uspesno izmenjen!");
                         LoadVisitors();
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(result.Message, "Došlo je do greške prilikom izmene Posetioca.", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -386,8 +386,7 @@ namespace WpfClient
 
                     if (result != null)
                     {
-                        MessageBox.Show("Izdavač je uspešno izmenjen!", "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        ShowToast("Izdavač je uspešno izmenjen!");
                         LoadPublishers();
                         LoadBooks();
                     }
@@ -465,8 +464,8 @@ namespace WpfClient
                     var result = _bookController.EditBook(dialog.Book);
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        ShowToast("Knjiga je uspešno izmenjena.");
+                           
                         LoadBooks();
                     }
                     else
@@ -803,7 +802,7 @@ namespace WpfClient
             }
             else
             {
-                MessageBox.Show("Molimo izaberite autora iz tabele.");
+                MessageBox.Show("Molimo izaberite autora iz tabele.","Upozorenje",MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         private List<BookDTO> GetBooksForPublisher(PublisherDTO publisher)

@@ -372,7 +372,7 @@
        
     </DockPanel>
     <Border x:Name="Toast"
-                Background="#09e201"
+                Background="#7ace8a"
                 CornerRadius="8"
                 Padding="12,8"
                 HorizontalAlignment="Right"
