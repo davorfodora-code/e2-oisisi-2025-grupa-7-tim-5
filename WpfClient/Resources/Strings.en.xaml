@@ -1,12 +1,13 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!-- ===== APP ===== -->
     <sys:String x:Key="App_Title">Book Fair</sys:String>
 
-    <!-- ===== MENU ===== -->
+    <sys:String x:Key="Status_Date">Date:</sys:String>
+    <sys:String x:Key="Status_Time">Time:</sys:String>
+    <sys:String x:Key="Status_Tab">Tab:</sys:String>
+
     <sys:String x:Key="Menu_File">File</sys:String>
     <sys:String x:Key="Menu_New">New</sys:String>
     <sys:String x:Key="Menu_Save">Save</sys:String>
@@ -16,85 +17,243 @@
     <sys:String x:Key="Menu_Authors">Authors</sys:String>
     <sys:String x:Key="Menu_Publishers">Publishers</sys:String>
     <sys:String x:Key="Menu_EditRoot">Edit</sys:String>
-    <sys:String x:Key="Menu_HelpRoot">Help</sys:String>
-    <sys:String x:Key="Menu_Delete">Delete</sys:String>
     <sys:String x:Key="Menu_Edit">Edit</sys:String>
+    <sys:String x:Key="Menu_Delete">Delete</sys:String>
+    <sys:String x:Key="Menu_HelpRoot">Help</sys:String>
     <sys:String x:Key="Menu_About">About</sys:String>
     <sys:String x:Key="Menu_Language">Language</sys:String>
 
-     <!-- ===== MESSAGES ===== -->
-    <sys:String x:Key="Msg_SelectEntityToEdit">Select a entity to edit.</sys:String>
-<sys:String x:Key="Msg_SelectEntityToDelete">Select a entity to delete.</sys:String>
-<sys:String x:Key="Msg_SelectEntityFromTable">Select a entity from the table.</sys:String>
-<sys:String x:Key="Msg_ConfirmDeleteEntity">Are you sure you want to delete entity?</sys:String>
-<sys:String x:Key="Toast_Added">Entity added successfully!</sys:String>
-<sys:String x:Key="Msg_OperationFailed">Operation failed.</sys:String>
-<sys:String x:Key="Toast_Updated">Entity updated successfully!</sys:String>
-<sys:String x:Key="Msg_SelectTab">Select one of the tabs!</sys:String>
-
-    <!-- ===== DIALOG TITLE ===== -->
-    <sys:String x:Key="Dlg_ErrorTitle">Error</sys:String>
-    <sys:String x:Key="Dlg_WarnTitle">Warning</sys:String>
-    <sys:String x:Key="Dlg_InfoTitle">Information</sys:String>
-    <sys:String x:Key="Dlg_ConfirmTitle">Confirmation</sys:String>
-
-    <!-- ===== TABS ===== -->
     <sys:String x:Key="Tab_Books">Books</sys:String>
     <sys:String x:Key="Tab_Visitors">Visitors</sys:String>
     <sys:String x:Key="Tab_Authors">Authors</sys:String>
     <sys:String x:Key="Tab_Publishers">Publishers</sys:String>
 
-    <!-- ===== BUTTONS ===== -->
-    <sys:String x:Key="Btn_CompareBooks">Compare Books</sys:String>
-    <sys:String x:Key="Btn_SetPublisherManager">Set Publisher Manager</sys:String>
-    <sys:String x:Key="Btn_ShowPublisherBooks">Publisher - Books</sys:String>
-    <sys:String x:Key="Btn_ShowVisitorsByAuthor">Author - Visitors</sys:String>
-
-    <!-- ===== STATUS BAR ===== -->
-    <sys:String x:Key="Status_Date">Date:</sys:String>
-    <sys:String x:Key="Status_Time">Time:</sys:String>
-    <sys:String x:Key="Status_Tab">Tab:</sys:String>
-
-    <!-- ===== DATA GRID - BOOKS ===== -->
     <sys:String x:Key="Col_ISBN">ISBN</sys:String>
     <sys:String x:Key="Col_Name">Name</sys:String>
     <sys:String x:Key="Col_Price">Price</sys:String>
     <sys:String x:Key="Col_Year">Year</sys:String>
     <sys:String x:Key="Col_Genre">Genre</sys:String>
-
-    <!-- ===== DATA GRID - VISITORS ===== -->
     <sys:String x:Key="Col_MembershipNumber">Membership Number</sys:String>
     <sys:String x:Key="Col_FirstName">First Name</sys:String>
     <sys:String x:Key="Col_LastName">Last Name</sys:String>
     <sys:String x:Key="Col_Address">Address</sys:String>
     <sys:String x:Key="Col_Status">Status</sys:String>
-
-    <!-- ===== DATA GRID - AUTHORS ===== -->
     <sys:String x:Key="Col_IdCard">ID Card</sys:String>
     <sys:String x:Key="Col_DateOfBirth">Date of Birth</sys:String>
     <sys:String x:Key="Col_Email">Email</sys:String>
-
-    <!-- ===== DATA GRID - PUBLISHERS ===== -->
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
-    <sys:String x:Key="Col_PublisherName">Publisher Name</sys:String>
+    <sys:String x:Key="Col_PublisherName">Name</sys:String>
     <sys:String x:Key="Col_Manager">Manager</sys:String>
-
-    <!-- ===== BOOKADD DIALOG ===== -->
-    <sys:String x:Key="AddBook_Title">Add book</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Name">Name:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_ISBN">ISBN:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Price">Price:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Year">Year:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Genre">Genre:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Publisher">Publisher:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Authors">Authors:</sys:String>
-    <sys:String x:Key="AddBook_Lbl_Pages">Number of pages:</sys:String>
-    <sys:String x:Key="AddBook_Gb_SelectAuthors"> Select authors</sys:String>
-
-    <sys:String x:Key="EditBook_Title">Edit book</sys:String>
-<sys:String x:Key="Btn_SaveChanges">Save changes</sys:String>
+    <sys:String x:Key="Col_Action">Action</sys:String>
+    <sys:String x:Key="Col_Date">Date</sys:String>
+    <sys:String x:Key="Col_Review">Review</sys:String>
+    <sys:String x:Key="Col_Comment">Comment</sys:String>
+    <sys:String x:Key="Col_Authors">Author(s)</sys:String>
+    <sys:String x:Key="Col_ExperienceYears">Years of Experience</sys:String>
 
     <sys:String x:Key="Btn_Save">Save</sys:String>
     <sys:String x:Key="Btn_Cancel">Cancel</sys:String>
+    <sys:String x:Key="Btn_SaveChanges">Save Changes</sys:String>
+    <sys:String x:Key="Btn_CompareBooks">Compare Books</sys:String>
+    <sys:String x:Key="Btn_ShowVisitorsByAuthor">Author Visitors</sys:String>
+    <sys:String x:Key="Btn_SetPublisherManager">Set Manager</sys:String>
+    <sys:String x:Key="Btn_ShowPublisherBooks">Publisher Books</sys:String>
+    <sys:String x:Key="Btn_Close">Close</sys:String>
+    <sys:String x:Key="Btn_Add">Add</sys:String>
+    <sys:String x:Key="Btn_Delete">Delete</sys:String>
+    <sys:String x:Key="Btn_Remove">Remove</sys:String>
+    <sys:String x:Key="Btn_Search">Search</sys:String>
+    <sys:String x:Key="Btn_Find">Find</sys:String>
+    <sys:String x:Key="Btn_Purchase">Purchase</sys:String>
+    <sys:String x:Key="Btn_CancelPurchase">Cancel Purchase</sys:String>
+    <sys:String x:Key="Btn_Confirm">Confirm</sys:String>
+    <sys:String x:Key="Btn_Abandon">Abandon</sys:String>
+    <sys:String x:Key="Btn_SetManager">Set as Manager</sys:String>
+    <sys:String x:Key="Btn_ShowResults">Show Results</sys:String>
 
+    <sys:String x:Key="Dlg_ErrorTitle">Error</sys:String>
+    <sys:String x:Key="Dlg_WarnTitle">Warning</sys:String>
+    <sys:String x:Key="Dlg_InfoTitle">Information</sys:String>
+    <sys:String x:Key="Dlg_ConfirmTitle">Confirm</sys:String>
+
+    <sys:String x:Key="Toast_Added">Successfully added!</sys:String>
+    <sys:String x:Key="Toast_Updated">Successfully updated!</sys:String>
+
+    <sys:String x:Key="Msg_OperationFailed">Operation failed.</sys:String>
+    <sys:String x:Key="Msg_SelectTab">Please select a tab.</sys:String>
+    <sys:String x:Key="Msg_SelectEntityFromTable">Please select an item from the table.</sys:String>
+    <sys:String x:Key="Msg_SelectEntityToEdit">Please select an item to edit.</sys:String>
+    <sys:String x:Key="Msg_SelectEntityToDelete">Please select an item to delete.</sys:String>
+
+    <sys:String x:Key="Msg_IsbnRequired">ISBN is required.</sys:String>
+    <sys:String x:Key="Msg_BookNameRequired">Book name is required.</sys:String>
+    <sys:String x:Key="Msg_GenreRequired">Genre is required.</sys:String>
+    <sys:String x:Key="Msg_PagesPositiveInt">Number of pages must be a positive integer.</sys:String>
+    <sys:String x:Key="Msg_PricePositiveNumber">Price must be a positive number.</sys:String>
+    <sys:String x:Key="Msg_AtLeastOneAuthor">Book must have at least one author.</sys:String>
+    <sys:String x:Key="Msg_PublisherRequired">Publisher is required.</sys:String>
+    <sys:String x:Key="Msg_SaveBookError">Error saving book:</sys:String>
+
+    <sys:String x:Key="Msg_SelectTwoBooks">Please select two different books.</sys:String>
+    <sys:String x:Key="Msg_SelectDifferentBooks">Please select two different books.</sys:String>
+    <sys:String x:Key="Msg_Found">Found</sys:String>
+
+    <sys:String x:Key="AddBook_Title">Add Book</sys:String>
+    <sys:String x:Key="EditBook_Title">Edit Book</sys:String>
+    <sys:String x:Key="AddBook_Lbl_ISBN">ISBN:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Name">Name:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Authors">Authors:</sys:String>
+    <sys:String x:Key="AddBook_Gb_SelectAuthors">Select Authors</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Genre">Genre:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Year">Year:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Price">Price:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Pages">Pages:</sys:String>
+    <sys:String x:Key="AddBook_Lbl_Publisher">Publisher:</sys:String>
+
+    <sys:String x:Key="AddAuthor_Title">Add Author</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_IdCard">ID Card:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Name">First Name:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_LastName">Last Name:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_DateOfBirth">Date of Birth:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Phone">Phone:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Email">Email:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Experience">Years of Experience:</sys:String>
+    <sys:String x:Key="AddAuthor_Gb_Address">Address</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Street">Street:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Number">Number:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_City">City:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_State">Municipality:</sys:String>
+    <sys:String x:Key="AddAuthor_Lbl_Country">Country:</sys:String>
+
+    <sys:String x:Key="AuthorEdit_Title">Edit Author</sys:String>
+    <sys:String x:Key="AuthorEdit_Tab_Info">Information</sys:String>
+    <sys:String x:Key="AuthorEdit_Tab_Books">Books</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_AddBook">Add book:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_IdCard">ID Card:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Name">First Name:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_LastName">Last Name:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_DateOfBirth">Date of Birth:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Phone">Phone:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Email">Email:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Experience">Experience (years):</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Street">Street:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Number">Number:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_City">City:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_State">Municipality:</sys:String>
+    <sys:String x:Key="AuthorEdit_Lbl_Country">Country:</sys:String>
+
+    <sys:String x:Key="AddVisitor_Title">Add Visitor</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_MembershipNumber">Membership Number:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Name">First Name:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_LastName">Last Name:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Status">Status:</sys:String>
+    <sys:String x:Key="AddVisitor_Status_Regular">Regular</sys:String>
+    <sys:String x:Key="AddVisitor_Status_VIP">VIP</sys:String>
+    <sys:String x:Key="AddVisitor_Gb_Address">Address</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Street">Street:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Number">Number:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_City">City:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_State">Municipality:</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Country">Country:</sys:String>
+
+    <sys:String x:Key="VisitorEdit_Title">Edit Visitor</sys:String>
+    <sys:String x:Key="VisitorEdit_Tab_Info">Information</sys:String>
+    <sys:String x:Key="VisitorEdit_Tab_Purchased">Purchased</sys:String>
+    <sys:String x:Key="VisitorEdit_Tab_Wishlist">Wishlist</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_MembershipNumber">Membership Number:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_MembershipYear">Membership Year:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Name">First Name:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_LastName">Last Name:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_DateOfBirth">Date of Birth:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Street">Street:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Number">Number:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_City">City:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Country">Country:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_TotalSpent">Total Spent:</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_AvgReview">Average Review:</sys:String>
+
+    <sys:String x:Key="PublisherEdit_Title">Edit Publisher</sys:String>
+    <sys:String x:Key="PublisherEdit_Header">Publisher</sys:String>
+    <sys:String x:Key="PublisherEdit_Info">Information</sys:String>
+    <sys:String x:Key="PublisherEdit_Lbl_Name">Name:</sys:String>
+    <sys:String x:Key="PublisherEdit_Authors">Authors</sys:String>
+
+    <sys:String x:Key="PublisherBooks_Title">Publisher Books</sys:String>
+
+    <sys:String x:Key="SetManager_Title">Set Publisher Manager</sys:String>
+    <sys:String x:Key="SetManager_Header">Set Publisher Manager</sys:String>
+    <sys:String x:Key="SetManager_Lbl_Publisher">Publisher:</sys:String>
+    <sys:String x:Key="SetManager_Lbl_CurrentManager">Current Manager:</sys:String>
+    <sys:String x:Key="SetManager_Gb_Authors">Authors who published with this publisher</sys:String>
+
+    <sys:String x:Key="BookCompare_Title">Book Comparison - Visitors</sys:String>
+    <sys:String x:Key="BookCompare_Header">Book Comparison</sys:String>
+    <sys:String x:Key="BookCompare_Lbl_FirstBook">First book:</sys:String>
+    <sys:String x:Key="BookCompare_Lbl_SecondBook">Second book:</sys:String>
+    <sys:String x:Key="BookCompare_Lbl_Search">Search:</sys:String>
+    <sys:String x:Key="BookCompare_Tab_BothWishlist">Both books on wishlist</sys:String>
+    <sys:String x:Key="BookCompare_Tab_BoughtFirst">Bought first, not second</sys:String>
+
+    <sys:String x:Key="VisitorsByAuthor_Title">Visitors with books by selected author</sys:String>
+    <sys:String x:Key="VisitorsByAuthor_Header">Visitors who have books by selected author</sys:String>
+    <sys:String x:Key="VisitorsByAuthor_Lbl_Search">Search:</sys:String>
+    <sys:String x:Key="VisitorsByAuthor_TotalVisitors">Total visitors:</sys:String>
+    <sys:String x:Key="VisitorsByAuthor_SelectedAuthor">Selected author:</sys:String>
+
+    <sys:String x:Key="WishlistAdd_Title">Add Book</sys:String>
+
+    <sys:String x:Key="Purchase_Title">Book Purchase</sys:String>
+    <sys:String x:Key="Purchase_Lbl_ISBN">ISBN *</sys:String>
+    <sys:String x:Key="Purchase_Lbl_Name">Name *</sys:String>
+    <sys:String x:Key="Purchase_Lbl_Review">Review *</sys:String>
+    <sys:String x:Key="Purchase_Lbl_Date">Purchase Date *</sys:String>
+    <sys:String x:Key="Purchase_ReviewError">Review must be between 1 and 5</sys:String>
+
+    <sys:String x:Key="About_Title">About</sys:String>
+
+    <sys:String x:Key="Msg_ConfirmDeleteVisitor">Are you sure you want to delete visitor:</sys:String>
+    <sys:String x:Key="Msg_ConfirmDeleteAuthor">Are you sure you want to delete author:</sys:String>
+    <sys:String x:Key="Msg_ConfirmDeleteBook">Are you sure you want to delete book:</sys:String>
+    <sys:String x:Key="Msg_ConfirmDeletePublisher">Are you sure you want to delete publisher:</sys:String>
+    <sys:String x:Key="Msg_DeleteConfirmTitle">Confirm deletion</sys:String>
+    <sys:String x:Key="Msg_DeleteSuccess">Successfully deleted!</sys:String>
+    <sys:String x:Key="Msg_DeleteFailed">An error occurred while deleting.</sys:String>
+
+    <sys:String x:Key="Msg_SelectBookToAdd">Please select a book to add!</sys:String>
+    <sys:String x:Key="Msg_BookAlreadyAssigned">This book is already assigned to the author!</sys:String>
+    <sys:String x:Key="Msg_BookAddedToAuthor">has been added to the author.</sys:String>
+    <sys:String x:Key="Msg_ConfirmRemoveBook">Are you sure you want to remove the book</sys:String>
+    <sys:String x:Key="Msg_BookRemovedFromAuthor">Book removed from author!</sys:String>
+    <sys:String x:Key="Msg_RemoveError">Error while removing:</sys:String>
+    <sys:String x:Key="Msg_LoadBooksError">Error loading books:</sys:String>
+    <sys:String x:Key="Msg_FirstNameRequired">First name is required!</sys:String>
+    <sys:String x:Key="Msg_LastNameRequired">Last name is required!</sys:String>
+    <sys:String x:Key="Msg_DateOfBirthRequired">Date of birth is required!</sys:String>
+    <sys:String x:Key="Msg_ExperienceMustBeNumber">Years of experience must be a number!</sys:String>
+    <sys:String x:Key="Msg_SaveError">Error while saving:</sys:String>
+    <sys:String x:Key="Msg_CriticalError">Critical error:</sys:String>
+
+    <sys:String x:Key="Msg_NoAvailableBooks">No books available to add to the wishlist.</sys:String>
+    <sys:String x:Key="Msg_ConfirmRemoveFromWishlist">Are you sure you want to remove the book</sys:String>
+    <sys:String x:Key="Msg_ConfirmCancelPurchase">Are you sure you want to cancel this purchase?</sys:String>
+    <sys:String x:Key="Msg_NameRequired">First and last name are required!</sys:String>
+
+    <sys:String x:Key="VisitorsByAuthor_AuthorLabel">Author:</sys:String>
+    <sys:String x:Key="VisitorsByAuthor_Found">Found</sys:String>
+    <sys:String x:Key="Msg_SearchError">Search error:</sys:String>
+
+    <sys:String x:Key="PublisherBooks_HeaderPrefix">Books by publisher:</sys:String>
+
+    <sys:String x:Key="Msg_SaveFunctionCalled">The 'Save' function has been called.&#x0a;The current state of the application has been saved.</sys:String>
+
+
+    <sys:String x:Key="About_AppName">Book Fair</sys:String>
+    <sys:String x:Key="About_Version">Version: 1.0.0</sys:String>
+    <sys:String x:Key="About_DescriptionLabel">Application description:</sys:String>
+    <sys:String x:Key="About_DescriptionText">The Book Fair application provides basic CRUD functionality. Enables adding, editing, and deleting.</sys:String>
+    <sys:String x:Key="About_AuthorsLabel">Authors:</sys:String>
+    <sys:String x:Key="About_Author1Name">Davor Fodora</sys:String>
+    <sys:String x:Key="About_Author1Bio">My name is Davor Fodora. I am currently studying at the Faculty of Technical Sciences and hope to have my engineering degree next year. This is my first CRUD project, I hope you like it.</sys:String>
+    <sys:String x:Key="About_Author2Name">Nemanja Elor</sys:String>
+    <sys:String x:Key="About_Author2Bio">My name is Nemanja Elor. I am a third-year student and this is my first CRUD application.</sys:String>
 </ResourceDictionary>

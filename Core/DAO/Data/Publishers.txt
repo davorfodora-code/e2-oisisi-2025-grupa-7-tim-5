@@ -1,5 +1,5 @@
 1|Mirko|Id kartica,Milos,Markovic,2,milos@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;ID-1-9999,Nikola,Nikolasevic,3,nikola@gmail.com;AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|
-2|Milankovic|Id kartica,Milos,Markovic,2,milos@gmail.com|ID-22-33,Ivor,Adamek,4,ivor@mail.com;AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|
+2|Milankovic|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|ID-22-33,Ivor,Adamek,4,ivor@mail.com;AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|
 3|Laguna|AU-04-04,Marko,Popovic,8,marko@gmail.com|AU-03-03,Ana,Stojanovic,7,ana@gmail.com;AU-04-04,Marko,Popovic,8,marko@gmail.com|
 4|Vulkan|AU-04-04,Marko,Popovic,8,marko@gmail.com|AU-05-05,Maja,Nikolic,9,maja@gmail.com;AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com|
 5|Prosveta|AU-05-05,Maja,Nikolic,9,maja@gmail.com|AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com;AU-08-08,Luka,Pavlovic,12,luka@gmail.com|

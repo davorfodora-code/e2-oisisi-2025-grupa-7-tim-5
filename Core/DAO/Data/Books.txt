@@ -1,6 +1,6 @@
 ISBN-B01|Prokleta avlija|Roman|1954|350|180|Id kartica,Milos,Markovic;AU-01-01,Jelena,Petrovic|1|Mirko
-ISBN-B02|Dervis i smrt|Roman|1966|420|210|AU-02-02,Stefan,Jovanovic;ID-1-9999,Nikola,Nikolasevic|2|Milankovic
-ISBN-B03|Hazarski recnik|Misterija|1984|500|300|AU-03-03,Ana,Stojanovic|1|Mirko
+ISBN-B02|Dervis i smrt|Roman|1966|420|210|AU-02-02,Stefan,Jovanovic;ID-1-9999,Nikola,Nikolasevic;KK-11-22,Davor,Fodora|2|Milankovic
+ISBN-B03|Hazarski recnik|Misterija|1984|500|300|AU-03-03,Ana,Stojanovic;KK-11-22,Davor,Fodora|1|Mirko
 ISBN-B04|Seobe|Istorija|1929|380|200|KK-11-22,Davor,Fodora;AU-04-04,Marko,Popovic|2|Milankovic
 ISBN-B05|Koreni|Roman|1954|290|150|AU-05-05,Maja,Nikolic;Id kartica,Milos,Markovic|1|Mirko
 ISBN-B06|Noz|Triler|1999|310|180|AU-06-06,Nemanja,Ilic|2|Milankovic
@@ -9,7 +9,7 @@ ISBN-B08|Pesme|Poezija|1847|180|90|ID-22-33,Ivor,Adamek;AU-08-08,Luka,Pavlovic|2
 ISBN-B09|Gorski vijenac|Drama|1847|220|110|AU-09-09,Milica,Vukovic|1|Mirko
 ISBN-B10|Besnilo|Horor|1983|440|250|AU-10-10,Dragan,Lazarevic;KK-11-22,Davor,Fodora|2|Milankovic
 ISBN-B11|Pripovetke|Pripovetka|1899|200|100|AU-11-11,Sonja,Milosevic;Id kartica,Milos,Markovic|1|Mirko
-ISBN-B12|Vreme cuda|NaučnaFantastika|1989|370|190|AU-02-02,Stefan,Jovanovic|2|Milankovic
+ISBN-B12|Vreme cuda|NaučnaFantastika|1989|370|190|AU-02-02,Stefan,Jovanovic;KK-11-22,Davor,Fodora|2|Milankovic
 ISBN-B13|Romani o Londonu|Roman|1981|480|280|AU-03-03,Ana,Stojanovic;AU-05-05,Maja,Nikolic|1|Mirko
 ISBN-B14|Dnevnik o Carnojevicu|Roman|1921|150|80|ID-1-9999,Nikola,Nikolasevic;AU-06-06,Nemanja,Ilic|2|Milankovic
 ISBN-B15|Odabrane pesme|Poezija|1964|160|85|AU-07-07,Ivana,Djordjevic;AU-09-09,Milica,Vukovic|1|Mirko
