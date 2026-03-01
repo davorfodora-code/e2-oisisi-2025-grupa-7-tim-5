@@ -17,6 +17,8 @@ namespace WpfClient
         private ObservableCollection<BookDTO> _availableBooks;
         private List<Purchase> _purchases;
 
+        private string L(string key) => (string)Application.Current.Resources[key];
+
         public VisitorEditDialog(VisitorDTO visitorDto, Visitor originalVisitor, BookController bookController)
         {
             InitializeComponent();
@@ -50,8 +52,6 @@ namespace WpfClient
             TxtStreetNumber.Text = _originalVisitor.Address?.Number ?? "";
             TxtCity.Text = _originalVisitor.Address?.City ?? "";
             TxtCountry.Text = _originalVisitor.Address?.Country ?? "";
-
-           
         }
 
         private void LoadAllBooks()
@@ -76,8 +76,6 @@ namespace WpfClient
                 if (!wishlistIsbns.Contains(book.Isbn) && !purchasedIsbns.Contains(book.Isbn))
                     _availableBooks.Add(book);
             }
-
-          
         }
 
         private void LoadWishlist()
@@ -88,7 +86,6 @@ namespace WpfClient
             {
                 foreach (var book in _originalVisitor.Wishlist)
                 {
-                    // Pronađi kompletnu knjigu iz _availableBooks ili kreiraj novu
                     var fullBook = _availableBooks.FirstOrDefault(b => b.Isbn == book.Isbn);
 
                     if (fullBook != null)
@@ -98,7 +95,6 @@ namespace WpfClient
                     }
                     else
                     {
-                        // Ako nema u available, kreiraj sa osnovnim podacima
                         var bookDto = new BookDTO
                         {
                             Isbn = book.Isbn,
@@ -116,14 +112,12 @@ namespace WpfClient
                 }
             }
 
-    
             if (VisitorDTO.Wishlist != null)
             {
                 foreach (var book in VisitorDTO.Wishlist)
                 {
                     if (!_wishlist.Any(b => b.Isbn == book.Isbn))
                     {
-                        // Pronađi kompletnu knjigu
                         var fullBook = _availableBooks.FirstOrDefault(b => b.Isbn == book.Isbn);
 
                         if (fullBook != null)
@@ -138,9 +132,6 @@ namespace WpfClient
                     }
                 }
             }
-
-
-         
         }
 
         private void LoadPurchasedBooks()
@@ -155,7 +146,6 @@ namespace WpfClient
                 double total = _purchases.Sum(p => p.Book?.Price ?? 0);
                 TxtTotalSpent.Text = $"{total:C}";
 
-                // prosek ocene (uzmi samo validne 1..5)
                 var reviews = _purchases
                     .Select(p => p.Review)
                     .Where(r => r >= 1 && r <= 5)
@@ -178,12 +168,10 @@ namespace WpfClient
             }
         }
 
-
         private void BtnAddToWishlist_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // knjige koje mogu u wishlist: nisu ni u wishlist, ni u purchased
                 var purchasedIsbns = _purchases
                     .Where(p => p.Book != null)
                     .Select(p => p.Book.Isbn)
@@ -199,7 +187,7 @@ namespace WpfClient
 
                 if (!candidates.Any())
                 {
-                    MessageBox.Show("Nema dostupnih knjiga za dodavanje u listu želja.", "Informacija",
+                    MessageBox.Show(L("Msg_NoAvailableBooks"), L("Dlg_InfoTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
@@ -229,26 +217,25 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Greška (Dodaj)", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.ToString(), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void BtnDeleteFromWishlist_Click(object sender, RoutedEventArgs e)
         {
             var selectedBook = WishlistBooksGrid.SelectedItem as BookDTO;
             if (selectedBook == null) return;
 
             var result = MessageBox.Show(
-                $"Da li ste sigurni da želite da uklonite knjigu '{selectedBook.Name}' iz liste želja?",
-                "Potvrda",
+                $"{L("Msg_ConfirmRemoveFromWishlist")} '{selectedBook.Name}'?",
+                L("Dlg_ConfirmTitle"),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes) return;
 
-            // ukloni iz wishlist
             _wishlist.Remove(selectedBook);
 
-            // vrati u available ako već nije kupljena
             if (!_availableBooks.Any(b => b.Isbn == selectedBook.Isbn))
                 _availableBooks.Add(selectedBook);
 
@@ -265,18 +252,20 @@ namespace WpfClient
             BtnPurchase.IsEnabled = hasSelection;
             BtnDeleteFromWishlist.IsEnabled = hasSelection;
         }
+
         private void PurchasedBooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BtnCancelPurchase.IsEnabled = PurchasedBooksGrid.SelectedItem != null;
         }
+
         private void BtnCancelPurchase_Click(object sender, RoutedEventArgs e)
         {
             var selectedPurchase = PurchasedBooksGrid.SelectedItem as Purchase;
             if (selectedPurchase == null) return;
 
             var result = MessageBox.Show(
-                "Da li ste sigurni da želite da poništite kupovinu?",
-                "Poništi kupovinu",
+                L("Msg_ConfirmCancelPurchase"),
+                L("Btn_CancelPurchase"),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -305,10 +294,10 @@ namespace WpfClient
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             try
-            { 
+            {
                 if (string.IsNullOrWhiteSpace(TxtName.Text) || string.IsNullOrWhiteSpace(TxtLastName.Text))
                 {
-                    MessageBox.Show("Ime i prezime su obavezni!", "Greška",
+                    MessageBox.Show(L("Msg_NameRequired"), L("Dlg_ErrorTitle"),
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
@@ -367,17 +356,16 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Greška pri čuvanju: {ex.Message}", "Greška",
+                MessageBox.Show($"{L("Msg_SaveError")} {ex.Message}", L("Dlg_ErrorTitle"),
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
-
-       
 
         private void BtnPurchase_Click(object sender, RoutedEventArgs e)
         {
@@ -392,6 +380,7 @@ namespace WpfClient
 
             bool? ok = dlg.ShowDialog();
             if (ok != true) return;
+
             var purchase = new Purchase
             {
                 Book = new Book
@@ -417,6 +406,7 @@ namespace WpfClient
             var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
             if (inAvailable != null)
                 _availableBooks.Remove(inAvailable);
+
             WishlistBooksGrid.ItemsSource = null;
             WishlistBooksGrid.ItemsSource = _wishlist;
             CalculateTotalSpent();
