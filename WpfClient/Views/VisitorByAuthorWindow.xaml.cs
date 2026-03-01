@@ -14,6 +14,8 @@ namespace WpfClient
         private List<VisitorDTO> _allVisitors;
         private List<VisitorDTO> _filteredVisitors;
 
+        private string L(string key) => (string)Application.Current.Resources[key];
+
         public VisitorsByAuthorWindow(AuthorDTO selectedAuthor, List<VisitorDTO> allVisitors)
         {
             InitializeComponent();
@@ -40,9 +42,13 @@ namespace WpfClient
                 ).ToList();
 
                 VisitorsGrid.ItemsSource = _filteredVisitors;
-                TxtAuthorInfo.Text = $"Autor: {_selectedAuthor.Name} {_selectedAuthor.Lastname} (Pronađeno: {_filteredVisitors.Count})";
+
+                TxtAuthorInfo.Text = $"{L("VisitorsByAuthor_AuthorLabel")} {_selectedAuthor.Name} {_selectedAuthor.Lastname} ({L("VisitorsByAuthor_Found")}: {_filteredVisitors.Count})";
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -69,7 +75,7 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Greška pri pretrazi: {ex.Message}", "Greška",
+                MessageBox.Show($"{L("Msg_SearchError")} {ex.Message}", L("Dlg_ErrorTitle"),
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
