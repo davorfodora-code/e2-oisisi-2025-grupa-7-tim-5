@@ -1,74 +1,46 @@
 ﻿<Window x:Class="WpfClient.WishlistAddDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Dodavanje knjige"
-        Height="220"
-        Width="420"
+        Title="{DynamicResource WishlistAdd_Title}"
+        Height="220" Width="420"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         Background="White">
-
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- okvir kao na maketi -->
-        <Border Grid.Row="0"
-                BorderBrush="#4A4A4A"
-                BorderThickness="1"
-                Background="White"
-                Padding="4">
-
-            <ListBox x:Name="BooksList"
-                     BorderThickness="0"
-                     SelectionMode="Single"
+        <Border Grid.Row="0" BorderBrush="#4A4A4A" BorderThickness="1" Background="White" Padding="4">
+            <ListBox x:Name="BooksList" BorderThickness="0" SelectionMode="Single"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      SelectionChanged="BooksList_SelectionChanged">
-
-                <!-- kompaktnije stavke -->
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="4.2"/>
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListBox.ItemContainerStyle>
-
-               <ListBox.ItemTemplate>
-    <DataTemplate>
-        <TextBlock FontSize="13"
-              
-                   TextTrimming="CharacterEllipsis">
-            <Run Text="{Binding Isbn, Mode=OneWay}"/>
-            <Run Text="  "/>
-            <Run Text="{Binding Name, Mode=OneWay}"/>
-            <Run Text=" — "/>
-            <Run Text="{Binding DisplayAuthors, Mode=OneWay}"/>
-        </TextBlock>
-    </DataTemplate>
-</ListBox.ItemTemplate>
-
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="13" TextTrimming="CharacterEllipsis">
+                            <Run Text="{Binding Isbn, Mode=OneWay}"/>
+                            <Run Text="  "/>
+                            <Run Text="{Binding Name, Mode=OneWay}"/>
+                            <Run Text=" — "/>
+                            <Run Text="{Binding DisplayAuthors, Mode=OneWay}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </Border>
 
-        <!-- dugmad dole desno -->
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,10,0,0">
-            <Button Content="Odustani"
-                    Width="90"
-                    Height="28"
-                    Margin="0,0,10,0"
-                    Click="BtnCancel_Click"/>
-
-            <Button x:Name="BtnAdd"
-                    Content="Dodaj"
-                    Width="90"
-                    Height="28"
-                    IsEnabled="False"
-                    Click="BtnAdd_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="{DynamicResource Btn_Abandon}" Width="90" Height="28"
+                    Margin="0,0,10,0" Click="BtnCancel_Click"/>
+            <Button x:Name="BtnAdd" Content="{DynamicResource Btn_Add}" Width="90" Height="28"
+                    IsEnabled="False" Click="BtnAdd_Click"/>
         </StackPanel>
     </Grid>
 </Window>
