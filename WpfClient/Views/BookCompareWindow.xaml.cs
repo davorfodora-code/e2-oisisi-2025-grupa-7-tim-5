@@ -23,6 +23,8 @@ namespace WpfClient
         private List<VisitorDTO> _bothWishlistResult = new();
         private List<VisitorDTO> _boughtFirstResult = new();
 
+        private string L(string key) => (string)Application.Current.Resources[key];
+
         public BookCompareWindow(List<BookDTO> allBooks, List<VisitorDTO> allVisitors)
         {
             InitializeComponent();
@@ -51,14 +53,14 @@ namespace WpfClient
 
             if (book1 == null || book2 == null)
             {
-                MessageBox.Show("Molimo izaberite obe knjige.", "Upozorenje",
+                MessageBox.Show(L("Msg_SelectTwoBooks"), L("Dlg_WarnTitle"),
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (book1.Isbn == book2.Isbn)
             {
-                MessageBox.Show("Molimo izaberite dve različite knjige.", "Upozorenje",
+                MessageBox.Show(L("Msg_SelectDifferentBooks"), L("Dlg_WarnTitle"),
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
