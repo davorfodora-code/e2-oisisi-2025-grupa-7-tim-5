@@ -144,7 +144,7 @@ namespace WpfClient
             if (_purchases != null && _purchases.Any())
             {
                 double total = _purchases.Sum(p => p.Book?.Price ?? 0);
-                TxtTotalSpent.Text = $"{total:C}";
+                TxtTotalSpent.Text = $"{total:N2} RSD";
 
                 var reviews = _purchases
                     .Select(p => p.Review)

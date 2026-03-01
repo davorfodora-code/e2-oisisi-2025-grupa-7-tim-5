@@ -33,7 +33,7 @@
                         <TextBlock Text="{DynamicResource Col_Genre}"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="110">
+                <DataGridTextColumn Binding="{Binding Price, StringFormat='{}{0:N2} RSD'}" Width="110">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource Col_Price}"/>
                     </DataGridTextColumn.Header>
