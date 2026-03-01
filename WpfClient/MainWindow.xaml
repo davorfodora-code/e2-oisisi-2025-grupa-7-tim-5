@@ -8,209 +8,200 @@
         Title="{DynamicResource App_Title}"
         Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
-<Grid>
-    <DockPanel>
-        <Menu DockPanel.Dock="Top" Background="#F0F0F0">
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Background="#F0F0F0">
 
-    <MenuItem Header="{DynamicResource Menu_File}">
-        <MenuItem Header="{DynamicResource Menu_New}" Click="FileNew_Click">
-            <MenuItem.Icon>
-                <Image Source="/Icons/plus.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
-        </MenuItem>
+                <MenuItem Header="{DynamicResource Menu_File}">
+                    <MenuItem Header="{DynamicResource Menu_New}" Click="FileNew_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/plus.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-        <MenuItem Header="{DynamicResource Menu_Save}" Click="FileSave_Click">
-            <MenuItem.Icon>
-                <Image Source="/Icons/diskette.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
-        </MenuItem>
+                    <MenuItem Header="{DynamicResource Menu_Save}" Click="FileSave_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/diskette.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-        <Separator/>
+                    <Separator/>
 
-        <MenuItem Header="{DynamicResource Menu_Open}">
-            <MenuItem.Icon>
-                <Image Source="/Icons/share.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
+                    <MenuItem Header="{DynamicResource Menu_Open}">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/share.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
 
-            <MenuItem Header="{DynamicResource Menu_Visitors}" Click="OpenPosetioci_Click">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/multiple-users-silhouette.png" Width="16" Height="16"/>
-                </MenuItem.Icon>
-            </MenuItem>
+                        <MenuItem Header="{DynamicResource Menu_Visitors}" Click="OpenPosetioci_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/multiple-users-silhouette.png" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-            <MenuItem Header="{DynamicResource Menu_Books}" Click="OpenKnjige_Click">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/open-book.png" Width="16" Height="16"/>
-                </MenuItem.Icon>
-            </MenuItem>
+                        <MenuItem Header="{DynamicResource Menu_Books}" Click="OpenKnjige_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/open-book.png" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-            <MenuItem Header="{DynamicResource Menu_Authors}" Click="OpenAutori_Click">
-                <MenuItem.Icon>
-                    <Image Source="/Icons/author.png" Width="16" Height="16"/>
-                </MenuItem.Icon>
-            </MenuItem>
+                        <MenuItem Header="{DynamicResource Menu_Authors}" Click="OpenAutori_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/author.png" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
 
-            <MenuItem Header="{DynamicResource Menu_Publishers}" Click="OpenIzdavaci_Click">
-                <MenuItem.Icon>
-                    <!-- ako nemaš publisher.png, obriši ovaj Image ili dodaj fajl -->
-                    <Image Source="/Icons/publisher.png" Width="16" Height="16"/>
-                </MenuItem.Icon>
-            </MenuItem>
-        </MenuItem>
-    </MenuItem>
+                        <MenuItem Header="{DynamicResource Menu_Publishers}" Click="OpenIzdavaci_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/Icons/publisher.png" Width="16" Height="16"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                </MenuItem>
 
-    <MenuItem Header="{DynamicResource Menu_EditRoot}">
-        <MenuItem Header="{DynamicResource Menu_Edit}" Click="EditEdit_Click">
-            <MenuItem.Icon>
-                <Image Source="/Icons/edit-user.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
-        </MenuItem>
+                <MenuItem Header="{DynamicResource Menu_EditRoot}">
+                    <MenuItem Header="{DynamicResource Menu_Edit}" Click="EditEdit_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/edit-user.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-        <MenuItem Header="{DynamicResource Menu_Delete}" Click="EditDelete_Click">
-            <MenuItem.Icon>
-                <Image Source="/Icons/delete-user.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
-        </MenuItem>
-    </MenuItem>
+                    <MenuItem Header="{DynamicResource Menu_Delete}" Click="EditDelete_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/delete-user.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
 
-    <MenuItem Header="{DynamicResource Menu_HelpRoot}">
-        <MenuItem Header="{DynamicResource Menu_About}" Click="HelpAbout_Click">
-            <MenuItem.Icon>
-                <Image Source="/Icons/information-button.png" Width="16" Height="16"/>
-            </MenuItem.Icon>
-        </MenuItem>
-    </MenuItem>
+                <MenuItem Header="{DynamicResource Menu_HelpRoot}">
+                    <MenuItem Header="{DynamicResource Menu_About}" Click="HelpAbout_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Icons/information-button.png" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
 
-    <!-- opcionalno: jezik -->
-    <MenuItem Header="{DynamicResource Menu_Language}">
-        <MenuItem Header="Српски" Click="LangSr_Click"/>
-        <MenuItem Header="English" Click="LangEn_Click"/>
-    </MenuItem>
+                <MenuItem Header="{DynamicResource Menu_Language}">
+                    <MenuItem Header="Srpski" Click="LangSr_Click"/>
+                    <MenuItem Header="English" Click="LangEn_Click"/>
+                </MenuItem>
 
-</Menu>
+            </Menu>
 
-        <StatusBar DockPanel.Dock="Bottom" Background="#F0F0F0">
-            <StatusBarItem>
-                <TextBlock x:Name="StatusBarDate" Text="{DynamicResource Status_Date}" Width="120"/>
-            </StatusBarItem>
-            <Separator/>
-            <StatusBarItem>
-               <TextBlock x:Name="StatusBarTime" Text="{DynamicResource Status_Time}" Width="100"/>
-            </StatusBarItem>
-            <Separator/>
-            <StatusBarItem>
-               <TextBlock x:Name="StatusBarAppName" Text="{DynamicResource App_Title}" Width="100"/>
-            </StatusBarItem>
-            <Separator/>
-            <StatusBarItem>
-               <TextBlock x:Name="StatusBarTabName" Text="{DynamicResource Status_Tab}" Width="200"/>
-            </StatusBarItem>
+            <StatusBar DockPanel.Dock="Bottom" Background="#F0F0F0">
+                <StatusBarItem>
+                    <TextBlock x:Name="StatusBarDate" Text="{DynamicResource Status_Date}" Width="120"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock x:Name="StatusBarTime" Text="{DynamicResource Status_Time}" Width="100"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock x:Name="StatusBarAppName" Text="{DynamicResource App_Title}" Width="100"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock x:Name="StatusBarTabName" Text="{DynamicResource Status_Tab}" Width="200"/>
+                </StatusBarItem>
+            </StatusBar>
 
-  
-        </StatusBar>
-
-        <Border DockPanel.Dock="Top"
+            <Border DockPanel.Dock="Top"
                 Background="#F0F0F0"
                 Padding="6"
                 BorderBrush="#CCCCCC"
                 BorderThickness="0,0,0,1">
-            <Grid HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-               
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="0">
-                    <Button x:Name="BtnAdd"
+                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                        <Button x:Name="BtnAdd"
                             Click="BtnAdd_Click"
                             Margin="0,0,8,0"
                             Padding="8,4"
                             Width="34">
-                        <Image Source="pack://application:,,,/Icons/add-user.png"
+                            <Image Source="pack://application:,,,/Icons/add-user.png"
                                Width="16" Height="16"/>
-                    </Button>
+                        </Button>
 
-                    <Button x:Name="BtnEdit"
+                        <Button x:Name="BtnEdit"
                             Click="BtnEdit_Click"
                             Margin="0,0,8,0"
                             Padding="8,4"
                             Width="33">
-                        <Image Source="/Icons/edit-user.png"
+                            <Image Source="/Icons/edit-user.png"
                                Width="16" Height="16"/>
-                    </Button>
+                        </Button>
 
-                    <Button x:Name="BtnDelete"
+                        <Button x:Name="BtnDelete"
                             Click="BtnDelete_Click"
                             Margin="0,0,24,0"
                             Padding="8,4"
                             Width="33">
-                        <Image Source="/Icons/delete-user.png"
+                            <Image Source="/Icons/delete-user.png"
                                Width="16" Height="16"/>
-                    </Button>
-                </StackPanel>
+                        </Button>
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                             Grid.Column="2"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center">
 
-                    <TextBox x:Name="TxtSearch"
+                        <TextBox x:Name="TxtSearch"
                              Width="200"
                              Height="28"
                              Padding="6"
                              KeyDown="TxtSearch_KeyDown"
                              TextChanged="TxtSearch_TextChanged"/>
 
-                    <Button x:Name="BtnSearch"
+                        <Button x:Name="BtnSearch"
                             Width="35"
                             Height="28"
                             Margin="5,0,0,0"
                             Click="BtnSearch_Click">
-                        <Image Source="/Icons/magnifier.png"
+                            <Image Source="/Icons/magnifier.png"
                                Width="16"
                                Height="16"/>
-                    </Button>
-                </StackPanel>
-                  <StackPanel x:Name="ToastContainer" 
-                    VerticalAlignment="Bottom"     
-                    HorizontalAlignment="Right"     
-                    Margin="10"                     
+                        </Button>
+                    </StackPanel>
+                    <StackPanel x:Name="ToastContainer"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Margin="10"
                     Panel.ZIndex="9999">
                     </StackPanel>
-            </Grid>
-        </Border>
+                </Grid>
+            </Border>
 
-        <TabControl x:Name="MainTabs"
+            <TabControl x:Name="MainTabs"
                     SelectionChanged="MainTabs_SelectionChanged"
                     Margin="10"
                     Background="White"
                     BorderBrush="#E0E0E0"
                     BorderThickness="1">
 
+                <!-- ===== TAB KNJIGE ===== -->
+                <TabItem Header="{DynamicResource Tab_Books}">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-            <!-- ===== TAB KNJIGE ===== -->
-            <TabItem Header="{DynamicResource Tab_Books}">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button x:Name="BtnCompareBooks"
+                            <Button x:Name="BtnCompareBooks"
                                Content="{DynamicResource Btn_CompareBooks}"
                                 Width="120"
                                 Height="30"
                                 Click="BtnCompareBooks_Click"/>
-                        
-                    </StackPanel>
-                  
-                
+                        </StackPanel>
 
-                    <DataGrid Grid.Row="1"
+                        <DataGrid Grid.Row="1"
                               x:Name="BooksGrid"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
@@ -223,51 +214,40 @@
                               HeadersVisibility="Column"
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0">
-                        <DataGrid.Columns>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Isbn}" Width="120">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_ISBN}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Name}" Width="2*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Name}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="100">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Price}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding PublicationYear}" Width="80">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Year}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Genre}" Width="*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Genre}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
 
-    <DataGridTextColumn Binding="{Binding Isbn}" Width="120">
-        <DataGridTextColumn.Header>
-            <TextBlock Text="{DynamicResource Col_ISBN}" />
-        </DataGridTextColumn.Header>
-    </DataGridTextColumn>
-
-    <DataGridTextColumn Binding="{Binding Name}" Width="2*">
-        <DataGridTextColumn.Header>
-            <TextBlock Text="{DynamicResource Col_Name}" />
-        </DataGridTextColumn.Header>
-    </DataGridTextColumn>
-
-    <DataGridTextColumn Binding="{Binding Price, StringFormat='{}{0:C}'}" Width="100">
-        <DataGridTextColumn.Header>
-            <TextBlock Text="{DynamicResource Col_Price}" />
-        </DataGridTextColumn.Header>
-    </DataGridTextColumn>
-
-    <DataGridTextColumn Binding="{Binding PublicationYear}" Width="80">
-        <DataGridTextColumn.Header>
-            <TextBlock Text="{DynamicResource Col_Year}" />
-        </DataGridTextColumn.Header>
-    </DataGridTextColumn>
-
-    <DataGridTextColumn Binding="{Binding Genre}" Width="*">
-        <DataGridTextColumn.Header>
-            <TextBlock Text="{DynamicResource Col_Genre}" />
-        </DataGridTextColumn.Header>
-    </DataGridTextColumn>
-
-</DataGrid.Columns>
-
-                    </DataGrid>
-                  
-                 
-                </Grid>
-                     
-            </TabItem>
-                   
-
-            <!-- ===== TAB POSETIOCI ===== -->
-            <TabItem Header="{DynamicResource Tab_Visitors}">
-                <DataGrid x:Name="VisitorsGrid"
+                <!-- ===== TAB POSETIOCI ===== -->
+                <TabItem Header="{DynamicResource Tab_Visitors}">
+                    <DataGrid x:Name="VisitorsGrid"
                           AutoGenerateColumns="False"
                           IsReadOnly="True"
                           Margin="10"
@@ -280,45 +260,54 @@
                           HeadersVisibility="Column"
                           VerticalGridLinesBrush="#E0E0E0"
                           HorizontalGridLinesBrush="#E0E0E0">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{DynamicResource Col_MembershipNumber}"
-                                           Binding="{Binding MembershipNumber}"
-                                           Width="150"/>
-                        <DataGridTextColumn Header="{DynamicResource Col_FirstName}"
-                                           Binding="{Binding Name}"
-                                           Width="100"/>
-                        <DataGridTextColumn Header="{DynamicResource Col_LastName}"
-                                           Binding="{Binding LastName}"
-                                           Width="120"/>
-                        <DataGridTextColumn Header="{DynamicResource Col_Address}"
-                                           Binding="{Binding DisplayAddress}"
-                                           Width="250"/>
-                        <DataGridTextColumn Header="{DynamicResource Col_Status}"
-                                           Binding="{Binding DisplayStatus}"
-                                           Width="100"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding MembershipNumber}" Width="150">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Col_MembershipNumber}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Name}" Width="100">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Col_FirstName}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding LastName}" Width="120">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Col_LastName}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DisplayAddress}" Width="250">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Col_Address}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DisplayStatus}" Width="100">
+                                <DataGridTextColumn.Header>
+                                    <TextBlock Text="{DynamicResource Col_Status}"/>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
 
-            </TabItem>
+                <!-- ===== TAB AUTORI ===== -->
+                <TabItem Header="{DynamicResource Tab_Authors}">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-            <!-- ===== TAB AUTORI ===== -->
-            <TabItem Header="{DynamicResource Tab_Authors}">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button x:Name="BtnShowVisitorsByAuthor"
+                            <Button x:Name="BtnShowVisitorsByAuthor"
                                 Content="{DynamicResource Btn_ShowVisitorsByAuthor}"
                                 Width="120"
                                 Height="30"
                                 Click="BtnShowVisitorsByAuthor_Click"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                    <DataGrid Grid.Row="1"
+                        <DataGrid Grid.Row="1"
                               x:Name="AuthorsGrid"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
@@ -332,52 +321,62 @@
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0"
                               SelectionChanged="AuthorsGrid_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="{DynamicResource Col_FirstName}"
-                                               Binding="{Binding Name}"
-                                               Width="*"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_LastName}"
-                                               Binding="{Binding Lastname}"
-                                               Width="*"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_IdCard}"
-                                               Binding="{Binding IdCard}"
-                                               Width="120"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_DateOfBirth}"
-                                               Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}"
-                                               Width="120"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_Email}"
-                                               Binding="{Binding Email}"
-                                               Width="2*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Width="*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_FirstName}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Lastname}" Width="*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_LastName}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding IdCard}" Width="120">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_IdCard}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding DateOfBirth, StringFormat='dd.MM.yyyy.'}" Width="120">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_DateOfBirth}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Email}" Width="2*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Email}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
 
-            <!-- ===== TAB IZDAVACI ===== -->
-            <TabItem Header="{DynamicResource Tab_Publishers}">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <!-- ===== TAB IZDAVACI ===== -->
+                <TabItem Header="{DynamicResource Tab_Publishers}">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal"
+                        <StackPanel Grid.Row="0" Orientation="Horizontal"
                                 HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button x:Name="BtnSetPublisherManager"
+                            <Button x:Name="BtnSetPublisherManager"
                                 Content="{DynamicResource Btn_SetPublisherManager}"
                                 Width="150"
                                 Height="30"
                                 Click="BtnSetPublisherManager_Click"/>
 
-                        <Button x:Name="BtnShowPublisherBooks"
+                            <Button x:Name="BtnShowPublisherBooks"
                                Content="{DynamicResource Btn_ShowPublisherBooks}"
                                 Width="120"
                                 Height="30"
                                 Margin="10,0,0,0"
                                 Click="BtnShowPublisherBooks_Click"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                    <DataGrid Grid.Row="1"
+                        <DataGrid Grid.Row="1"
                               x:Name="PublishersGrid"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
@@ -390,35 +389,43 @@
                               HeadersVisibility="Column"
                               VerticalGridLinesBrush="#E0E0E0"
                               HorizontalGridLinesBrush="#E0E0E0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="{DynamicResource Col_PublisherId}" Binding="{Binding Id}" Width="50"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_PublisherName}" Binding="{Binding Name}" Width="2*"/>
-                            <DataGridTextColumn Header="{DynamicResource Col_Manager}" Binding="{Binding DisplayManager}" Width="2*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </TabItem>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Width="50">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_PublisherId}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding Name}" Width="2*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_PublisherName}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding DisplayManager}" Width="2*">
+                                    <DataGridTextColumn.Header>
+                                        <TextBlock Text="{DynamicResource Col_Manager}"/>
+                                    </DataGridTextColumn.Header>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
 
-        </TabControl>
-      
-       
-    </DockPanel>
-    <Border x:Name="Toast"
-                Background="#7ace8a"
-                CornerRadius="8"
-                Padding="12,8"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="15"
-                Opacity="0"
-                Visibility="Collapsed">
+            </TabControl>
+        </DockPanel>
+
+        <Border x:Name="Toast"
+            Background="#7ace8a"
+            CornerRadius="8"
+            Padding="12,8"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="15"
+            Opacity="0"
+            Visibility="Collapsed">
             <TextBlock x:Name="ToastText"
-                       Foreground="White"
-                       FontSize="13"
-                       TextWrapping="Wrap"/>
+                   Foreground="White"
+                   FontSize="13"
+                   TextWrapping="Wrap"/>
         </Border>
-
-        </Grid>
-
-
+    </Grid>
 </Window>
