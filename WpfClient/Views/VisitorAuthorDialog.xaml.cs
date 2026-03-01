@@ -15,6 +15,8 @@ namespace WpfClient
         private List<VisitorDTO> _allVisitors;
         private ObservableCollection<VisitorDTO> _filteredVisitors;
 
+        private string L(string key) => (string)Application.Current.Resources[key];
+
         public VisitorAuthorDialog(AuthorDTO selectedAuthor, List<VisitorDTO> allVisitors)
         {
             InitializeComponent();
@@ -22,13 +24,10 @@ namespace WpfClient
             _selectedAuthor = selectedAuthor;
             _allVisitors = allVisitors;
 
-            // Prikaži informacije o autoru
             TxtAuthorInfo.Text = $"{_selectedAuthor.Name} {_selectedAuthor.Lastname} (ID: {_selectedAuthor.IdCard})";
 
-            // Filtriraj posetioce
             FilterVisitors();
 
-            // Postavi DataGrid
             VisitorsGrid.ItemsSource = _filteredVisitors;
 
             UpdateStatus();
@@ -36,7 +35,6 @@ namespace WpfClient
 
         private void FilterVisitors(string searchQuery = "")
         {
-            // Prvo filtriraj po autoru - posetioci koji imaju bar jednu knjigu ovog autora u wishlisti
             var visitorsWithAuthorBook = _allVisitors.Where(visitor =>
                 visitor.Wishlist != null &&
                 visitor.Wishlist.Any(book =>
@@ -45,7 +43,6 @@ namespace WpfClient
                 )
             ).ToList();
 
-            // Zatim filtriraj po searchQuery ako postoji
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
                 var searchLower = searchQuery.ToLower();
@@ -63,7 +60,7 @@ namespace WpfClient
 
         private void UpdateStatus()
         {
-            TxtStatus.Text = $"Ukupno posetilaca: {_filteredVisitors?.Count ?? 0}";
+            TxtStatus.Text = $"{L("VisitorsByAuthor_TotalVisitors")} {_filteredVisitors?.Count ?? 0}";
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -79,10 +76,8 @@ namespace WpfClient
             }
         }
 
-        private void TxtSearch_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Opciono: dinamička pretraga dok kucaš
-            // FilterVisitors(TxtSearch.Text.Trim());
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
