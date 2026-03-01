@@ -30,9 +30,9 @@ namespace WpfClient
             _availableBooks = new ObservableCollection<BookDTO>();
 
             LoadVisitorData();
-            LoadAllBooks();
-            LoadWishlist();
             LoadPurchasedBooks();
+            LoadWishlist();
+            LoadAllBooks();
             CalculateTotalSpent();
 
             WishlistBooksGrid.ItemsSource = _wishlist;
@@ -361,6 +361,7 @@ namespace WpfClient
                     }).ToList()
                 }).ToList();
                 _originalVisitor.Status = VisitorDTO.Status;
+                _originalVisitor.Purchases = _purchases;
                 DialogResult = true;
                 Close();
             }

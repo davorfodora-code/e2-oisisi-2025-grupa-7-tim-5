@@ -1,3 +1,15 @@
-Davor|Fodora||Sremska|1|Backa Palanka|Backa Palanka|Srbija|||CK-1-0001||R|0||ISBN2,NAZIV2,14.02.2026.;Isbn,Naziv,07.02.2026.
-Nemanja|Elor||Dunavska|13|Novi Sad|Novi Sad|Srbija|||CK-1-0002||V|0||Isbn,Naziv,12.02.2026.
-Andjela|Prastalo||Savska|3|Zrenjanin|Zrenjanin|Srbija|||CK-2-0003||V|0||ISBN3,Na Drini cuprija,14.02.2026.
+Davor|Petrovic||Jovana Ducica|12|Novi Sad|Vojvodina|Srbija|064111222|davor.petrovic@gmail.com|CK-1-0001|2024|R|4.5|ISBN-B02,Dervis i smrt,AU-02-02~Stefan~Jovanovic;ISBN-B04,Seobe,KK-11-22~Davor~Fodora|ID kartica~Milos~Markovic|ISBN-B01,Prokleta avlija,15.01.2026.;ISBN-B03,Hazarski recnik,20.01.2026.
+Milica|Jovanovic||Kralja Petra|5|Beograd|Srbija|Srbija|063222333|milica.j@gmail.com|CK-1-0002|2023|V|4|ISBN-B06,Noz,AU-06-06~Nemanja~Ilic|AU-03-03~Ana~Stojanovic|ISBN-B02,Dervis i smrt,03.02.2026.;ISBN-B05,Koreni,10.02.2026.
+Andjela|Prastalo||Sremska|22|Backa Palanka|Vojvodina|Srbija|062333444|andjela@gmail.com|CK-2-0003|2024|V|3|ISBN-B09,Gorski vijenac,AU-09-09~Milica~Vukovic||ISBN-B04,Seobe,12.01.2026.;ISBN-B07,Vuk Stefanovic Karadzic,18.01.2026.
+Nemanja|Eler||Dunavska|7|Novi Sad|Vojvodina|Srbija|061444555|nemanja.e@gmail.com|CK-3-0004|2022|R|4.5|ISBN-B11,Pripovetke,AU-11-11~Sonja~Milosevic||ISBN-B06,Noz,25.01.2026.;ISBN-B08,Pesme,01.02.2026.
+Jovana|Markovic||Cara Dusana|18|Beograd|Srbija|Srbija|060555666|jovana.m@gmail.com|CK-4-0005|2023|R|5|ISBN-B13,Romani o Londonu,AU-03-03~Ana~Stojanovic||ISBN-B09,Gorski vijenac,05.02.2026.;ISBN-B10,Besnilo,14.02.2026.
+Stefan|Nikolic||Njegoseva|3|Novi Sad|Vojvodina|Srbija|065666777|stefan.n@gmail.com|CK-5-0006|2024|V|4.5|ISBN-B15,Odabrane pesme,AU-07-07~Ivana~Djordjevic||ISBN-B11,Pripovetke,08.01.2026.;ISBN-B12,Vreme cuda,22.01.2026.
+Maja|Stojanovic||Zmaj Jovina|44|Beograd|Srbija|Srbija|066777888|maja.s@gmail.com|CK-6-0007|2022|R|3.5|ISBN-B01,Prokleta avlija,Id kartica~Milos~Markovic||ISBN-B13,Romani o Londonu,28.01.2026.;ISBN-B14,Dnevnik o Carnojevicu,11.02.2026.
+Luka|Ilic||Mileticeva|9|Novi Sad|Vojvodina|Srbija|067888999|luka.i@gmail.com|CK-7-0008|2025|R|5|ISBN-B03,Hazarski recnik,AU-03-03~Ana~Stojanovic||ISBN-B15,Odabrane pesme,17.02.2026.
+Jelena|Popovic||Partizanska|6|Backa Palanka|Vojvodina|Srbija|068999000|jelena.p@gmail.com|CK-8-0009|2023|V|4|ISBN-B05,Koreni,AU-05-05~Maja~Nikolic||
+Marko|Djordjevic||Bulevar Oslobodjenja|101|Novi Sad|Vojvodina|Srbija|069000111|marko.d@gmail.com|CK-9-0010|2024|R|0|ISBN-B07,Vuk Stefanovic Karadzic,AU-07-07~Ivana~Djordjevic||
+Ivana|Lazarevic||Knez Mihajlova|15|Beograd|Srbija|Srbija|060111222|ivana.l@gmail.com|CK-1-0011|2022|V|4.5|ISBN-B08,Pesme,ID-22-33~Ivor~Adamek||
+Petar|Vukovic||Vojvodanska|33|Backa Palanka|Vojvodina|Srbija|061222333|petar.v@gmail.com|CK-2-0012|2025|R|0|ISBN-B10,Besnilo,AU-10-10~Dragan~Lazarevic||
+Sanja|Pavlovic||Terazije|2|Beograd|Srbija|Srbija|062333444|sanja.p@gmail.com|CK-3-0013|2023|R|3|ISBN-B12,Vreme cuda,AU-02-02~Stefan~Jovanovic||
+Bojan|Milosevic||Fruskogorska|8|Novi Sad|Vojvodina|Srbija|063444555|bojan.m@gmail.com|CK-4-0014|2024|V|0|ISBN-B14,Dnevnik o Carnojevicu,ID-1-9999~Nikola~Nikolasevic||
+Tamara|Radovic||Savska|19|Beograd|Srbija|Srbija|064555666|tamara.r@gmail.com|CK-5-0015|2022|R|0|||

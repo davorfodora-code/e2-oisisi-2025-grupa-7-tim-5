@@ -1,3 +1,15 @@
-204|strinng|12.12.2000.|4,3|Odlicna knjiga
-204|ISBN9788652114520|12.12.2023.|4,3|Odlična knjiga!
-412|ISBN9788645123975|05.01.2024.|4,2|Lepo opisana istorija
+CK-1-0001|ISBN-B01|15.01.2026.|5|Odlicna knjiga, preporucujem svima
+CK-1-0001|ISBN-B03|20.01.2026.|4|Vrlo interesantno stivo
+CK-1-0002|ISBN-B02|03.02.2026.|3|Solidna knjiga
+CK-1-0002|ISBN-B05|10.02.2026.|5|Jedna od najboljih koje sam procitao
+CK-2-0003|ISBN-B04|12.01.2026.|4|Lepo opisana istorija
+CK-2-0003|ISBN-B07|18.01.2026.|2|Nije ispunilo ocekivanja
+CK-3-0004|ISBN-B06|25.01.2026.|5|Vrhunski triler
+CK-3-0004|ISBN-B08|01.02.2026.|4|Lijepe pesme
+CK-4-0005|ISBN-B09|05.02.2026.|5|Klasik srpske knjizevnosti
+CK-4-0005|ISBN-B10|14.02.2026.|3|Malo previse mracno
+CK-5-0006|ISBN-B11|08.01.2026.|4|Kratke price pune emocija
+CK-5-0006|ISBN-B12|22.01.2026.|5|Fascinantna naucna fantastika
+CK-6-0007|ISBN-B13|28.01.2026.|4|Kompleksni likovi
+CK-6-0007|ISBN-B14|11.02.2026.|3|Zanimljivo ali tesko za citanje
+CK-7-0008|ISBN-B15|17.02.2026.|5|Prelepe pesme

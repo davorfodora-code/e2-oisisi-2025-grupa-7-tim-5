@@ -1,1 +1,15 @@
-1|DJordja Zlicica|34|Novi Sad|Vojvodina|Srbija
+1|Jovana Ducica|12|Novi Sad|Vojvodina|Srbija
+2|Kralja Petra|5|Beograd|Srbija|Srbija
+3|Sremska|22|Backa Palanka|Vojvodina|Srbija
+4|Dunavska|7|Novi Sad|Vojvodina|Srbija
+5|Cara Dusana|18|Beograd|Srbija|Srbija
+6|Njegoseva|3|Novi Sad|Vojvodina|Srbija
+7|Zmaj Jovina|44|Beograd|Srbija|Srbija
+8|Mileticeva|9|Novi Sad|Vojvodina|Srbija
+9|Partizanska|6|Backa Palanka|Vojvodina|Srbija
+10|Bulevar Oslobodjenja|101|Novi Sad|Vojvodina|Srbija
+11|Knez Mihajlova|15|Beograd|Srbija|Srbija
+12|Vojvodanska|33|Backa Palanka|Vojvodina|Srbija
+13|Terazije|2|Beograd|Srbija|Srbija
+14|Fruskogorska|8|Novi Sad|Vojvodina|Srbija
+15|Savska|19|Beograd|Srbija|Srbija

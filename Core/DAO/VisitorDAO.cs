@@ -75,7 +75,7 @@ namespace Core.DAO
             oldVisitor.Name = v.Name;
             oldVisitor.LastName = v.LastName;
             oldVisitor.Address = v.Address;
-            oldVisitor.Wishlist = v.Wishlist;  // Ovo je dobro
+            oldVisitor.Wishlist = v.Wishlist;  
             oldVisitor.Purchases = v.Purchases;
             oldVisitor.Status = v.Status;
             oldVisitor.AverageReview = v.AverageReview;

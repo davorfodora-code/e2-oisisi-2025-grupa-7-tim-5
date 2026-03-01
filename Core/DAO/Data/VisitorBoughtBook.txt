@@ -1,1 +1,15 @@
-204|Davor|Fodora|strinng|ime
+CK-1-0001|Davor|Petrovic|ISBN-B01|Prokleta avlija
+CK-1-0001|Davor|Petrovic|ISBN-B03|Hazarski recnik
+CK-1-0002|Milica|Jovanovic|ISBN-B02|Dervis i smrt
+CK-1-0002|Milica|Jovanovic|ISBN-B05|Koreni
+CK-2-0003|Andjela|Prastalo|ISBN-B04|Seobe
+CK-2-0003|Andjela|Prastalo|ISBN-B07|Vuk Stefanovic Karadzic
+CK-3-0004|Nemanja|Eler|ISBN-B06|Noz
+CK-3-0004|Nemanja|Eler|ISBN-B08|Pesme
+CK-4-0005|Jovana|Markovic|ISBN-B09|Gorski vijenac
+CK-4-0005|Jovana|Markovic|ISBN-B10|Besnilo
+CK-5-0006|Stefan|Nikolic|ISBN-B11|Pripovetke
+CK-5-0006|Stefan|Nikolic|ISBN-B12|Vreme cuda
+CK-6-0007|Maja|Stojanovic|ISBN-B13|Romani o Londonu
+CK-6-0007|Maja|Stojanovic|ISBN-B14|Dnevnik o Carnojevicu
+CK-7-0008|Luka|Ilic|ISBN-B15|Odabrane pesme

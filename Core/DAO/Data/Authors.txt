@@ -1,4 +1,15 @@
-KK-11-22|Davor|Fodora|08.02.2026.|088897123|davor@gmail.com|1|Ulica|11|||Srbija|ISBN2,NAZIV2;isbn7,Lazara majka karala
-Id kartica|Milos|Markovic|13.02.2026.|123|123@gmail.com|10|Ulicanska|99|||Srbija|
-ID-1-9999|Nikola|Nikolasevic|30.01.2026.|099999999|nikola@gmail.com|5|Ulica|11|||Srbija|Isbn,Naziv
-ID-22-33|Ivor|Adamek|20.02.2026.|060876484|ivor@mail.com|3|Drinska|3|Novi Sad|Novi Sad|Srbija|
+KK-11-22|Davor|Fodora|08.02.2026.|088897123|davor@gmail.com|1|Jovana Ducica|12|Novi Sad|Vojvodina|Srbija|ISBN2,NAZIV5;isbn7,Lazara majka karala
+Id kartica|Milos|Markovic|13.02.2026.|064123456|milos@gmail.com|2|Kralja Petra|5|Beograd|Srbija|Srbija|
+ID-1-9999|Nikola|Nikolasevic|30.01.2026.|099999999|nikola@gmail.com|3|Sremska|22|Backa Palanka|Vojvodina|Srbija|Isbn,Naziv
+ID-22-33|Ivor|Adamek|20.02.2026.|060876484|ivor@mail.com|4|Dunavska|7|Novi Sad|Vojvodina|Srbija|
+AU-01-01|Jelena|Petrovic|15.03.2025.|061234567|jelena@gmail.com|5|Cara Dusana|18|Beograd|Srbija|Srbija|
+AU-02-02|Stefan|Jovanovic|22.04.2025.|062345678|stefan@gmail.com|6|Njegoseva|3|Novi Sad|Vojvodina|Srbija|
+AU-03-03|Ana|Stojanovic|10.05.2025.|063456789|ana@gmail.com|7|Zmaj Jovina|44|Beograd|Srbija|Srbija|
+AU-04-04|Marko|Popovic|01.06.2025.|064567890|marko@gmail.com|8|Mileticeva|9|Novi Sad|Vojvodina|Srbija|
+AU-05-05|Maja|Nikolic|17.07.2025.|065678901|maja@gmail.com|9|Partizanska|6|Backa Palanka|Vojvodina|Srbija|
+AU-06-06|Nemanja|Ilic|25.08.2025.|066789012|nemanja@gmail.com|10|Bulevar Oslobodjenja|101|Novi Sad|Vojvodina|Srbija|
+AU-07-07|Ivana|Djordjevic|03.09.2025.|067890123|ivana@gmail.com|11|Knez Mihajlova|15|Beograd|Srbija|Srbija|
+AU-08-08|Luka|Pavlovic|12.10.2025.|068901234|luka@gmail.com|12|Vojvodanska|33|Backa Palanka|Vojvodina|Srbija|
+AU-09-09|Milica|Vukovic|20.11.2025.|069012345|milica@gmail.com|13|Terazije|2|Beograd|Srbija|Srbija|
+AU-10-10|Dragan|Lazarevic|05.12.2025.|060123456|dragan@gmail.com|14|Fruskogorska|8|Novi Sad|Vojvodina|Srbija|
+AU-11-11|Sonja|Milosevic|14.01.2026.|061234987|sonja@gmail.com|15|Savska|19|Beograd|Srbija|Srbija|
