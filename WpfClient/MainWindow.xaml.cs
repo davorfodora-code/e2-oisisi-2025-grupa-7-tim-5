@@ -26,8 +26,6 @@ namespace WpfClient
         private BookController _bookController;
         private ObservableCollection<BookDTO> _books;
 
-
-
         private PublisherController _publisherController;
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
@@ -71,16 +69,10 @@ namespace WpfClient
             LoadAuthors();
             LoadBooks();
             LoadPublishers();
-
-
         }
 
-        private string L(string key)
-        {
-            return (string)Application.Current.Resources[key];
-        }
-        private string F(string key, params object[] args)
-    => string.Format(L(key), args);
+        private string L(string key) => (string)Application.Current.Resources[key];
+        private string F(string key, params object[] args) => string.Format(L(key), args);
 
         private void MsgError(string msgKey)
             => MessageBox.Show(L(msgKey), L("Dlg_ErrorTitle"),
@@ -97,9 +89,10 @@ namespace WpfClient
         private MessageBoxResult MsgConfirm(string msgKey)
             => MessageBox.Show(L(msgKey), L("Dlg_ConfirmTitle"),
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
+
         private void InitializeStatusBar()
         {
-            StatusBarAppName.Text = L("App_Title");  
+            StatusBarAppName.Text = L("App_Title");
             UpdateTabName();
             UpdateDateTime();
 
@@ -117,7 +110,6 @@ namespace WpfClient
         private void UpdateDateTime()
         {
             var now = DateTime.Now;
-
             StatusBarDate.Text = $"{L("Status_Date")} {now:dd.MM.yyyy}";
             StatusBarTime.Text = $"{L("Status_Time")} {now:HH:mm:ss}";
         }
@@ -134,8 +126,6 @@ namespace WpfClient
             }
         }
 
-       
-
         private void LoadVisitors()
         {
             var visitorModels = _visitorController.GetAllVisitors();
@@ -150,6 +140,7 @@ namespace WpfClient
             VisitorsGrid.ItemsSource = _visitors;
             _allVisitors = _visitors.ToList();
         }
+
         private void BtnCompareBooks_Click(object sender, RoutedEventArgs e)
         {
             var allVisitors = _visitorDAO
@@ -167,6 +158,7 @@ namespace WpfClient
             win.Owner = this;
             win.ShowDialog();
         }
+
         private void LoadAuthors()
         {
             var authorModels = _authorController.GetAllAuthors();
@@ -196,6 +188,7 @@ namespace WpfClient
             BooksGrid.ItemsSource = _books;
             _allBooks = _books.ToList();
         }
+
         private void LoadPublishers()
         {
             if (_publisherController == null)
@@ -212,10 +205,6 @@ namespace WpfClient
 
             PublishersGrid.Items.Refresh();
         }
-
-       
-
-
 
         private void Window_Loaded(object? sender, RoutedEventArgs e)
         {
@@ -242,7 +231,7 @@ namespace WpfClient
                         }
                         else
                         {
-                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -261,8 +250,7 @@ namespace WpfClient
                         }
                         else
                         {
-                            MessageBox.Show("Došlo je do greške prilikom dodavanja izdavača.",
-                                "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(L("Msg_OperationFailed"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -281,7 +269,7 @@ namespace WpfClient
                         }
                         else
                         {
-                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -304,7 +292,7 @@ namespace WpfClient
                         }
                         else
                         {
-                            MessageBox.Show(result.Message, "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -315,38 +303,34 @@ namespace WpfClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Greška: {ex.Message}\n\nDetalji: {ex.StackTrace}",
-                    "Kritična greška", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"{L("Msg_CriticalError")} {ex.Message}\n\n{ex.StackTrace}",
+                    L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-       
         private async void ShowToast(string message, int ms = 2500)
         {
             ToastText.Text = message;
-
             Toast.Visibility = Visibility.Visible;
 
-    
             var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
             Toast.BeginAnimation(OpacityProperty, fadeIn);
 
             await Task.Delay(ms);
 
-   
             var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
             fadeOut.Completed += (_, __) => Toast.Visibility = Visibility.Collapsed;
             Toast.BeginAnimation(OpacityProperty, fadeOut);
         }
+
         private void ShowVisitorsForAuthor_Click(object sender, RoutedEventArgs e)
         {
             var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
             if (selectedAuthor != null)
             {
                 var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
-
                 var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
-                win.Owner = this; 
+                win.Owner = this;
                 win.ShowDialog();
             }
             else
@@ -354,6 +338,7 @@ namespace WpfClient
                 MsgWarn("Msg_SelectEntityFromTable");
             }
         }
+
         private void BtnEdit_Click(object? sender, RoutedEventArgs e)
         {
             int idx = MainTabs?.SelectedIndex ?? -1;
@@ -361,45 +346,26 @@ namespace WpfClient
             if (idx == TAB_VISITORS)
             {
                 var selectedVisitorDto = VisitorsGrid.SelectedItem as VisitorDTO;
-                if (selectedVisitorDto == null)
-                {
-                    MsgWarn("Msg_SelectEntityFromTable");
-                    return;
-                }
+                if (selectedVisitorDto == null) { MsgWarn("Msg_SelectEntityFromTable"); return; }
 
                 var originalVisitor = _visitorController.GetAllVisitors()
                     .FirstOrDefault(v => v.MembershipNumber == selectedVisitorDto.MembershipNumber);
 
-                if (originalVisitor == null)
-                {
-                    MsgError("Msg_OperationFailed");
-                    return;
-                }
+                if (originalVisitor == null) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new VisitorEditDialog(selectedVisitorDto, originalVisitor, _bookController);
 
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _visitorController.UpdateVisitor(dialog.VisitorDTO);
-                    if (result.Success)
-                    {
-                        ShowToast(L("Toast_Updated"));
-                        LoadVisitors();
-                    }
-                    else
-                    {
-                        MsgError("Msg_OperationFailed");
-                    }
+                    if (result.Success) { ShowToast(L("Toast_Updated")); LoadVisitors(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else if (idx == TAB_PUBLISHERS)
             {
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
-                if (selectedPublisher == null)
-                {
-                    MsgWarn("Msg_SelectEntityToEdit");
-                    return;
-                }
+                if (selectedPublisher == null) { MsgWarn("Msg_SelectEntityToEdit"); return; }
 
                 var dialog = new PublisherEditDialog(selectedPublisher, _authors);
                 dialog.Owner = this;
@@ -409,35 +375,19 @@ namespace WpfClient
                     var publisherModel = dialog.Publisher.ToModel();
                     var result = _publisherController.UpdatePublisher(publisherModel);
 
-                    if (result != null)
-                    {
-                        ShowToast(L("Toast_Updated"));
-                        LoadPublishers();
-                        LoadBooks();
-                    }
-                    else
-                    {
-                        MsgError("Msg_OperationFailed");
-                    }
+                    if (result != null) { ShowToast(L("Toast_Updated")); LoadPublishers(); LoadBooks(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else if (idx == TAB_AUTHORS)
             {
                 var selectedAuthorDto = AuthorsGrid.SelectedItem as AuthorDTO;
-                if (selectedAuthorDto == null)
-                {
-                    MsgWarn("Msg_SelectEntityToEdit");
-                    return;
-                }
+                if (selectedAuthorDto == null) { MsgWarn("Msg_SelectEntityToEdit"); return; }
 
                 var originalAuthor = _authorController.GetAllAuthors()
                     .FirstOrDefault(a => a.IdCard == selectedAuthorDto.IdCard);
 
-                if (originalAuthor == null)
-                {
-                    MsgError("Msg_OperationFailed");
-                    return;
-                }
+                if (originalAuthor == null) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new AuthorEditDialog(selectedAuthorDto, originalAuthor, _bookController);
                 dialog.Owner = this;
@@ -445,19 +395,18 @@ namespace WpfClient
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _authorController.UpdateAuthor(dialog.AuthorDTO);
-
                     LoadBooks();
 
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, "Uspešno",
+                        MessageBox.Show(result.Message, L("Dlg_InfoTitle"),
                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadAuthors(); 
-                        LoadPublishers(); 
+                        LoadAuthors();
+                        LoadPublishers();
                     }
                     else
                     {
-                        MessageBox.Show(result.Message, "Greška",
+                        MessageBox.Show(result.Message, L("Dlg_ErrorTitle"),
                             MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
@@ -465,34 +414,17 @@ namespace WpfClient
             else if (idx == TAB_BOOKS)
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
-                if (selectedBook == null)
-                {
-                    MsgWarn("Msg_SelectEntityToEdit");
-                    return;
-                }
+                if (selectedBook == null) { MsgWarn("Msg_SelectEntityToEdit"); return; }
 
-                if (_publishers == null || _publishers.Count == 0)
-                {
-                    MsgError("Msg_OperationFailed");
-                    return;
-                }
+                if (_publishers == null || _publishers.Count == 0) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new AddBookDialog(selectedBook, _authors, _publishers);
 
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _bookController.EditBook(dialog.Book);
-                    if (result.Success)
-                    {
-                        ShowToast(L("Toast_Updated"));
-
-                        LoadBooks();
-                    }
-                    else
-                    {
-                        MessageBox.Show(result.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    if (result.Success) { ShowToast(L("Toast_Updated")); LoadBooks(); }
+                    else MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -508,133 +440,65 @@ namespace WpfClient
             if (idx == TAB_VISITORS)
             {
                 var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
-                if (selectedVisitor == null)
-                {
-                    MsgWarn("Msg_SelectEntityToDelete");
-                    return;
-                }
+                if (selectedVisitor == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
 
                 var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete posetioca:\n" +
-                    $"{selectedVisitor.Name} {selectedVisitor.LastName}\n" +
-                    $"(Broj članske karte: {selectedVisitor.MembershipNumber})?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                    $"{L("Msg_ConfirmDeleteVisitor")}\n{selectedVisitor.Name} {selectedVisitor.LastName}\n({selectedVisitor.MembershipNumber})?",
+                    L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
-                    if (deleteResult.Success)
-                    {
-                        MessageBox.Show(deleteResult.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadVisitors();
-                    }
-                    else
-                    {
-                        MessageBox.Show(deleteResult.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    if (deleteResult.Success) { ShowToast(L("Msg_DeleteSuccess")); LoadVisitors(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else if (idx == TAB_PUBLISHERS)
             {
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
-                if (selectedPublisher == null)
-                {
-                    MsgWarn("Msg_SelectEntityToDelete");
-                    return;
-                }
+                if (selectedPublisher == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
 
                 var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete izdavača:\n{selectedPublisher.Name}?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Warning);
+                    $"{L("Msg_ConfirmDeletePublisher")}\n{selectedPublisher.Name}?",
+                    L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _publisherController.RemovePublisher(selectedPublisher.ToModel());
-                    if (deleteResult != null)
-                    {
-                        MessageBox.Show("Izdavač je uspešno obrisan!", "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadPublishers();
-                        LoadBooks();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Došlo je do greške prilikom brisanja izdavača.",
-                            "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    if (deleteResult != null) { ShowToast(L("Msg_DeleteSuccess")); LoadPublishers(); LoadBooks(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else if (idx == TAB_AUTHORS)
             {
                 var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
-                if (selectedAuthor == null)
-                {
-                    MsgWarn("Msg_SelectEntityToDelete");
-                    return;
-                }
+                if (selectedAuthor == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
 
                 var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete autora:\n" +
-                    $"{selectedAuthor.Name} {selectedAuthor.Lastname}\n" +
-                    $"(ID kartica: {selectedAuthor.IdCard})?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                    $"{L("Msg_ConfirmDeleteAuthor")}\n{selectedAuthor.Name} {selectedAuthor.Lastname}\n({selectedAuthor.IdCard})?",
+                    L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
-                    if (deleteResult.Success)
-                    {
-                        MessageBox.Show(deleteResult.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadAuthors();
-                        LoadPublishers();
-                    }
-                    else
-                    {
-                        MessageBox.Show(deleteResult.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    if (deleteResult.Success) { ShowToast(L("Msg_DeleteSuccess")); LoadAuthors(); LoadPublishers(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else if (idx == TAB_BOOKS)
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
-                if (selectedBook == null)
-                {
-                    MsgWarn("Msg_SelectEntityToDelete");
-                    return;
-                }
+                if (selectedBook == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
 
                 var result = MessageBox.Show(
-                    $"Da li ste sigurni da želite da obrišete knjigu:\n" +
-                    $"{selectedBook.Name}\n" +
-                    $"(ISBN: {selectedBook.Isbn})?",
-                    "Potvrda brisanja",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+                    $"{L("Msg_ConfirmDeleteBook")}\n{selectedBook.Name}\n({selectedBook.Isbn})?",
+                    L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _bookController.RemoveBook(selectedBook.Isbn);
-                    if (deleteResult.Success)
-                    {
-                        MessageBox.Show(deleteResult.Message, "Uspešno",
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        LoadBooks();
-                    }
-                    else
-                    {
-                        MessageBox.Show(deleteResult.Message, "Greška",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    if (deleteResult.Success) { ShowToast(L("Msg_DeleteSuccess")); LoadBooks(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
             else
@@ -646,9 +510,7 @@ namespace WpfClient
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             string q = TxtSearch.Text ?? "";
-
             int idx = MainTabs?.SelectedIndex ?? -1;
-
 
             if (string.IsNullOrWhiteSpace(q))
             {
@@ -661,21 +523,21 @@ namespace WpfClient
             if (idx == TAB_VISITORS)
             {
                 var filtered = VisitorSearch.Filter(_allVisitors, q).ToList();
-                VisitorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<VisitorDTO>(filtered);
+                VisitorsGrid.ItemsSource = new ObservableCollection<VisitorDTO>(filtered);
                 return;
             }
 
             if (idx == TAB_AUTHORS)
             {
                 var filtered = AuthorSearch.Filter(_allAuthors, q).ToList();
-                AuthorsGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<AuthorDTO>(filtered);
+                AuthorsGrid.ItemsSource = new ObservableCollection<AuthorDTO>(filtered);
                 return;
             }
 
             if (idx == TAB_BOOKS)
             {
                 var filtered = BookSearch.Filter(_allBooks, q).ToList();
-                BooksGrid.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<BookDTO>(filtered);
+                BooksGrid.ItemsSource = new ObservableCollection<BookDTO>(filtered);
                 return;
             }
         }
@@ -698,20 +560,11 @@ namespace WpfClient
 
                     var result = _publisherController.UpdatePublisher(publisherModel);
 
-                    if (result != null)
-                    {
-                        MsgInfo("Toast_Updated");
-                        LoadPublishers();
-                    }
-                    else
-                    {
-                        MsgError("Msg_OperationFailed");
-                    }
+                    if (result != null) { MsgInfo("Toast_Updated"); LoadPublishers(); }
+                    else MsgError("Msg_OperationFailed");
                 }
             }
         }
-
-
 
         private void TxtSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -719,23 +572,15 @@ namespace WpfClient
                 BtnSearch_Click(sender, e);
         }
 
-       
-
         private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             TxtSearch.Clear();
             UpdateTabName();
         }
 
-        private void MenuItem_Click(object? sender, RoutedEventArgs e)
-        {
+        private void MenuItem_Click(object? sender, RoutedEventArgs e) { }
 
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-
-        }
+        protected override void OnKeyDown(KeyEventArgs e) { }
 
         protected override void OnClosed(EventArgs e)
         {
@@ -743,15 +588,9 @@ namespace WpfClient
             _timer?.Stop();
         }
 
-        private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e)
-        {
+        private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e) { }
 
-        }
-
-        private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
 
         private void FileNew_Click(object sender, RoutedEventArgs e)
         {
@@ -760,39 +599,18 @@ namespace WpfClient
 
         private void FileSave_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Funkcija 'Save' je pozvana.\nTrenutno stanje aplikacije je sačuvano.",
-                "Informacija", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(L("Msg_SaveFunctionCalled"), L("Dlg_InfoTitle"),
+                MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void OpenPosetioci_Click(object sender, RoutedEventArgs e)
-        {
-            MainTabs.SelectedIndex = 1;
-        }
+        private void OpenPosetioci_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 1;
+        private void OpenKnjige_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 0;
+        private void OpenAutori_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 2;
+        private void OpenIzdavaci_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 3;
 
-        private void OpenKnjige_Click(object sender, RoutedEventArgs e)
-        {
-            MainTabs.SelectedIndex = 0;
-        }
+        private void EditEdit_Click(object sender, RoutedEventArgs e) => BtnEdit_Click(sender, e);
+        private void EditDelete_Click(object sender, RoutedEventArgs e) => BtnDelete_Click(sender, e);
 
-        private void OpenAutori_Click(object sender, RoutedEventArgs e)
-        {
-            MainTabs.SelectedIndex = 2;
-        }
-
-        private void EditEdit_Click(object sender, RoutedEventArgs e)
-        {
-            BtnEdit_Click(sender, e);
-        }
-
-        private void EditDelete_Click(object sender, RoutedEventArgs e)
-        {
-            BtnDelete_Click(sender, e);
-        }
-
-        private void OpenIzdavaci_Click(object sender, RoutedEventArgs e)
-        {
-            MainTabs.SelectedIndex = 3;
-        }
         private void HelpAbout_Click(object sender, RoutedEventArgs e)
         {
             var aboutWindow = new AboutWindow();
@@ -805,7 +623,6 @@ namespace WpfClient
             if (selectedAuthor != null)
             {
                 var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
-
                 var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
                 win.Owner = this;
                 win.ShowDialog();
@@ -815,6 +632,7 @@ namespace WpfClient
                 MsgWarn("Msg_SelectEntityFromTable");
             }
         }
+
         private List<BookDTO> GetBooksForPublisher(PublisherDTO publisher)
         {
             if (publisher == null) return new List<BookDTO>();
@@ -824,6 +642,7 @@ namespace WpfClient
                             string.Equals(b.Publisher.Name, publisher.Name, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
+
         private void PublishersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BtnShowPublisherBooks.IsEnabled = PublishersGrid.SelectedItem != null;
@@ -835,13 +654,11 @@ namespace WpfClient
             if (publisher != null)
             {
                 var books = GetBooksForPublisher(publisher);
-
                 var dlg = new PublisherBooksDialog(publisher, books)
                 {
                     Owner = this,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };
-
                 dlg.ShowDialog();
             }
             else
@@ -849,6 +666,7 @@ namespace WpfClient
                 MsgWarn("Msg_SelectEntityFromTable");
             }
         }
+
         private void LangSr_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("sr");
