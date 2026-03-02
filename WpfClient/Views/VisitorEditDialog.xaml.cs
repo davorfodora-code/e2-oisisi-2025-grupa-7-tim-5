@@ -388,7 +388,7 @@ namespace WpfClient
                 },
                 Review = dlg.Review,
                 DateOfPurchase = DateOnly.FromDateTime(dlg.DateOfPurchase),
-                Comment = ""
+                Comment = dlg.Comment
             };
 
             _wishlist.Remove(selectedBook);
@@ -396,6 +396,9 @@ namespace WpfClient
 
             var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
             if (inAvailable != null) _availableBooks.Remove(inAvailable);
+
+            PurchasedBooksGrid.ItemsSource = null;
+            PurchasedBooksGrid.ItemsSource = _purchases;
 
             RefreshWishlistGrid();
             CalculateTotalSpent();

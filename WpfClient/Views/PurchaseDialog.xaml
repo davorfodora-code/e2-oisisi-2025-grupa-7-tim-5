@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -38,8 +39,12 @@
         <DatePicker Grid.Row="4" Grid.Column="1" x:Name="DpDatum" Margin="5"
                     SelectedDateChanged="DpDatum_SelectedDateChanged"/>
 
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal"
-                    HorizontalAlignment="Right" Margin="0,15,0,0">
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource Purchase_Lbl_Comment}" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="5" Grid.Column="1" x:Name="TxtKomentar" Margin="5" 
+         MaxLength="200" TextChanged="AnyFieldChanged"/>
+
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal"
+            HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button Content="{DynamicResource Btn_Abandon}" Width="90" Margin="0,0,10,0" Click="BtnCancel_Click"/>
             <Button x:Name="BtnConfirm" Content="{DynamicResource Btn_Confirm}"
                     Width="90" IsEnabled="False" Click="BtnConfirm_Click"/>

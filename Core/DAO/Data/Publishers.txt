@@ -1,15 +1,15 @@
-1|Mirko|Id kartica,Milos,Markovic,2,milos@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;ID-1-9999,Nikola,Nikolasevic,3,nikola@gmail.com;AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|
+1|Mirko|AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;ID-1-9999,Nikola,Nikolasevic,3,nikola@gmail.com;AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|
 2|Milankovic|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|ID-22-33,Ivor,Adamek,4,ivor@mail.com;AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|
 3|Laguna|AU-04-04,Marko,Popovic,8,marko@gmail.com|AU-03-03,Ana,Stojanovic,7,ana@gmail.com;AU-04-04,Marko,Popovic,8,marko@gmail.com|
-4|Vulkan|AU-04-04,Marko,Popovic,8,marko@gmail.com|AU-05-05,Maja,Nikolic,9,maja@gmail.com;AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com|
-5|Prosveta|AU-05-05,Maja,Nikolic,9,maja@gmail.com|AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com;AU-08-08,Luka,Pavlovic,12,luka@gmail.com|
-6|Nolit|AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com|AU-09-09,Milica,Vukovic,13,milica@gmail.com;AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|
-7|Srpska knjizevna zadruga|AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com|AU-11-11,Sonja,Milosevic,15,sonja@gmail.com;KK-11-22,Davor,Fodora,1,davor@gmail.com|
-8|Dereta|AU-08-08,Luka,Pavlovic,12,luka@gmail.com|Id kartica,Milos,Markovic,2,milos@gmail.com;AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|
-9|Stylos|AU-09-09,Milica,Vukovic,13,milica@gmail.com|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com;ID-1-9999,Nikola,Nikolasevic,3,nikola@gmail.com|
-10|Matica srpska|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|AU-03-03,Ana,Stojanovic,7,ana@gmail.com;ID-22-33,Ivor,Adamek,4,ivor@mail.com|
-11|Zavod za udzbenike|AU-11-11,Sonja,Milosevic,15,sonja@gmail.com|AU-04-04,Marko,Popovic,8,marko@gmail.com;AU-05-05,Maja,Nikolic,9,maja@gmail.com|
-12|Clio|KK-11-22,Davor,Fodora,1,davor@gmail.com|AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com;AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com|
-13|Plato|Id kartica,Milos,Markovic,2,milos@gmail.com|AU-08-08,Luka,Pavlovic,12,luka@gmail.com;AU-09-09,Milica,Vukovic,13,milica@gmail.com|
-14|Kreativni centar|AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com;AU-11-11,Sonja,Milosevic,15,sonja@gmail.com|
-15|Algoritam|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;Id kartica,Milos,Markovic,2,milos@gmail.com|
+4|Vulkan|AU-05-05,Maja,Nikolic,9,maja@gmail.com|AU-05-05,Maja,Nikolic,9,maja@gmail.com;AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com|
+5|Prosveta|AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com|AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com;AU-08-08,Luka,Pavlovic,12,luka@gmail.com|
+6|Nolit|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|AU-09-09,Milica,Vukovic,13,milica@gmail.com;AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|
+7|Srpska knjizevna zadruga|AU-11-11,Sonja,Milosevic,15,sonja@gmail.com|AU-11-11,Sonja,Milosevic,15,sonja@gmail.com;KK-11-22,Davor,Fodora,1,davor@gmail.com|
+8|Dereta|AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|Id kartica,Milos,Markovic,2,milos@gmail.com;AU-01-01,Jelena,Petrovic,5,jelena@gmail.com|
+9|Stylos|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com|AU-02-02,Stefan,Jovanovic,6,stefan@gmail.com;ID-1-9999,Nikola,Nikolasevic,3,nikola@gmail.com|
+10|Matica srpska|AU-03-03,Ana,Stojanovic,7,ana@gmail.com|AU-03-03,Ana,Stojanovic,7,ana@gmail.com;ID-22-33,Ivor,Adamek,4,ivor@mail.com|
+11|Zavod za udzbenike|AU-05-05,Maja,Nikolic,9,maja@gmail.com|AU-04-04,Marko,Popovic,8,marko@gmail.com;AU-05-05,Maja,Nikolic,9,maja@gmail.com|
+12|Clio|AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com|AU-06-06,Nemanja,Ilic,10,nemanja@gmail.com;AU-07-07,Ivana,Djordjevic,11,ivana@gmail.com|
+13|Plato|AU-08-08,Luka,Pavlovic,12,luka@gmail.com|AU-08-08,Luka,Pavlovic,12,luka@gmail.com;AU-09-09,Milica,Vukovic,13,milica@gmail.com|
+14|Kreativni centar|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com;AU-11-11,Sonja,Milosevic,15,sonja@gmail.com|
+15|Algoritam|AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|KK-11-22,Davor,Fodora,1,davor@gmail.com;Id kartica,Milos,Markovic,2,milos@gmail.com;AU-10-10,Dragan,Lazarevic,14,dragan@gmail.com|

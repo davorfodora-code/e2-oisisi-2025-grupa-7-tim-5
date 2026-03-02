@@ -9,7 +9,7 @@ public class Visitor : ISerializable
     public enum Status_type { R, V }
     public string Name { get; set; }
     public string LastName { get; set; }
-    public DateOnly DateOfBirth { get; set; }          // ← IZMENJENO: string → DateOnly
+    public DateOnly DateOfBirth { get; set; }
     public Address Address { get; set; }
     public string ContactPhone { get; set; }
     public string Email { get; set; }
@@ -76,13 +76,13 @@ public class Visitor : ISerializable
         }));
 
         string purchasesString = string.Join(";", Purchases.Select(purchase =>
-            $"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.}"));
+    $"{purchase.Book.Isbn},{purchase.Book.Name},{purchase.DateOfPurchase:dd.MM.yyyy.},{purchase.Book.Price.ToString("0.##")},{purchase.Review},{purchase.Comment ?? ""}"));
 
         string[] Values =
         {
             Name,
             LastName,
-            DateOfBirth.ToString("dd.MM.yyyy."),       // ← DateOnly → string za CSV
+            DateOfBirth.ToString("dd.MM.yyyy."),
             Address?.Street ?? "",
             Address?.Number ?? "",
             Address?.City ?? "",
@@ -111,7 +111,6 @@ public class Visitor : ISerializable
         Name = values[0];
         LastName = values[1];
 
-        // ← Parsiranje DateOnly iz stringa
         if (DateOnly.TryParseExact(values[2], "dd.MM.yyyy.", out DateOnly dob))
             DateOfBirth = dob;
         else if (DateOnly.TryParse(values[2], out DateOnly dob2))
@@ -194,21 +193,24 @@ public class Visitor : ISerializable
             var purchaseEntries = values[15].Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (var entry in purchaseEntries)
             {
-                int firstComma = entry.IndexOf(',');
-                int lastComma = entry.LastIndexOf(',');
+                var parts = entry.Split(',');
+                if (parts.Length < 3) continue;
 
-                if (firstComma < 0 || lastComma <= firstComma) continue;
+                string isbn = parts[0];
+                string bookName = parts[1];
+                string dateStr = parts[2];
+                double price = parts.Length > 3 && double.TryParse(parts[3], out double p) ? p : 0.0;
+                double review = parts.Length > 4 && double.TryParse(parts[4], out double r) ? r : 0.0;
+                string comment = parts.Length > 5 ? parts[5] : "";
 
-                string isbn = entry.Substring(0, firstComma);
-                string dateStr = entry.Substring(lastComma + 1);
-                string bookName = entry.Substring(firstComma + 1, lastComma - firstComma - 1);
-
-                if (DateOnly.TryParse(dateStr, out DateOnly date))
+                if (DateOnly.TryParseExact(dateStr, "dd.MM.yyyy.", out DateOnly date) ||
+                    DateOnly.TryParse(dateStr, out date))
                 {
                     Purchases.Add(new Purchase
                     {
-                        Book = new Book { Isbn = isbn, Name = bookName },
-                        DateOfPurchase = date
+                        Book = new Book { Isbn = isbn, Name = bookName, Price = price },
+                        DateOfPurchase = date,
+                        Review = review
                     });
                 }
                 else

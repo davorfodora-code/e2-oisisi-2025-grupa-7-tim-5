@@ -12,6 +12,8 @@ namespace WpfClient
         public int Review { get; private set; }
         public DateTime DateOfPurchase { get; private set; }
 
+        public string Comment { get; private set; }  
+
         public PurchaseDialog(string isbn, string naziv)
         {
             InitializeComponent();
@@ -67,6 +69,7 @@ namespace WpfClient
 
             Review = int.Parse(TxtOcena.Text, CultureInfo.InvariantCulture);
             DateOfPurchase = DpDatum.SelectedDate!.Value.Date;
+            Comment = TxtKomentar.Text.Trim();  
 
             DialogResult = true;
             Close();

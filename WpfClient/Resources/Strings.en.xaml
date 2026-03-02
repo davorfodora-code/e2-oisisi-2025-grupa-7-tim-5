@@ -287,4 +287,7 @@
 <sys:String x:Key="WishlistAuthors_SearchLabel">Search:</sys:String>
 <sys:String x:Key="Btn_ShowWishlistAuthors">Authors from Wishlist</sys:String>
 
+<sys:String x:Key="Purchase_Lbl_Comment">Comment:</sys:String>
+
+
 </ResourceDictionary>
