@@ -47,41 +47,43 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Binding="{Binding FirstName}" Width="*">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_FirstName}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Width="*">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_FirstName}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding LastName}" Width="*">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_LastName}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+<DataGridTextColumn Binding="{Binding Lastname}" Width="*">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_LastName}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding BirthDate, StringFormat=dd.MM.yyyy}" Width="140">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_DateOfBirth}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+<!-- DateOnly: nemoj StringFormat direktno, koristi string property -->
+<DataGridTextColumn Binding="{Binding DateOfBirthText}" Width="140">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_DateOfBirth}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding Address}" Width="2*">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_Address}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+<!-- Skracena adresa: ulica, broj, grad -->
+<DataGridTextColumn Binding="{Binding AddressText}" Width="2*">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_Address}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding Phone}" Width="140">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_Phone}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+<DataGridTextColumn Binding="{Binding PhoneNumber}" Width="140">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_Phone}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding Email}" Width="2*">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="{DynamicResource Col_Email}"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+<DataGridTextColumn Binding="{Binding Email}" Width="2*">
+    <DataGridTextColumn.Header>
+        <TextBlock Text="{DynamicResource Col_Email}"/>
+    </DataGridTextColumn.Header>
+</DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

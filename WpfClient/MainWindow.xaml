@@ -186,6 +186,10 @@
 
                 <TabItem Header="{DynamicResource Tab_Books}">
                     <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="59*"/>
+                            <ColumnDefinition Width="259*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -212,7 +216,7 @@
                               RowHeight="30"
                               HeadersVisibility="Column"
                               VerticalGridLinesBrush="#E0E0E0"
-                              HorizontalGridLinesBrush="#E0E0E0">
+                              HorizontalGridLinesBrush="#E0E0E0" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Isbn}" Width="120">
                                     <DataGridTextColumn.Header>
@@ -355,7 +359,9 @@
                     <Grid Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
+
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Orientation="Horizontal"
@@ -375,6 +381,7 @@
                             <Button Content="{DynamicResource Btn_ShowAuthors}"  
                                 Width="150" 
                                  Height="30"
+                                  Margin="20,0,0,0"
                                 Click="BtnShowAuthorsByPublisher_Click"
                                 IsEnabled="{Binding SelectedItem, ElementName=PublishersGrid}"/>
                         </StackPanel>

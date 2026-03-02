@@ -42,6 +42,16 @@ namespace Core.DTO
 
             return (true, "");
         }
+        public string DateOfBirthText => DateOfBirth.ToString("dd.MM.yyyy");
+
+        public string AddressText
+        {
+            get
+            {
+                if (Address == null) return "";
+                return $"{Address.Street} {Address.Number}, {Address.City}";
+            }
+        }
 
         public Author ToModel()
         {

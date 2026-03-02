@@ -12,9 +12,9 @@ namespace Core.DTO
         public string MembershipNumber { get; set; } = "";
         public string Name { get; set; } = "";
         public string LastName { get; set; } = "";
-        public DateOnly DateOfBirth { get; set; }           // ← NOVO
-        public string ContactPhone { get; set; } = "";      // ← NOVO
-        public string Email { get; set; } = "";             // ← NOVO
+        public DateOnly DateOfBirth { get; set; }           
+        public string ContactPhone { get; set; } = "";     
+        public string Email { get; set; } = "";           
         public AddressDTO Address { get; set; } = new AddressDTO();
         public string Status { get; set; } = "R";
         public List<BookDTO> Wishlist { get; set; } = new List<BookDTO>();
