@@ -102,7 +102,25 @@ namespace WpfClient
 
             var cmdClose = new RoutedCommand();
             CommandBindings.Add(new CommandBinding(cmdClose, (s, e) => Close()));
-            InputBindings.Add(new KeyBinding(cmdClose, Key.W, ModifierKeys.Control));
+            InputBindings.Add(new KeyBinding(cmdClose, Key.C, ModifierKeys.Control));
+
+            // Ctrl + E (Edit)
+            var cmdEdit = new RoutedCommand();
+            CommandBindings.Add(new CommandBinding(cmdEdit, (s, e) =>
+            {
+                // ako vec imas logiku u BtnEdit_Click
+                BtnEdit_Click(s, null);
+            }));
+            InputBindings.Add(new KeyBinding(cmdEdit, Key.E, ModifierKeys.Control));
+
+            // Ctrl + D (Delete)
+            var cmdDelete = new RoutedCommand();
+            CommandBindings.Add(new CommandBinding(cmdDelete, (s, e) =>
+            {
+                // ako vec imas logiku u BtnDelete_Click
+                BtnDelete_Click(s, null);
+            }));
+            InputBindings.Add(new KeyBinding(cmdDelete, Key.D, ModifierKeys.Control));
         }
 
         protected override void OnKeyDown(KeyEventArgs e) { base.OnKeyDown(e); }

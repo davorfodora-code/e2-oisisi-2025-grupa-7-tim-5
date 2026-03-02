@@ -1,4 +1,4 @@
-Davor|Petrovic|01.01.0001.|Jovana Ducica|12|Novi Sad|Vojvodina|Srbija|064111222|davor.petrovic@gmail.com|CK-1-0001|2024|R|45|ISBN-B04,Seobe,KK-11-22~Davor~Fodora|AU-04-04~Marko~Popovic;ISBN-B03,Hazarski recnik,AU-03-03~Ana~Stojanovic|KK-11-22~Davor~Fodora|
+Davor|Petrovic|01.01.0001.|Jovana Ducica|12|Novi Sad|Vojvodina|Srbija|064111222|davor.petrovic@gmail.com|CK-1-0001|2024|R|45|ISBN-B04,Seobe,KK-11-22~Davor~Fodora|AU-04-04~Marko~Popovic|
 Milica|Jovanovic|01.01.0001.|Kralja Petra|5|Beograd|Srbija|Srbija|063222333|milica.j@gmail.com|CK-1-0002|2023|V|4|ISBN-B06,Noz,AU-06-06~Nemanja~Ilic|
 Andjela|Prastalo|01.01.0001.|Sremska|22|Backa Palanka|Vojvodina|Srbija|062333444|andjela@gmail.com|CK-2-0003|2024|V|3|ISBN-B09,Gorski vijenac,AU-09-09~Milica~Vukovic|
 Nemanja|Eler|01.01.0001.|Dunavska|7|Novi Sad|Vojvodina|Srbija|061444555|nemanja.e@gmail.com|CK-3-0004|2022|R|45|ISBN-B11,Pripovetke,AU-11-11~Sonja~Milosevic|
