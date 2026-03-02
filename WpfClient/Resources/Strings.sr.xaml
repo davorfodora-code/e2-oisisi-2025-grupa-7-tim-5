@@ -276,4 +276,11 @@
     <sys:String x:Key="Msg_ConfirmRemoveAuthor">Da li ste sigurni da zelite da uklonite autora</sys:String>
     <sys:String x:Key="Msg_NoAvailableAuthors">Nema dostupnih autora za dodavanje.</sys:String>
 
+    <sys:String x:Key="PublisherAuthors_Title">Autori izdavača</sys:String>
+<sys:String x:Key="PublisherAuthors_HeaderPrefix">Autori izdavača:</sys:String>
+<sys:String x:Key="PublisherAuthors_SearchLabel">Pretraga:</sys:String>
+
+<sys:String x:Key="Col_Phone">Telefon</sys:String>
+
+
 </ResourceDictionary>
