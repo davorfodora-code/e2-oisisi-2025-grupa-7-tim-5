@@ -436,6 +436,36 @@ namespace WpfClient
                 }
             }
         }
+
+        private void BtnShowWishlistAuthors_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
+            if (selectedVisitor == null)
+            {
+                MsgWarn("Msg_SelectEntityFromTable");
+                return;
+            }
+
+            var allBooks = _bookDAO.GetAllBooks()
+                                   .Select(BookDTO.FromModel)
+                                   .Where(b => b != null)
+                                   .ToList();
+
+            var wishlistedBooks = allBooks
+                .Where(b => b.VisitorWishList != null &&
+                            b.VisitorWishList.Any(v => v.MembershipNumber == selectedVisitor.MembershipNumber))
+                .ToList();
+
+            var authors = wishlistedBooks
+                .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
+                .Where(a => a != null && !string.IsNullOrWhiteSpace(a.IdCard))
+                .GroupBy(a => a.IdCard)
+                .Select(g => g.First())
+                .ToList();
+
+            var win = new WishlistAuthorsDialog(selectedVisitor, authors) { Owner = this };
+            win.ShowDialog();
+        }
         private void BtnShowAuthorsByPublisher_Click(object sender, RoutedEventArgs e)
         {
             var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
@@ -445,18 +475,18 @@ namespace WpfClient
                 return;
             }
 
-            // 1) Sve knjige (model -> DTO)
+
             var allBooks = _bookDAO.GetAllBooks()
                                    .Select(BookDTO.FromModel)
                                    .Where(b => b != null)
                                    .ToList();
 
-            // 2) Knjige tog izdavača
+
             var publisherBooks = allBooks
                 .Where(b => b.Publisher != null && b.Publisher.Id == selectedPublisher.Id)
                 .ToList();
 
-            // 3) Uzmi IdCard svih autora koji se pojavljuju u tim knjigama (bez duplikata)
+
             var authorIdCards = publisherBooks
                 .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
                 .Select(a => a?.IdCard)
@@ -464,7 +494,7 @@ namespace WpfClient
                 .Distinct()
                 .ToHashSet();
 
-            // 4) Učitaj kompletne autore iz baze/fajla i filtriraj po IdCard
+
             var allAuthors = _authorDAO.GetAllAuthors()
                                        .Select(AuthorDTO.FromModel)
                                        .Where(a => a != null)

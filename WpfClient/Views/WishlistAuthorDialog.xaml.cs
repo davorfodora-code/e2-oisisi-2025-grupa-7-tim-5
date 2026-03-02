@@ -21,7 +21,8 @@ namespace WpfClient
         {
             InitializeComponent();
 
-            TxtHeader.Text = $"{L("WishlistAuthors_HeaderPrefix")} {visitor?.FullName}";
+            TxtHeader.Text = $"{L("WishlistAuthors_HeaderPrefix")} {visitor?.Name} {visitor?.LastName}";
+
             _allAuthors = authors ?? new List<AuthorDTO>();
             AuthorsGrid.ItemsSource = _allAuthors;
         }

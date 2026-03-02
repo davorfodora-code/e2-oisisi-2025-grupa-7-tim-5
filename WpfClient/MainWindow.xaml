@@ -248,49 +248,73 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="{DynamicResource Tab_Visitors}">
-                    <DataGrid x:Name="VisitorsGrid"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          Margin="10"
-                          BorderBrush="#E0E0E0"
-                          BorderThickness="1"
-                          RowBackground="White"
-                          AlternatingRowBackground="#F8F9FA"
-                          FontSize="14"
-                          RowHeight="30"
-                          HeadersVisibility="Column"
-                          VerticalGridLinesBrush="#E0E0E0"
-                          HorizontalGridLinesBrush="#E0E0E0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding MembershipNumber}" Width="150">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_MembershipNumber}"/>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Name}" Width="100">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_FirstName}"/>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding LastName}" Width="120">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_LastName}"/>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding DisplayAddress}" Width="250">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_Address}"/>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding DisplayStatus}" Width="100">
-                                <DataGridTextColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_Status}"/>
-                                </DataGridTextColumn.Header>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
+           <TabItem Header="{DynamicResource Tab_Visitors}">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,10">
+            <Button Content="{DynamicResource Btn_ShowWishlistAuthors}"
+                    Width="150"
+                    Margin="0,0,10,0"
+                    Click="BtnShowWishlistAuthors_Click"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  x:Name="VisitorsGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="0"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  RowBackground="White"
+                  AlternatingRowBackground="#F8F9FA"
+                  FontSize="14"
+                  RowHeight="30"
+                  HeadersVisibility="Column"
+                  VerticalGridLinesBrush="#E0E0E0"
+                  HorizontalGridLinesBrush="#E0E0E0">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding MembershipNumber}" Width="150">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_MembershipNumber}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Name}" Width="100">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_FirstName}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding LastName}" Width="120">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_LastName}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding DisplayAddress}" Width="250">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_Address}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding DisplayStatus}" Width="100">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_Status}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</TabItem>
 
                 <!-- ===== TAB AUTORI ===== -->
                 <TabItem Header="{DynamicResource Tab_Authors}">
