@@ -35,10 +35,13 @@ namespace WpfClient
         private const int TAB_AUTHORS = 2;
         private const int TAB_PUBLISHERS = 3;
 
+
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeStatusBar();
+            RegisterKeyboardShortcuts();
 
             var purchaseDAO = new PurchaseDAO();
             var visitorDAO = new VisitorDAO(purchaseDAO);
@@ -102,6 +105,22 @@ namespace WpfClient
             _timer.Start();
         }
 
+
+        private void RegisterKeyboardShortcuts()
+        {
+            var cmdNew = new RoutedCommand();
+            CommandBindings.Add(new CommandBinding(cmdNew, (s, e) => BtnAdd_Click(s, null)));
+            InputBindings.Add(new KeyBinding(cmdNew, Key.N, ModifierKeys.Control));
+
+            var cmdClose = new RoutedCommand();
+            CommandBindings.Add(new CommandBinding(cmdClose, (s, e) => Close()));
+            InputBindings.Add(new KeyBinding(cmdClose, Key.W, ModifierKeys.Control));
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+        }
         private void Timer_Tick(object? sender, EventArgs e)
         {
             UpdateDateTime();
@@ -580,7 +599,6 @@ namespace WpfClient
 
         private void MenuItem_Click(object? sender, RoutedEventArgs e) { }
 
-        protected override void OnKeyDown(KeyEventArgs e) { }
 
         protected override void OnClosed(EventArgs e)
         {

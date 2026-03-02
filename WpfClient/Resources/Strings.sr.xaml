@@ -256,4 +256,16 @@
     <sys:String x:Key="About_Author2Name">Nemanja Elor</sys:String>
     <sys:String x:Key="About_Author2Bio">Moje ime je Nemanja Elor. Student sam trece godine i ovo je moja prva CRUD aplikacija.</sys:String>
 
+    <sys:String x:Key="AddVisitor_Lbl_DateOfBirth">Datum rođenja</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_ContactPhone">Kontakt telefon</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Email">Email</sys:String>
+    <sys:String x:Key="AddVisitor_Gb_Details">Detalji</sys:String>
+
+    <sys:String x:Key="VisitorEdit_Lbl_ContactPhone">Kontakt telefon</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Email">Email</sys:String>
+
+    <sys:String x:Key="WishlistAdd_Instruction">Izaberite knjigu koju želite dodati na listu želja:</sys:String>
+
+    <sys:String x:Key="Col_Publisher">Izdavač</sys:String>
+
 </ResourceDictionary>

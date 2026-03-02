@@ -32,9 +32,9 @@ namespace WpfClient
             _availableBooks = new ObservableCollection<BookDTO>();
 
             LoadVisitorData();
-            LoadPurchasedBooks();
-            LoadWishlist();
             LoadAllBooks();
+            LoadWishlist();
+            LoadPurchasedBooks();
             CalculateTotalSpent();
 
             WishlistBooksGrid.ItemsSource = _wishlist;
@@ -46,7 +46,14 @@ namespace WpfClient
             TxtMembershipYear.Text = _originalVisitor.MembershipYear;
             TxtName.Text = VisitorDTO.Name;
             TxtLastName.Text = VisitorDTO.LastName;
-            TxtDateOfBirth.Text = _originalVisitor.DateOfBirth;
+
+            // ← NOVO: DatePicker
+            if (_originalVisitor.DateOfBirth != default)
+                DpDateOfBirth.SelectedDate = _originalVisitor.DateOfBirth.ToDateTime(TimeOnly.MinValue);
+
+            // ← NOVO: ContactPhone, Email
+            TxtContactPhone.Text = _originalVisitor.ContactPhone ?? "";
+            TxtEmail.Text = _originalVisitor.Email ?? "";
 
             TxtStreet.Text = _originalVisitor.Address?.Street ?? "";
             TxtStreetNumber.Text = _originalVisitor.Address?.Number ?? "";
@@ -104,7 +111,7 @@ namespace WpfClient
                                 IdCard = a.IdCard,
                                 Name = a.Name,
                                 Lastname = a.Lastname
-                            }).ToList() ?? new System.Collections.Generic.List<AuthorDTO>(),
+                            }).ToList() ?? new List<AuthorDTO>(),
                             Price = book.Price
                         };
                         _wishlist.Add(bookDto);
@@ -151,15 +158,7 @@ namespace WpfClient
                     .Where(r => r >= 1 && r <= 5)
                     .ToList();
 
-                if (reviews.Any())
-                {
-                    double avg = reviews.Average();
-                    TxtAverageReview.Text = avg.ToString("0.00");
-                }
-                else
-                {
-                    TxtAverageReview.Text = "-";
-                }
+                TxtAverageReview.Text = reviews.Any() ? reviews.Average().ToString("0.00") : "-";
             }
             else
             {
@@ -177,9 +176,7 @@ namespace WpfClient
                     .Select(p => p.Book.Isbn)
                     .ToHashSet();
 
-                var wishlistIsbns = _wishlist
-                    .Select(b => b.Isbn)
-                    .ToHashSet();
+                var wishlistIsbns = _wishlist.Select(b => b.Isbn).ToHashSet();
 
                 var candidates = _availableBooks
                     .Where(b => !wishlistIsbns.Contains(b.Isbn) && !purchasedIsbns.Contains(b.Isbn))
@@ -202,18 +199,13 @@ namespace WpfClient
                 if (ok != true || dlg.SelectedBook == null) return;
 
                 var selectedBook = dlg.SelectedBook;
-
-                if (_wishlist.Any(b => b.Isbn == selectedBook.Isbn))
-                    return;
+                if (_wishlist.Any(b => b.Isbn == selectedBook.Isbn)) return;
 
                 _wishlist.Add(selectedBook);
-
                 var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
-                if (inAvailable != null)
-                    _availableBooks.Remove(inAvailable);
+                if (inAvailable != null) _availableBooks.Remove(inAvailable);
 
-                WishlistBooksGrid.ItemsSource = null;
-                WishlistBooksGrid.ItemsSource = _wishlist;
+                RefreshWishlistGrid();
             }
             catch (Exception ex)
             {
@@ -228,20 +220,15 @@ namespace WpfClient
 
             var result = MessageBox.Show(
                 $"{L("Msg_ConfirmRemoveFromWishlist")} '{selectedBook.Name}'?",
-                L("Dlg_ConfirmTitle"),
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+                L("Dlg_ConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes) return;
 
             _wishlist.Remove(selectedBook);
-
             if (!_availableBooks.Any(b => b.Isbn == selectedBook.Isbn))
                 _availableBooks.Add(selectedBook);
 
-            WishlistBooksGrid.ItemsSource = null;
-            WishlistBooksGrid.ItemsSource = _wishlist;
-
+            RefreshWishlistGrid();
             BtnDeleteFromWishlist.IsEnabled = false;
             BtnPurchase.IsEnabled = false;
         }
@@ -263,11 +250,8 @@ namespace WpfClient
             var selectedPurchase = PurchasedBooksGrid.SelectedItem as Purchase;
             if (selectedPurchase == null) return;
 
-            var result = MessageBox.Show(
-                L("Msg_ConfirmCancelPurchase"),
-                L("Btn_CancelPurchase"),
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            var result = MessageBox.Show(L("Msg_ConfirmCancelPurchase"), L("Btn_CancelPurchase"),
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result != MessageBoxResult.Yes) return;
 
@@ -276,18 +260,14 @@ namespace WpfClient
             if (selectedPurchase.Book != null)
             {
                 var bookDto = BookDTO.FromModel(selectedPurchase.Book);
-
                 if (!_wishlist.Any(b => b.Isbn == bookDto.Isbn))
                     _wishlist.Add(bookDto);
             }
 
             PurchasedBooksGrid.ItemsSource = null;
             PurchasedBooksGrid.ItemsSource = _purchases;
-
-            WishlistBooksGrid.ItemsSource = null;
-            WishlistBooksGrid.ItemsSource = _wishlist;
+            RefreshWishlistGrid();
             CalculateTotalSpent();
-
             BtnCancelPurchase.IsEnabled = false;
         }
 
@@ -305,6 +285,14 @@ namespace WpfClient
                 VisitorDTO.Name = TxtName.Text.Trim();
                 VisitorDTO.LastName = TxtLastName.Text.Trim();
 
+                // ← NOVO: DateOfBirth iz DatePickera
+                if (DpDateOfBirth.SelectedDate.HasValue)
+                    VisitorDTO.DateOfBirth = DateOnly.FromDateTime(DpDateOfBirth.SelectedDate.Value);
+
+                // ← NOVO: ContactPhone, Email
+                VisitorDTO.ContactPhone = TxtContactPhone.Text.Trim();
+                VisitorDTO.Email = TxtEmail.Text.Trim();
+
                 if (VisitorDTO.Address == null)
                     VisitorDTO.Address = new AddressDTO();
 
@@ -321,21 +309,23 @@ namespace WpfClient
                     PublicationYear = book.PublicationYear,
                     Price = book.Price,
                     NumberOfPages = book.NumberOfPages,
-                    Publisher = book.Publisher != null ? new PublisherDTO
-                    {
-                        Id = book.Publisher.Id,
-                        Name = book.Publisher.Name
-                    } : new PublisherDTO(),
+                    Publisher = book.Publisher != null
+                        ? new PublisherDTO { Id = book.Publisher.Id, Name = book.Publisher.Name }
+                        : new PublisherDTO(),
                     Authors = book.Authors?.Select(a => new AuthorDTO
                     {
                         IdCard = a.IdCard,
                         Name = a.Name,
                         Lastname = a.Lastname
-                    }).ToList() ?? new System.Collections.Generic.List<AuthorDTO>()
+                    }).ToList() ?? new List<AuthorDTO>()
                 }).ToList();
 
+                // Ažuriramo originalVisitor
                 _originalVisitor.Name = VisitorDTO.Name;
                 _originalVisitor.LastName = VisitorDTO.LastName;
+                _originalVisitor.DateOfBirth = VisitorDTO.DateOfBirth;
+                _originalVisitor.ContactPhone = VisitorDTO.ContactPhone;
+                _originalVisitor.Email = VisitorDTO.Email;
                 _originalVisitor.Address = VisitorDTO.Address.ToModel();
                 _originalVisitor.Wishlist = VisitorDTO.Wishlist.Select(b => new Book
                 {
@@ -351,6 +341,7 @@ namespace WpfClient
                 }).ToList();
                 _originalVisitor.Status = VisitorDTO.Status;
                 _originalVisitor.Purchases = _purchases;
+
                 DialogResult = true;
                 Close();
             }
@@ -404,14 +395,17 @@ namespace WpfClient
             _purchases.Add(purchase);
 
             var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
-            if (inAvailable != null)
-                _availableBooks.Remove(inAvailable);
+            if (inAvailable != null) _availableBooks.Remove(inAvailable);
 
+            RefreshWishlistGrid();
+            CalculateTotalSpent();
+            BtnPurchase.IsEnabled = false;
+        }
+
+        private void RefreshWishlistGrid()
+        {
             WishlistBooksGrid.ItemsSource = null;
             WishlistBooksGrid.ItemsSource = _wishlist;
-            CalculateTotalSpent();
-
-            BtnPurchase.IsEnabled = false;
         }
     }
 }

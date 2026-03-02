@@ -256,4 +256,16 @@
     <sys:String x:Key="About_Author1Bio">My name is Davor Fodora. I am currently studying at the Faculty of Technical Sciences and hope to have my engineering degree next year. This is my first CRUD project, I hope you like it.</sys:String>
     <sys:String x:Key="About_Author2Name">Nemanja Elor</sys:String>
     <sys:String x:Key="About_Author2Bio">My name is Nemanja Elor. I am a third-year student and this is my first CRUD application.</sys:String>
+
+    <sys:String x:Key="AddVisitor_Lbl_DateOfBirth">Date of Birth</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_ContactPhone">Contact Phone</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_Email">Email</sys:String>
+    <sys:String x:Key="AddVisitor_Gb_Details">Details</sys:String>
+
+    <sys:String x:Key="VisitorEdit_Lbl_ContactPhone">Contact Phone</sys:String>
+    <sys:String x:Key="VisitorEdit_Lbl_Email">Email</sys:String>
+
+    <sys:String x:Key="WishlistAdd_Instruction">Select a book to add to the wishlist:</sys:String>
+
+    <sys:String x:Key="Col_Publisher">Publisher</sys:String>
 </ResourceDictionary>
