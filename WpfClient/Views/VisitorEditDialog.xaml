@@ -20,7 +20,7 @@
                     BorderThickness="1"
                     Margin="0,0,0,10">
 
-            <!-- ══════════════════ TAB: INFO ══════════════════ -->
+
             <TabItem FontSize="14" Padding="10">
                 <TabItem.Header>
                     <TextBlock Text="{DynamicResource VisitorEdit_Tab_Info}"/>
@@ -39,58 +39,55 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <!-- ContactPhone -->
                             <RowDefinition Height="Auto"/>
-                            <!-- Email -->
-                        </Grid.RowDefinitions>
+                     </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="165"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_MembershipNumber}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="TxtMembershipNumber" Margin="5" IsEnabled="False" Height="30"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="TxtMembershipNumber" Margin="5" IsEnabled="False" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_MembershipYear}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TxtMembershipYear" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="TxtMembershipYear" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_Name}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="TxtName" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="TxtName" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_LastName}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="TxtLastName" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" x:Name="TxtLastName" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
-                        <!-- ← NOVO: DatePicker za datum rodjenja -->
+
                         <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_DateOfBirth}" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         <DatePicker Grid.Row="4" Grid.Column="1" x:Name="DpDateOfBirth" Margin="5" Height="30"
                                     SelectedDateFormat="Short"
                                     DisplayDateEnd="{x:Static sys:DateTime.Today}"/>
 
-                        <!-- ← NOVO: Kontakt telefon -->
-                        <Label Grid.Row="5" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_ContactPhone}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="TxtContactPhone" Margin="5" Height="30"/>
 
-                        <!-- ← NOVO: Email -->
+                        <Label Grid.Row="5" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_ContactPhone}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" x:Name="TxtContactPhone" Margin="5" Height="30" Foreground="Black" Background="White"/>
+
+
                         <Label Grid.Row="6" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_Email}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" x:Name="TxtEmail" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="6" Grid.Column="1" x:Name="TxtEmail" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="7" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_Street}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="7" Grid.Column="1" x:Name="TxtStreet" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="7" Grid.Column="1" x:Name="TxtStreet" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="8" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_Number}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="8" Grid.Column="1" x:Name="TxtStreetNumber" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="8" Grid.Column="1" x:Name="TxtStreetNumber" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="9" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_City}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="9" Grid.Column="1" x:Name="TxtCity" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="9" Grid.Column="1" x:Name="TxtCity" Margin="5" Height="30" Foreground="Black" Background="White"/>
 
                         <Label Grid.Row="10" Grid.Column="0" Content="{DynamicResource VisitorEdit_Lbl_Country}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="10" Grid.Column="1" x:Name="TxtCountry" Margin="5" Height="30"/>
+                        <TextBox Grid.Row="10" Grid.Column="1" x:Name="TxtCountry" Margin="5" Height="30" Foreground="Black" Background="White"/>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ══════════════════ TAB: PURCHASES ══════════════════ -->
-            <TabItem FontSize="14" Padding="10">
+         <TabItem FontSize="14" Padding="10">
                 <TabItem.Header>
                     <TextBlock Text="{DynamicResource VisitorEdit_Tab_Purchased}"/>
                 </TabItem.Header>
@@ -167,7 +164,7 @@
                 </Grid>
             </TabItem>
 
-            <!-- ══════════════════ TAB: WISHLIST ══════════════════ -->
+
             <TabItem FontSize="14" Padding="10">
                 <TabItem.Header>
                     <TextBlock Text="{DynamicResource VisitorEdit_Tab_Wishlist}"/>
@@ -178,7 +175,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Toolbar -->
+ 
                     <Border Grid.Row="0"
                             Background="#F8F9FA"
                             BorderBrush="#E0E0E0"
@@ -206,7 +203,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- ← POBOLJŠANO: veći RowHeight, FontSize, dodata Publisher kolona -->
                     <DataGrid Grid.Row="1"
                               x:Name="WishlistBooksGrid"
                               SelectionMode="Single"
@@ -233,7 +229,6 @@
                                     <TextBlock Text="{DynamicResource Col_Authors}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-                            <!-- ← NOVA KOLONA: Izdavač -->
                             <DataGridTextColumn Binding="{Binding DisplayPublisher}" Width="*">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="{DynamicResource Col_Publisher}"/>
