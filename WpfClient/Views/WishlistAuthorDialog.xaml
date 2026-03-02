@@ -1,0 +1,72 @@
+﻿<Window x:Class="WpfClient.WishlistAuthorsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{DynamicResource WishlistAuthors_Title}"
+        Height="450" Width="700"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F5F5">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TxtHeader"
+                   Grid.Row="0"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+        <DockPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock DockPanel.Dock="Left"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"
+                       Text="{DynamicResource WishlistAuthors_SearchLabel}"/>
+            <TextBox x:Name="TxtSearch"
+                     Height="28"
+                     VerticalAlignment="Center"
+                     TextChanged="TxtSearch_TextChanged"/>
+        </DockPanel>
+
+        <DataGrid Grid.Row="2"
+                  x:Name="AuthorsGrid"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  BorderBrush="#E0E0E0"
+                  BorderThickness="1"
+                  RowHeight="30"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Width="*">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_FirstName}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Lastname}" Width="*">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_LastName}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding Email}" Width="2*">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource Col_Email}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3"
+                Content="{DynamicResource Btn_Close}"
+                Width="90" Height="30"
+                HorizontalAlignment="Right"
+                Margin="0,10,0,0"
+                Click="BtnClose_Click"/>
+    </Grid>
+</Window>

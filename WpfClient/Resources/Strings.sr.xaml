@@ -283,5 +283,9 @@
 <sys:String x:Key="Col_Phone">Telefon</sys:String>
 <sys:String x:Key="Btn_ShowAuthors">Autori izdavača</sys:String>
 
+<sys:String x:Key="WishlistAuthors_Title">Autori sa liste želja</sys:String>
+<sys:String x:Key="WishlistAuthors_HeaderPrefix">Autori sa liste želja posetioca:</sys:String>
+<sys:String x:Key="WishlistAuthors_SearchLabel">Pretraga:</sys:String>
+
 
 </ResourceDictionary>
