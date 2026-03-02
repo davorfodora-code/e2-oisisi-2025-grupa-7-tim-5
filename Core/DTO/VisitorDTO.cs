@@ -12,12 +12,14 @@ namespace Core.DTO
         public string MembershipNumber { get; set; } = "";
         public string Name { get; set; } = "";
         public string LastName { get; set; } = "";
+        public DateOnly DateOfBirth { get; set; }           // ← NOVO
+        public string ContactPhone { get; set; } = "";      // ← NOVO
+        public string Email { get; set; } = "";             // ← NOVO
         public AddressDTO Address { get; set; } = new AddressDTO();
         public string Status { get; set; } = "R";
         public List<BookDTO> Wishlist { get; set; } = new List<BookDTO>();
 
         public string DisplayAddress => Address?.DisplayAddress ?? "";
-
         public string DisplayStatus => Status == "R" ? "Regular" : "VIP";
 
         public (bool IsValid, string ErrorMessage) Validate()
@@ -42,6 +44,28 @@ namespace Core.DTO
             if (!nameRegex.IsMatch(LastName))
                 return (false, "Last name must contain only letters.");
 
+            // Validacija datuma — ne sme biti u budućnosti
+            if (DateOfBirth == default)
+                return (false, "Date of birth is required.");
+            if (DateOfBirth > DateOnly.FromDateTime(DateTime.Today))
+                return (false, "Date of birth cannot be in the future.");
+
+            // Telefon — opciono, ali ako postoji mora biti validan
+            if (!string.IsNullOrWhiteSpace(ContactPhone))
+            {
+                Regex phoneRegex = new Regex(@"^[+\d\s\-\(\)]{6,20}$");
+                if (!phoneRegex.IsMatch(ContactPhone))
+                    return (false, "Contact phone is not valid.");
+            }
+
+            // Email — opciono, ali ako postoji mora biti validan
+            if (!string.IsNullOrWhiteSpace(Email))
+            {
+                Regex emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+                if (!emailRegex.IsMatch(Email))
+                    return (false, "Email is not valid.");
+            }
+
             var addressValid = Address.Validate();
             if (!addressValid.IsValid)
                 return addressValid;
@@ -59,6 +83,9 @@ namespace Core.DTO
                 MembershipNumber = this.MembershipNumber,
                 Name = this.Name,
                 LastName = this.LastName,
+                DateOfBirth = this.DateOfBirth,
+                ContactPhone = this.ContactPhone,
+                Email = this.Email,
                 Address = this.Address.ToModel(),
                 Status = this.Status,
                 Wishlist = this.Wishlist?.Select(b => b.ToModel()).ToList() ?? new List<Book>()
@@ -72,6 +99,9 @@ namespace Core.DTO
                 MembershipNumber = visitor.MembershipNumber,
                 Name = visitor.Name,
                 LastName = visitor.LastName,
+                DateOfBirth = visitor.DateOfBirth,
+                ContactPhone = visitor.ContactPhone ?? "",
+                Email = visitor.Email ?? "",
                 Address = AddressDTO.FromModel(visitor.Address),
                 Status = visitor.Status,
                 Wishlist = visitor.Wishlist?.Select(BookDTO.FromModel).ToList() ?? new List<BookDTO>()

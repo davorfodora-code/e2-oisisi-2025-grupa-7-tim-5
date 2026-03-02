@@ -4,8 +4,6 @@ using Core.Observer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Controllers
 {
@@ -20,33 +18,19 @@ namespace Core.Controllers
             _purchaseDAO = purchaseDAO;
         }
 
-        public void SubscribeObserver(IObserver observer)
-        {
-            Subscribe(observer);
-        }
+        public void SubscribeObserver(IObserver observer) => Subscribe(observer);
+        public void UnsubscribeObserver(IObserver observer) => Unsubscribe(observer);
 
-        public void UnsubscribeObserver(IObserver observer)
-        {
-            Unsubscribe(observer);
-        }
-
-        public List<Visitor> GetAllVisitors()
-        {
-            return _visitorDAO.GetAllVisitors();
-        }
+        public List<Visitor> GetAllVisitors() => _visitorDAO.GetAllVisitors();
 
         public (bool Success, string Message) AddVisitor(VisitorDTO dto)
         {
             var (isValid, errorMessage) = dto.Validate();
             if (!isValid)
-            {
                 return (false, errorMessage);
-            }
 
             if (_visitorDAO.GetVisitorByMemebershipId(dto.MembershipNumber) != null)
-            {
                 return (false, $"Visitor with membership number '{dto.MembershipNumber}' already exists!");
-            }
 
             var visitor = dto.ToModel();
             var result = _visitorDAO.AddVisitor(visitor);
@@ -62,9 +46,7 @@ namespace Core.Controllers
         {
             var (isValid, errorMessage) = dto.Validate();
             if (!isValid)
-            {
                 return (false, errorMessage);
-            }
 
             var existingVisitor = _visitorDAO.GetVisitorByMemebershipId(dto.MembershipNumber);
             if (existingVisitor == null)
@@ -72,12 +54,13 @@ namespace Core.Controllers
 
             var visitor = dto.ToModel();
 
+            // Čuvamo podatke koji se ne menjaju kroz VisitorDTO
             visitor.Purchases = existingVisitor.Purchases;
-            visitor.DateOfBirth = existingVisitor.DateOfBirth;
             visitor.MembershipYear = existingVisitor.MembershipYear;
-            visitor.ContactPhone = existingVisitor.ContactPhone;
-            visitor.Email = existingVisitor.Email;
             visitor.AverageReview = existingVisitor.AverageReview;
+
+            // ← NOVO: DateOfBirth, ContactPhone, Email sada dolaze iz DTO
+            // (već postavljeni kroz dto.ToModel() gore)
 
             var result = _visitorDAO.UpdateVisitor(visitor);
 
@@ -100,24 +83,16 @@ namespace Core.Controllers
         }
 
         public bool ExistsMembershipNumber(string membershipNumber)
-        {
-            return _visitorDAO.GetVisitorByMemebershipId(membershipNumber) != null;
-        }
+            => _visitorDAO.GetVisitorByMemebershipId(membershipNumber) != null;
 
         public double GetAverageReview(string membershipNumber)
-        {
-            return _visitorDAO.GetAverageReview(membershipNumber);
-        }
+            => _visitorDAO.GetAverageReview(membershipNumber);
 
         public void UpdateAverageReview(string membershipNumber)
-        {
-            _visitorDAO.UpdateAverageReview(membershipNumber);
-        }
+            => _visitorDAO.UpdateAverageReview(membershipNumber);
 
         public List<Visitor> SearchVisitors(string searchQuery)
-        {
-            return _visitorDAO.SearchVisitors(searchQuery);
-        }
+            => _visitorDAO.SearchVisitors(searchQuery);
 
         public List<VisitorDTO> SearchVisitorsDTO(string searchQuery)
         {

@@ -50,10 +50,10 @@ namespace ConsoleClient
             List<Purchase> purchases4 = new List<Purchase>();
             List<Book> wishlist4 = new List<Book>();
 
-            Visitor v1 = new Visitor("Davor", "Fodora", "24-06-04", adresa1, "000", "11", "204", "1V2", "V");
-            Visitor v2 = new Visitor("Ana", "Marković", "15-03-02", adresa3, "001", "15", "305", "8", "10", purchases2, wishlist2);
-            Visitor v3 = new Visitor("Marko", "Petrović", "10-11-05", adresa5, "002", "22", "118", "15", "20", purchases3, wishlist3);
-            Visitor v4 = new Visitor("Jovana", "Nikolić", "03-07-01", adresa6, "003", "9", "412", "5", "7", purchases4, wishlist4);
+            Visitor v1 = new Visitor("Davor", "Fodora", datumRodjenja1, adresa1, "000", "11", "204", "1V2", "V");
+            Visitor v2 = new Visitor("Ana", "Marković", datumRodjenja1, adresa3, "001", "15", "305", "8", "10", purchases2, wishlist2);
+            Visitor v3 = new Visitor("Marko", "Petrović", datumRodjenja1, adresa5, "002", "22", "118", "15", "20", purchases3, wishlist3);
+            Visitor v4 = new Visitor("Jovana", "Nikolić", datumRodjenja1, adresa6, "003", "9", "412", "5", "7", purchases4, wishlist4);
 
             // ========== 5. KNJIGE ==========
             List<Author> autoriIvo = new List<Author> { a1 };

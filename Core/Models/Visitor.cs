@@ -9,7 +9,7 @@ public class Visitor : ISerializable
     public enum Status_type { R, V }
     public string Name { get; set; }
     public string LastName { get; set; }
-    public string DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }          // ← IZMENJENO: string → DateOnly
     public Address Address { get; set; }
     public string ContactPhone { get; set; }
     public string Email { get; set; }
@@ -27,11 +27,13 @@ public class Visitor : ISerializable
         Address = new Address();
     }
 
-    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status, List<Purchase> purchases, List<Book> wishlist)
+    public Visitor(string name, string lastName, DateOnly dateOfBirth, Address address,
+        string contactPhone, string email, string membershipNumber, string membershipYear,
+        string status, List<Purchase> purchases, List<Book> wishlist)
     {
         Name = name;
         LastName = lastName;
-        DateOfBirth = dateofbirth;
+        DateOfBirth = dateOfBirth;
         Address = address ?? new Address();
         ContactPhone = contactPhone;
         Email = email;
@@ -42,11 +44,12 @@ public class Visitor : ISerializable
         Wishlist = wishlist ?? new List<Book>();
     }
 
-    public Visitor(string name, string lastName, string dateofbirth, Address address, string contactPhone, string email, string membershipNumber, string membershipYear, string status)
+    public Visitor(string name, string lastName, DateOnly dateOfBirth, Address address,
+        string contactPhone, string email, string membershipNumber, string membershipYear, string status)
     {
         Name = name;
         LastName = lastName;
-        DateOfBirth = dateofbirth;
+        DateOfBirth = dateOfBirth;
         Address = address ?? new Address();
         ContactPhone = contactPhone;
         Email = email;
@@ -56,7 +59,6 @@ public class Visitor : ISerializable
         Purchases = new List<Purchase>();
         Wishlist = new List<Book>();
     }
-
 
     public string[] ToCSV()
     {
@@ -80,7 +82,7 @@ public class Visitor : ISerializable
         {
             Name,
             LastName,
-            DateOfBirth,
+            DateOfBirth.ToString("dd.MM.yyyy."),       // ← DateOnly → string za CSV
             Address?.Street ?? "",
             Address?.Number ?? "",
             Address?.City ?? "",
@@ -108,7 +110,14 @@ public class Visitor : ISerializable
 
         Name = values[0];
         LastName = values[1];
-        DateOfBirth = values[2];
+
+        // ← Parsiranje DateOnly iz stringa
+        if (DateOnly.TryParseExact(values[2], "dd.MM.yyyy.", out DateOnly dob))
+            DateOfBirth = dob;
+        else if (DateOnly.TryParse(values[2], out DateOnly dob2))
+            DateOfBirth = dob2;
+        else
+            DateOfBirth = default;
 
         Address = new Address
         {
@@ -215,7 +224,7 @@ public class Visitor : ISerializable
         StringBuilder sb = new StringBuilder();
         sb.Append($"Name: {Name}, ");
         sb.Append($"Last name: {LastName}, ");
-        sb.Append($"Date of birth: {DateOfBirth}, ");
+        sb.Append($"Date of birth: {DateOfBirth:dd.MM.yyyy.}, ");
 
         if (Address != null)
             sb.Append($"Address: {Address.Street} {Address.Number}, {Address.City}, ");
