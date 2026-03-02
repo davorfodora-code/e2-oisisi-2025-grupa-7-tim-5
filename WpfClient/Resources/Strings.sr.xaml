@@ -43,7 +43,7 @@
     <sys:String x:Key="Col_Email">Email</sys:String>
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
     <sys:String x:Key="Col_PublisherName">Naziv</sys:String>
-    <sys:String x:Key="Col_Manager">Menadzер</sys:String>
+    <sys:String x:Key="Col_Manager">Sef izdavaca</sys:String>
     <sys:String x:Key="Col_Action">Akcija</sys:String>
     <sys:String x:Key="Col_Date">Datum</sys:String>
     <sys:String x:Key="Col_Review">Ocena</sys:String>
@@ -56,7 +56,7 @@
     <sys:String x:Key="Btn_SaveChanges">Sacuvaj izmene</sys:String>
     <sys:String x:Key="Btn_CompareBooks">Poredi knjige</sys:String>
     <sys:String x:Key="Btn_ShowVisitorsByAuthor">Posetioci autora</sys:String>
-    <sys:String x:Key="Btn_SetPublisherManager">Postavi menadzera</sys:String>
+    <sys:String x:Key="Btn_SetPublisherManager">Postavi sefa</sys:String>
     <sys:String x:Key="Btn_ShowPublisherBooks">Knjige izdavaca</sys:String>
     <sys:String x:Key="Btn_Close">Zatvori</sys:String>
     <sys:String x:Key="Btn_Add">Dodaj</sys:String>
@@ -68,7 +68,7 @@
     <sys:String x:Key="Btn_CancelPurchase">Ponisti kupovinu</sys:String>
     <sys:String x:Key="Btn_Confirm">Potvrdi</sys:String>
     <sys:String x:Key="Btn_Abandon">Odustani</sys:String>
-    <sys:String x:Key="Btn_SetManager">Postavi za sefa</sys:String>
+    <sys:String x:Key="Btn_SetManager">Postavi sefa izdavaca</sys:String>
     <sys:String x:Key="Btn_ShowResults">Prikazi rezultate</sys:String>
 
     <sys:String x:Key="Dlg_ErrorTitle">Greska</sys:String>
@@ -186,8 +186,8 @@
     <sys:String x:Key="SetManager_Lbl_CurrentManager">Trenutni sef:</sys:String>
     <sys:String x:Key="SetManager_Gb_Authors">Autori koji su izdavali kod izdavaca</sys:String>
 
-    <sys:String x:Key="BookCompare_Title">Poredjenjekniga - Posetioci</sys:String>
-    <sys:String x:Key="BookCompare_Header">Poredjenjekniga</sys:String>
+    <sys:String x:Key="BookCompare_Title">Poredjenje knjiga - Posetioci</sys:String>
+    <sys:String x:Key="BookCompare_Header">Poredjenje knjiga</sys:String>
     <sys:String x:Key="BookCompare_Lbl_FirstBook">Prva knjiga:</sys:String>
     <sys:String x:Key="BookCompare_Lbl_SecondBook">Druga knjiga:</sys:String>
     <sys:String x:Key="BookCompare_Lbl_Search">Pretraga:</sys:String>
@@ -256,7 +256,7 @@
     <sys:String x:Key="About_Author2Name">Nemanja Elor</sys:String>
     <sys:String x:Key="About_Author2Bio">Moje ime je Nemanja Elor. Student sam trece godine i ovo je moja prva CRUD aplikacija.</sys:String>
 
-    <sys:String x:Key="AddVisitor_Lbl_DateOfBirth">Datum rođenja</sys:String>
+    <sys:String x:Key="AddVisitor_Lbl_DateOfBirth">Datum rodjenja</sys:String>
     <sys:String x:Key="AddVisitor_Lbl_ContactPhone">Kontakt telefon</sys:String>
     <sys:String x:Key="AddVisitor_Lbl_Email">Email</sys:String>
     <sys:String x:Key="AddVisitor_Gb_Details">Detalji</sys:String>
@@ -264,17 +264,16 @@
     <sys:String x:Key="VisitorEdit_Lbl_ContactPhone">Kontakt telefon</sys:String>
     <sys:String x:Key="VisitorEdit_Lbl_Email">Email</sys:String>
 
-    <sys:String x:Key="WishlistAdd_Instruction">Izaberite knjigu koju želite dodati na listu želja:</sys:String>
+    <sys:String x:Key="WishlistAdd_Instruction">Izaberite knjigu koju zelite dodati na listu zelja:</sys:String>
 
-    <sys:String x:Key="Col_Publisher">Izdavač</sys:String>
+    <sys:String x:Key="Col_Publisher">Izdavac</sys:String>
 
     <sys:String x:Key="SelectAuthor_Title">Izaberi autora</sys:String>
     <sys:String x:Key="SelectBook_Title">Izaberi knjigu</sys:String>
     <sys:String x:Key="AuthorEdit_Btn_AddBook">Dodaj knjigu</sys:String>
     <sys:String x:Key="Tooltip_AddAuthor">Dodaj autora</sys:String>
     <sys:String x:Key="Tooltip_RemoveAuthor">Ukloni autora</sys:String>
-    <sys:String x:Key="Msg_ConfirmRemoveAuthor">Da li ste sigurni da želite da uklonite autora</sys:String>
+    <sys:String x:Key="Msg_ConfirmRemoveAuthor">Da li ste sigurni da zelite da uklonite autora</sys:String>
     <sys:String x:Key="Msg_NoAvailableAuthors">Nema dostupnih autora za dodavanje.</sys:String>
-    
 
 </ResourceDictionary>

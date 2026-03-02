@@ -43,7 +43,7 @@
     <sys:String x:Key="Col_Email">Email</sys:String>
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
     <sys:String x:Key="Col_PublisherName">Name</sys:String>
-    <sys:String x:Key="Col_Manager">Manager</sys:String>
+    <sys:String x:Key="Col_Manager">Publisher Head</sys:String>
     <sys:String x:Key="Col_Action">Action</sys:String>
     <sys:String x:Key="Col_Date">Date</sys:String>
     <sys:String x:Key="Col_Review">Review</sys:String>
@@ -56,7 +56,7 @@
     <sys:String x:Key="Btn_SaveChanges">Save Changes</sys:String>
     <sys:String x:Key="Btn_CompareBooks">Compare Books</sys:String>
     <sys:String x:Key="Btn_ShowVisitorsByAuthor">Author Visitors</sys:String>
-    <sys:String x:Key="Btn_SetPublisherManager">Set Manager</sys:String>
+    <sys:String x:Key="Btn_SetPublisherManager">Set Head</sys:String>
     <sys:String x:Key="Btn_ShowPublisherBooks">Publisher Books</sys:String>
     <sys:String x:Key="Btn_Close">Close</sys:String>
     <sys:String x:Key="Btn_Add">Add</sys:String>
@@ -68,7 +68,7 @@
     <sys:String x:Key="Btn_CancelPurchase">Cancel Purchase</sys:String>
     <sys:String x:Key="Btn_Confirm">Confirm</sys:String>
     <sys:String x:Key="Btn_Abandon">Abandon</sys:String>
-    <sys:String x:Key="Btn_SetManager">Set as Manager</sys:String>
+    <sys:String x:Key="Btn_SetManager">Set as Publisher Head</sys:String>
     <sys:String x:Key="Btn_ShowResults">Show Results</sys:String>
 
     <sys:String x:Key="Dlg_ErrorTitle">Error</sys:String>
@@ -180,10 +180,10 @@
 
     <sys:String x:Key="PublisherBooks_Title">Publisher Books</sys:String>
 
-    <sys:String x:Key="SetManager_Title">Set Publisher Manager</sys:String>
-    <sys:String x:Key="SetManager_Header">Set Publisher Manager</sys:String>
+    <sys:String x:Key="SetManager_Title">Set Publisher Head</sys:String>
+    <sys:String x:Key="SetManager_Header">Set Publisher Head</sys:String>
     <sys:String x:Key="SetManager_Lbl_Publisher">Publisher:</sys:String>
-    <sys:String x:Key="SetManager_Lbl_CurrentManager">Current Manager:</sys:String>
+    <sys:String x:Key="SetManager_Lbl_CurrentManager">Current Head:</sys:String>
     <sys:String x:Key="SetManager_Gb_Authors">Authors who published with this publisher</sys:String>
 
     <sys:String x:Key="BookCompare_Title">Book Comparison - Visitors</sys:String>
@@ -246,7 +246,6 @@
 
     <sys:String x:Key="Msg_SaveFunctionCalled">The 'Save' function has been called.&#x0a;The current state of the application has been saved.</sys:String>
 
-
     <sys:String x:Key="About_AppName">Book Fair</sys:String>
     <sys:String x:Key="About_Version">Version: 1.0.0</sys:String>
     <sys:String x:Key="About_DescriptionLabel">Application description:</sys:String>
@@ -276,4 +275,5 @@
     <sys:String x:Key="Tooltip_RemoveAuthor">Remove author</sys:String>
     <sys:String x:Key="Msg_ConfirmRemoveAuthor">Are you sure you want to remove author</sys:String>
     <sys:String x:Key="Msg_NoAvailableAuthors">No authors available to add.</sys:String>
+
 </ResourceDictionary>
