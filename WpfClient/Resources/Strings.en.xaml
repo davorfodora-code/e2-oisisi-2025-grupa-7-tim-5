@@ -43,7 +43,7 @@
     <sys:String x:Key="Col_Email">Email</sys:String>
     <sys:String x:Key="Col_PublisherId">ID</sys:String>
     <sys:String x:Key="Col_PublisherName">Name</sys:String>
-    <sys:String x:Key="Col_Manager">Publisher Head</sys:String>
+    <sys:String x:Key="Col_Manager">Head of publishers</sys:String>
     <sys:String x:Key="Col_Action">Action</sys:String>
     <sys:String x:Key="Col_Date">Date</sys:String>
     <sys:String x:Key="Col_Review">Review</sys:String>
@@ -56,7 +56,7 @@
     <sys:String x:Key="Btn_SaveChanges">Save Changes</sys:String>
     <sys:String x:Key="Btn_CompareBooks">Compare Books</sys:String>
     <sys:String x:Key="Btn_ShowVisitorsByAuthor">Author Visitors</sys:String>
-    <sys:String x:Key="Btn_SetPublisherManager">Set Head</sys:String>
+    <sys:String x:Key="Btn_SetPublisherManager">Set Head of publishers</sys:String>
     <sys:String x:Key="Btn_ShowPublisherBooks">Publisher Books</sys:String>
     <sys:String x:Key="Btn_Close">Close</sys:String>
     <sys:String x:Key="Btn_Add">Add</sys:String>
