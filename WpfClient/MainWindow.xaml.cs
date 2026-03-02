@@ -455,27 +455,29 @@ namespace WpfClient
         }
         private List<AuthorDTO> GetWishlistAuthorsForVisitor(VisitorDTO visitor)
         {
-            var wishlistBooks = GetWishlistBooksForVisitor(visitor);
+            if (visitor?.Wishlist == null || visitor.Wishlist.Count == 0)
+                return new List<AuthorDTO>();
 
+            var wishlistIsbns = visitor.Wishlist
+                .Select(b => b?.Isbn)
+                .Where(isbn => !string.IsNullOrWhiteSpace(isbn))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-   
-            var idCards = wishlistBooks
+            var fullBooks = _bookDAO.GetAllBooks()
+                .Select(BookDTO.FromModel)
+                .Where(b => b?.Isbn != null && wishlistIsbns.Contains(b.Isbn))
+                .ToList();
+
+            var authorIdCards = fullBooks
                 .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
                 .Select(a => a?.IdCard)
                 .Where(id => !string.IsNullOrWhiteSpace(id))
-                .Select(id => id.Trim())
-                .Distinct()
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-    
-            var allAuthors = _authorDAO.GetAllAuthors()
-                                       .Select(AuthorDTO.FromModel)
-                                       .Where(a => a != null)
-                                       .ToList();
-
-
-            return allAuthors
-                .Where(a => !string.IsNullOrWhiteSpace(a.IdCard) && idCards.Contains(a.IdCard.Trim()))
+            return _authorDAO.GetAllAuthors()
+                .Select(AuthorDTO.FromModel)
+                .Where(a => a != null && !string.IsNullOrWhiteSpace(a.IdCard)
+                            && authorIdCards.Contains(a.IdCard))
                 .ToList();
         }
 
