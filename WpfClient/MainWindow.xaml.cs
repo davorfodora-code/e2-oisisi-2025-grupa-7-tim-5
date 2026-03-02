@@ -25,7 +25,6 @@ namespace WpfClient
         private ObservableCollection<AuthorDTO> _authors;
         private BookController _bookController;
         private ObservableCollection<BookDTO> _books;
-
         private PublisherController _publisherController;
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
@@ -34,8 +33,6 @@ namespace WpfClient
         private const int TAB_VISITORS = 1;
         private const int TAB_AUTHORS = 2;
         private const int TAB_PUBLISHERS = 3;
-
-
 
         public MainWindow()
         {
@@ -55,7 +52,6 @@ namespace WpfClient
             _authorController = new AuthorController(authorDAO);
             _bookController = new BookController(bookDAO, publisherDAO);
             _visitorController = new VisitorController(visitorDAO, purchaseDAO);
-
             _publisherController = new PublisherController(publisherDAO);
 
             _visitors = new ObservableCollection<VisitorDTO>();
@@ -78,33 +74,23 @@ namespace WpfClient
         private string F(string key, params object[] args) => string.Format(L(key), args);
 
         private void MsgError(string msgKey)
-            => MessageBox.Show(L(msgKey), L("Dlg_ErrorTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Error);
-
+            => MessageBox.Show(L(msgKey), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
         private void MsgWarn(string msgKey)
-            => MessageBox.Show(L(msgKey), L("Dlg_WarnTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Warning);
-
+            => MessageBox.Show(L(msgKey), L("Dlg_WarnTitle"), MessageBoxButton.OK, MessageBoxImage.Warning);
         private void MsgInfo(string msgKey)
-            => MessageBox.Show(L(msgKey), L("Dlg_InfoTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Information);
-
+            => MessageBox.Show(L(msgKey), L("Dlg_InfoTitle"), MessageBoxButton.OK, MessageBoxImage.Information);
         private MessageBoxResult MsgConfirm(string msgKey)
-            => MessageBox.Show(L(msgKey), L("Dlg_ConfirmTitle"),
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            => MessageBox.Show(L(msgKey), L("Dlg_ConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         private void InitializeStatusBar()
         {
             StatusBarAppName.Text = L("App_Title");
             UpdateTabName();
             UpdateDateTime();
-
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             _timer.Tick += Timer_Tick;
             _timer.Start();
         }
-
 
         private void RegisterKeyboardShortcuts()
         {
@@ -117,14 +103,9 @@ namespace WpfClient
             InputBindings.Add(new KeyBinding(cmdClose, Key.W, ModifierKeys.Control));
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-        }
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            UpdateDateTime();
-        }
+        protected override void OnKeyDown(KeyEventArgs e) { base.OnKeyDown(e); }
+
+        private void Timer_Tick(object? sender, EventArgs e) => UpdateDateTime();
 
         private void UpdateDateTime()
         {
@@ -135,29 +116,55 @@ namespace WpfClient
 
         private void UpdateTabName()
         {
-            if (MainTabs.SelectedItem is TabItem selectedTab)
-            {
-                StatusBarTabName.Text = $"{L("Status_Tab")} {selectedTab.Header}";
-            }
-            else
-            {
-                StatusBarTabName.Text = $"{L("Status_Tab")} N/A";
-            }
+            StatusBarTabName.Text = MainTabs.SelectedItem is TabItem tab
+                ? $"{L("Status_Tab")} {tab.Header}"
+                : $"{L("Status_Tab")} N/A";
         }
 
         private void LoadVisitors()
         {
             var visitorModels = _visitorController.GetAllVisitors();
             _visitors = new ObservableCollection<VisitorDTO>();
-
-            foreach (var visitor in visitorModels)
-            {
-                var dto = VisitorDTO.FromModel(visitor);
-                _visitors.Add(dto);
-            }
-
+            foreach (var v in visitorModels)
+                _visitors.Add(VisitorDTO.FromModel(v));
             VisitorsGrid.ItemsSource = _visitors;
             _allVisitors = _visitors.ToList();
+        }
+
+        private void LoadAuthors()
+        {
+            var authorModels = _authorController.GetAllAuthors();
+            _authors = new ObservableCollection<AuthorDTO>();
+            foreach (var a in authorModels)
+                _authors.Add(AuthorDTO.FromModel(a));
+            AuthorsGrid.ItemsSource = _authors;
+            _allAuthors = _authors.ToList();
+        }
+
+        private void LoadBooks()
+        {
+            var bookModels = _bookController.GetAllBooks();
+            _books = new ObservableCollection<BookDTO>();
+            foreach (var b in bookModels)
+                _books.Add(BookDTO.FromModel(b));
+            BooksGrid.ItemsSource = _books;
+            _allBooks = _books.ToList();
+        }
+
+        private void LoadPublishers()
+        {
+            if (_publisherController == null) return;
+            var publisherModels = _publisherController.GetAllPublishers();
+            _publishers.Clear();
+            foreach (var p in publisherModels)
+                _publishers.Add(PublisherDTO.FromModel(p));
+            PublishersGrid.Items.Refresh();
+        }
+
+        private void Window_Loaded(object? sender, RoutedEventArgs e)
+        {
+            LoadVisitors();
+            UpdateTabName();
         }
 
         private void BtnCompareBooks_Click(object sender, RoutedEventArgs e)
@@ -178,59 +185,6 @@ namespace WpfClient
             win.ShowDialog();
         }
 
-        private void LoadAuthors()
-        {
-            var authorModels = _authorController.GetAllAuthors();
-            _authors = new ObservableCollection<AuthorDTO>();
-
-            foreach (var author in authorModels)
-            {
-                var dto = AuthorDTO.FromModel(author);
-                _authors.Add(dto);
-            }
-
-            AuthorsGrid.ItemsSource = _authors;
-            _allAuthors = _authors.ToList();
-        }
-
-        private void LoadBooks()
-        {
-            var bookModels = _bookController.GetAllBooks();
-            _books = new ObservableCollection<BookDTO>();
-
-            foreach (var book in bookModels)
-            {
-                var dto = BookDTO.FromModel(book);
-                _books.Add(dto);
-            }
-
-            BooksGrid.ItemsSource = _books;
-            _allBooks = _books.ToList();
-        }
-
-        private void LoadPublishers()
-        {
-            if (_publisherController == null)
-                return;
-
-            var publisherModels = _publisherController.GetAllPublishers();
-            _publishers.Clear();
-
-            foreach (var publisher in publisherModels)
-            {
-                var dto = PublisherDTO.FromModel(publisher);
-                _publishers.Add(dto);
-            }
-
-            PublishersGrid.Items.Refresh();
-        }
-
-        private void Window_Loaded(object? sender, RoutedEventArgs e)
-        {
-            LoadVisitors();
-            UpdateTabName();
-        }
-
         private void BtnAdd_Click(object? sender, RoutedEventArgs e)
         {
             try
@@ -243,118 +197,49 @@ namespace WpfClient
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _visitorController.AddVisitor(dialog.Visitor);
-                        if (result.Success)
-                        {
-                            ShowToast(L("Toast_Added"));
-                            LoadVisitors();
-                        }
-                        else
-                        {
-                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        if (result.Success) { ShowToast(L("Toast_Added")); LoadVisitors(); }
+                        else MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else if (idx == TAB_PUBLISHERS)
                 {
                     var dialog = new PublisherEditDialog(_authors);
                     dialog.Owner = this;
-
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _publisherController.AddPublisher(dialog.Publisher.ToModel());
-                        if (result != null)
-                        {
-                            ShowToast(L("Toast_Added"));
-                            LoadPublishers();
-                        }
-                        else
-                        {
-                            MessageBox.Show(L("Msg_OperationFailed"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        if (result != null) { ShowToast(L("Toast_Added")); LoadPublishers(); }
+                        else MessageBox.Show(L("Msg_OperationFailed"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else if (idx == TAB_AUTHORS)
                 {
                     var dialog = new AddAuthorDialog();
                     dialog.Owner = this;
-
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _authorController.AddAuthor(dialog.Author);
-                        if (result.Success)
-                        {
-                            ShowToast(L("Toast_Added"));
-                            LoadAuthors();
-                        }
-                        else
-                        {
-                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        if (result.Success) { ShowToast(L("Toast_Added")); LoadAuthors(); }
+                        else MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else if (idx == TAB_BOOKS)
                 {
-                    if (_publishers == null || _publishers.Count == 0)
-                    {
-                        MsgWarn("Msg_OperationFailed");
-                        return;
-                    }
-
+                    if (_publishers == null || _publishers.Count == 0) { MsgWarn("Msg_OperationFailed"); return; }
                     var dialog = new AddBookDialog(_authors, _publishers);
                     if (dialog.ShowDialog() == true)
                     {
                         var result = _bookController.CreateBook(dialog.Book);
-                        if (result.Success)
-                        {
-                            ShowToast(L("Toast_Added"));
-                            LoadBooks();
-                        }
-                        else
-                        {
-                            MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        if (result.Success) { ShowToast(L("Toast_Added")); LoadBooks(); }
+                        else MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else
-                {
-                    MsgInfo("Msg_SelectTab");
-                }
+                else { MsgInfo("Msg_SelectTab"); }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{L("Msg_CriticalError")} {ex.Message}\n\n{ex.StackTrace}",
                     L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private async void ShowToast(string message, int ms = 2500)
-        {
-            ToastText.Text = message;
-            Toast.Visibility = Visibility.Visible;
-
-            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
-            Toast.BeginAnimation(OpacityProperty, fadeIn);
-
-            await Task.Delay(ms);
-
-            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
-            fadeOut.Completed += (_, __) => Toast.Visibility = Visibility.Collapsed;
-            Toast.BeginAnimation(OpacityProperty, fadeOut);
-        }
-
-        private void ShowVisitorsForAuthor_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
-            if (selectedAuthor != null)
-            {
-                var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
-                var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
-                win.Owner = this;
-                win.ShowDialog();
-            }
-            else
-            {
-                MsgWarn("Msg_SelectEntityFromTable");
             }
         }
 
@@ -369,14 +254,13 @@ namespace WpfClient
 
                 var originalVisitor = _visitorController.GetAllVisitors()
                     .FirstOrDefault(v => v.MembershipNumber == selectedVisitorDto.MembershipNumber);
-
                 if (originalVisitor == null) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new VisitorEditDialog(selectedVisitorDto, originalVisitor, _bookController);
 
                 if (dialog.ShowDialog() == true)
                 {
-                    var result = _visitorController.UpdateVisitor(dialog.VisitorDTO);
+                    var result = _visitorController.UpdateVisitor(originalVisitor);
                     if (result.Success) { ShowToast(L("Toast_Updated")); LoadVisitors(); }
                     else MsgError("Msg_OperationFailed");
                 }
@@ -388,12 +272,10 @@ namespace WpfClient
 
                 var dialog = new PublisherEditDialog(selectedPublisher, _authors);
                 dialog.Owner = this;
-
                 if (dialog.ShowDialog() == true)
                 {
                     var publisherModel = dialog.Publisher.ToModel();
                     var result = _publisherController.UpdatePublisher(publisherModel);
-
                     if (result != null) { ShowToast(L("Toast_Updated")); LoadPublishers(); LoadBooks(); }
                     else MsgError("Msg_OperationFailed");
                 }
@@ -405,40 +287,31 @@ namespace WpfClient
 
                 var originalAuthor = _authorController.GetAllAuthors()
                     .FirstOrDefault(a => a.IdCard == selectedAuthorDto.IdCard);
-
                 if (originalAuthor == null) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new AuthorEditDialog(selectedAuthorDto, originalAuthor, _bookController);
                 dialog.Owner = this;
-
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _authorController.UpdateAuthor(dialog.AuthorDTO);
                     LoadBooks();
-
                     if (result.Success)
                     {
-                        MessageBox.Show(result.Message, L("Dlg_InfoTitle"),
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(result.Message, L("Dlg_InfoTitle"), MessageBoxButton.OK, MessageBoxImage.Information);
                         LoadAuthors();
                         LoadPublishers();
                     }
                     else
-                    {
-                        MessageBox.Show(result.Message, L("Dlg_ErrorTitle"),
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                        MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else if (idx == TAB_BOOKS)
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null) { MsgWarn("Msg_SelectEntityToEdit"); return; }
-
                 if (_publishers == null || _publishers.Count == 0) { MsgError("Msg_OperationFailed"); return; }
 
                 var dialog = new AddBookDialog(selectedBook, _authors, _publishers);
-
                 if (dialog.ShowDialog() == true)
                 {
                     var result = _bookController.EditBook(dialog.Book);
@@ -446,10 +319,7 @@ namespace WpfClient
                     else MessageBox.Show(result.Message, L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else
-            {
-                MsgInfo("Msg_SelectTab");
-            }
+            else { MsgInfo("Msg_SelectTab"); }
         }
 
         private void BtnDelete_Click(object? sender, RoutedEventArgs e)
@@ -460,11 +330,9 @@ namespace WpfClient
             {
                 var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
                 if (selectedVisitor == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
-
                 var result = MessageBox.Show(
                     $"{L("Msg_ConfirmDeleteVisitor")}\n{selectedVisitor.Name} {selectedVisitor.LastName}\n({selectedVisitor.MembershipNumber})?",
                     L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
-
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _visitorController.DeleteVisitor(selectedVisitor.MembershipNumber);
@@ -476,11 +344,9 @@ namespace WpfClient
             {
                 var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
                 if (selectedPublisher == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
-
                 var result = MessageBox.Show(
                     $"{L("Msg_ConfirmDeletePublisher")}\n{selectedPublisher.Name}?",
                     L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _publisherController.RemovePublisher(selectedPublisher.ToModel());
@@ -492,11 +358,9 @@ namespace WpfClient
             {
                 var selectedAuthor = AuthorsGrid.SelectedItem as AuthorDTO;
                 if (selectedAuthor == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
-
                 var result = MessageBox.Show(
                     $"{L("Msg_ConfirmDeleteAuthor")}\n{selectedAuthor.Name} {selectedAuthor.Lastname}\n({selectedAuthor.IdCard})?",
                     L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
-
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _authorController.DeleteAuthor(selectedAuthor.IdCard);
@@ -508,11 +372,9 @@ namespace WpfClient
             {
                 var selectedBook = BooksGrid.SelectedItem as BookDTO;
                 if (selectedBook == null) { MsgWarn("Msg_SelectEntityToDelete"); return; }
-
                 var result = MessageBox.Show(
                     $"{L("Msg_ConfirmDeleteBook")}\n{selectedBook.Name}\n({selectedBook.Isbn})?",
                     L("Msg_DeleteConfirmTitle"), MessageBoxButton.YesNo, MessageBoxImage.Question);
-
                 if (result == MessageBoxResult.Yes)
                 {
                     var deleteResult = _bookController.RemoveBook(selectedBook.Isbn);
@@ -520,17 +382,13 @@ namespace WpfClient
                     else MsgError("Msg_OperationFailed");
                 }
             }
-            else
-            {
-                MsgInfo("Msg_SelectTab");
-            }
+            else { MsgInfo("Msg_SelectTab"); }
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             string q = TxtSearch.Text ?? "";
             int idx = MainTabs?.SelectedIndex ?? -1;
-
             if (string.IsNullOrWhiteSpace(q))
             {
                 VisitorsGrid.ItemsSource = _visitors;
@@ -538,47 +396,39 @@ namespace WpfClient
                 BooksGrid.ItemsSource = _books;
                 return;
             }
-
             if (idx == TAB_VISITORS)
-            {
-                var filtered = VisitorSearch.Filter(_allVisitors, q).ToList();
-                VisitorsGrid.ItemsSource = new ObservableCollection<VisitorDTO>(filtered);
-                return;
-            }
-
+            { VisitorsGrid.ItemsSource = new ObservableCollection<VisitorDTO>(VisitorSearch.Filter(_allVisitors, q).ToList()); return; }
             if (idx == TAB_AUTHORS)
-            {
-                var filtered = AuthorSearch.Filter(_allAuthors, q).ToList();
-                AuthorsGrid.ItemsSource = new ObservableCollection<AuthorDTO>(filtered);
-                return;
-            }
-
+            { AuthorsGrid.ItemsSource = new ObservableCollection<AuthorDTO>(AuthorSearch.Filter(_allAuthors, q).ToList()); return; }
             if (idx == TAB_BOOKS)
-            {
-                var filtered = BookSearch.Filter(_allBooks, q).ToList();
-                BooksGrid.ItemsSource = new ObservableCollection<BookDTO>(filtered);
-                return;
-            }
+            { BooksGrid.ItemsSource = new ObservableCollection<BookDTO>(BookSearch.Filter(_allBooks, q).ToList()); return; }
+        }
+
+        private async void ShowToast(string message, int ms = 2500)
+        {
+            ToastText.Text = message;
+            Toast.Visibility = Visibility.Visible;
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
+            Toast.BeginAnimation(OpacityProperty, fadeIn);
+            await Task.Delay(ms);
+            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+            fadeOut.Completed += (_, __) => Toast.Visibility = Visibility.Collapsed;
+            Toast.BeginAnimation(OpacityProperty, fadeOut);
         }
 
         private void BtnSetPublisherManager_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new SetPublisherManager(_publishers, _authors);
             dialog.Owner = this;
-
             if (dialog.ShowDialog() == true)
             {
                 var updatedPublisher = dialog.GetUpdatedPublisher();
-
                 var publisherModel = _publisherController.GetAllPublishers()
                     .FirstOrDefault(p => p.Id == updatedPublisher.Id);
-
                 if (publisherModel != null)
                 {
                     publisherModel.Manager = updatedPublisher.Manager?.ToModel();
-
                     var result = _publisherController.UpdatePublisher(publisherModel);
-
                     if (result != null) { MsgInfo("Toast_Updated"); LoadPublishers(); }
                     else MsgError("Msg_OperationFailed");
                 }
@@ -587,8 +437,7 @@ namespace WpfClient
 
         private void TxtSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
-                BtnSearch_Click(sender, e);
+            if (e.Key == System.Windows.Input.Key.Enter) BtnSearch_Click(sender, e);
         }
 
         private void MainTabs_SelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -599,7 +448,6 @@ namespace WpfClient
 
         private void MenuItem_Click(object? sender, RoutedEventArgs e) { }
 
-
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -607,32 +455,24 @@ namespace WpfClient
         }
 
         private void TxtSearch_TextChanged(object? sender, TextChangedEventArgs e) { }
-
         private void AuthorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e) { }
+        private void ShowVisitorsForAuthor_Click(object sender, RoutedEventArgs e) { }
 
-        private void FileNew_Click(object sender, RoutedEventArgs e)
-        {
-            BtnAdd_Click(sender, e);
-        }
+        private void FileNew_Click(object sender, RoutedEventArgs e) => BtnAdd_Click(sender, e);
 
         private void FileSave_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(L("Msg_SaveFunctionCalled"), L("Dlg_InfoTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
+            => MessageBox.Show(L("Msg_SaveFunctionCalled"), L("Dlg_InfoTitle"), MessageBoxButton.OK, MessageBoxImage.Information);
 
         private void OpenPosetioci_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 1;
         private void OpenKnjige_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 0;
         private void OpenAutori_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 2;
         private void OpenIzdavaci_Click(object sender, RoutedEventArgs e) => MainTabs.SelectedIndex = 3;
-
         private void EditEdit_Click(object sender, RoutedEventArgs e) => BtnEdit_Click(sender, e);
         private void EditDelete_Click(object sender, RoutedEventArgs e) => BtnDelete_Click(sender, e);
 
         private void HelpAbout_Click(object sender, RoutedEventArgs e)
         {
-            var aboutWindow = new AboutWindow();
-            aboutWindow.ShowDialog();
+            new AboutWindow().ShowDialog();
         }
 
         private void BtnShowVisitorsByAuthor_Click(object sender, RoutedEventArgs e)
@@ -641,20 +481,15 @@ namespace WpfClient
             if (selectedAuthor != null)
             {
                 var allVisitors = _visitorDAO.GetAllVisitors().Select(VisitorDTO.FromModel).ToList();
-                var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors);
-                win.Owner = this;
+                var win = new VisitorsByAuthorWindow(selectedAuthor, allVisitors) { Owner = this };
                 win.ShowDialog();
             }
-            else
-            {
-                MsgWarn("Msg_SelectEntityFromTable");
-            }
+            else MsgWarn("Msg_SelectEntityFromTable");
         }
 
         private List<BookDTO> GetBooksForPublisher(PublisherDTO publisher)
         {
             if (publisher == null) return new List<BookDTO>();
-
             return _allBooks
                 .Where(b => b.Publisher != null &&
                             string.Equals(b.Publisher.Name, publisher.Name, StringComparison.OrdinalIgnoreCase))
@@ -672,33 +507,27 @@ namespace WpfClient
             if (publisher != null)
             {
                 var books = GetBooksForPublisher(publisher);
-                var dlg = new PublisherBooksDialog(publisher, books)
+                new PublisherBooksDialog(publisher, books)
                 {
                     Owner = this,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
-                dlg.ShowDialog();
+                }.ShowDialog();
             }
-            else
-            {
-                MsgWarn("Msg_SelectEntityFromTable");
-            }
+            else MsgWarn("Msg_SelectEntityFromTable");
         }
 
         private void LangSr_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("sr");
             StatusBarAppName.Text = L("App_Title");
-            UpdateDateTime();
-            UpdateTabName();
+            UpdateDateTime(); UpdateTabName();
         }
 
         private void LangEn_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("en");
             StatusBarAppName.Text = L("App_Title");
-            UpdateDateTime();
-            UpdateTabName();
+            UpdateDateTime(); UpdateTabName();
         }
     }
 }

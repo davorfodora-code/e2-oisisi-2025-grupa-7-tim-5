@@ -184,7 +184,6 @@
                     BorderBrush="#E0E0E0"
                     BorderThickness="1">
 
-                <!-- ===== TAB KNJIGE ===== -->
                 <TabItem Header="{DynamicResource Tab_Books}">
                     <Grid Margin="10">
                         <Grid.RowDefinitions>
@@ -245,7 +244,6 @@
                     </Grid>
                 </TabItem>
 
-                <!-- ===== TAB POSETIOCI ===== -->
                 <TabItem Header="{DynamicResource Tab_Visitors}">
                     <DataGrid x:Name="VisitorsGrid"
                           AutoGenerateColumns="False"

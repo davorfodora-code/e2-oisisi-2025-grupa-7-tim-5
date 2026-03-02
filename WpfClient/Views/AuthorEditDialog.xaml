@@ -12,7 +12,6 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="1" Margin="0,0,0,10">
-
             <TabItem Header="{DynamicResource AuthorEdit_Tab_Info}" FontSize="14" Padding="10">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid Margin="10">
@@ -76,70 +75,76 @@
             </TabItem>
 
             <TabItem Header="{DynamicResource AuthorEdit_Tab_Books}" FontSize="14" Padding="10">
-                <Grid>
+                <Grid Margin="5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Background="#F8F9FA" BorderBrush="#E0E0E0" BorderThickness="1"
-                            CornerRadius="5" Padding="10" Margin="0,0,0,10">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{DynamicResource AuthorEdit_Lbl_AddBook}"
-                                       FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <ComboBox Grid.Column="1" x:Name="CmbAvailableBooks" DisplayMemberPath="Name"
-                                      Margin="0,0,10,0" Height="30"/>
-                            <Button Grid.Column="2" x:Name="BtnAddBook" Content="{DynamicResource Btn_Add}"
-                                    Width="80" Height="30" Click="BtnAddBook_Click"/>
-                        </Grid>
+                    <Border Grid.Row="0"
+                            Background="#F8F9FA"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="8,6"
+                            Margin="0,0,0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="BtnAddBook"
+                                    Content="{DynamicResource AuthorEdit_Btn_AddBook}"
+                                    Width="130" Height="28"
+                                    Margin="0,0,8,0"
+                                    Click="BtnAddBook_Click"/>
+                            <Button x:Name="BtnRemoveBookToolbar"
+                                    Content="{DynamicResource Btn_Remove}"
+                                    Width="100" Height="28"
+                                    IsEnabled="False"
+                                    Click="BtnRemoveBookToolbar_Click"/>
+                        </StackPanel>
                     </Border>
 
-                    <DataGrid Grid.Row="1" x:Name="BooksGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                              Margin="0,0,0,10" RowHeight="35" BorderBrush="#E0E0E0" BorderThickness="1"
-                              SelectionMode="Single">
+                    <DataGrid Grid.Row="1"
+                              x:Name="BooksGrid"
+                              SelectionChanged="BooksGrid_SelectionChanged"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              RowHeight="34"
+                              FontSize="13"
+                              BorderBrush="#E0E0E0"
+                              BorderThickness="1"
+                              SelectionMode="Single"
+                              AlternatingRowBackground="#F8F9FA"
+                              GridLinesVisibility="Horizontal"
+                              HorizontalGridLinesBrush="#E0E0E0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="150"/>
-                            <DataGridTextColumn Binding="{Binding Name}" Width="*">
+                            <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}" Width="130"/>
+                            <DataGridTextColumn Binding="{Binding Name}" Width="2*">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="{DynamicResource Col_Name}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding PublicationYear}" Width="100">
+                            <DataGridTextColumn Binding="{Binding PublicationYear}" Width="80">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="{DynamicResource Col_Year}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Genre}" Width="120">
+                            <DataGridTextColumn Binding="{Binding Genre}" Width="100">
                                 <DataGridTextColumn.Header>
                                     <TextBlock Text="{DynamicResource Col_Genre}"/>
                                 </DataGridTextColumn.Header>
                             </DataGridTextColumn>
-                            <DataGridTemplateColumn Width="80">
-                                <DataGridTemplateColumn.Header>
-                                    <TextBlock Text="{DynamicResource Col_Action}"/>
-                                </DataGridTemplateColumn.Header>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Content="{DynamicResource Btn_Remove}"
-                                                Click="BtnRemoveBook_Click" Padding="5,2" FontSize="11"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </TabItem>
+
         </TabControl>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="BtnSave" Content="{DynamicResource Btn_SaveChanges}" Width="120" Height="35"
-                    Margin="0,0,10,0" Click="BtnSave_Click" FontWeight="SemiBold"/>
-            <Button x:Name="BtnCancel" Content="{DynamicResource Btn_Cancel}" Width="100" Height="35"
+            <Button x:Name="BtnSave" Content="{DynamicResource Btn_SaveChanges}"
+                    Width="120" Height="35" Margin="0,0,10,0"
+                    Click="BtnSave_Click" FontWeight="SemiBold"/>
+            <Button x:Name="BtnCancel" Content="{DynamicResource Btn_Cancel}"
+                    Width="100" Height="35"
                     Click="BtnCancel_Click" FontWeight="SemiBold"/>
         </StackPanel>
     </Grid>

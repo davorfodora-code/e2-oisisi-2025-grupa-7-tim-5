@@ -53,17 +53,21 @@ namespace Core.Controllers
                 return (false, "Visitor not found!");
 
             var visitor = dto.ToModel();
-
-            // Čuvamo podatke koji se ne menjaju kroz VisitorDTO
             visitor.Purchases = existingVisitor.Purchases;
             visitor.MembershipYear = existingVisitor.MembershipYear;
             visitor.AverageReview = existingVisitor.AverageReview;
 
-            // ← NOVO: DateOfBirth, ContactPhone, Email sada dolaze iz DTO
-            // (već postavljeni kroz dto.ToModel() gore)
-
             var result = _visitorDAO.UpdateVisitor(visitor);
+            if (result == null)
+                return (false, "Visitor not found!");
 
+            NotifyObservers();
+            return (true, "Visitor updated successfully!");
+        }
+
+        public (bool Success, string Message) UpdateVisitor(Visitor visitor)
+        {
+            var result = _visitorDAO.UpdateVisitor(visitor);
             if (result == null)
                 return (false, "Visitor not found!");
 

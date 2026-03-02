@@ -1,0 +1,55 @@
+<Window x:Class="WpfClient.SelectBookDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{DynamicResource SelectBook_Title}"
+        Height="360" Width="560"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="White">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#4A4A4A" BorderThickness="1" Background="White" Padding="4">
+            <ListBox x:Name="LstBooks"
+                     BorderThickness="0"
+                     SelectionMode="Single"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     SelectionChanged="LstBooks_SelectionChanged">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="6,5"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontSize="13" TextWrapping="Wrap">
+                            <Run Text="{Binding Isbn, Mode=OneWay}" Foreground="#777"/>
+                            <Run Text="  "/>
+                            <Run Text="{Binding Name, Mode=OneWay}" FontWeight="SemiBold"/>
+                            <Run Text=" — "/>
+                            <Run Text="{Binding DisplayPublisher, Mode=OneWay}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="{DynamicResource Btn_Abandon}"
+                    Width="90" Height="28"
+                    Margin="0,0,10,0"
+                    Click="BtnCancel_Click"/>
+            <Button x:Name="BtnConfirm"
+                    Content="{DynamicResource Btn_Confirm}"
+                    Width="90" Height="28"
+                    IsEnabled="False"
+                    Click="BtnConfirm_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

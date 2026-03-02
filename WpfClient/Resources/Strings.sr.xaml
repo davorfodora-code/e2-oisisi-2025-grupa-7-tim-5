@@ -268,4 +268,13 @@
 
     <sys:String x:Key="Col_Publisher">Izdavač</sys:String>
 
+    <sys:String x:Key="SelectAuthor_Title">Izaberi autora</sys:String>
+    <sys:String x:Key="SelectBook_Title">Izaberi knjigu</sys:String>
+    <sys:String x:Key="AuthorEdit_Btn_AddBook">Dodaj knjigu</sys:String>
+    <sys:String x:Key="Tooltip_AddAuthor">Dodaj autora</sys:String>
+    <sys:String x:Key="Tooltip_RemoveAuthor">Ukloni autora</sys:String>
+    <sys:String x:Key="Msg_ConfirmRemoveAuthor">Da li ste sigurni da želite da uklonite autora</sys:String>
+    <sys:String x:Key="Msg_NoAvailableAuthors">Nema dostupnih autora za dodavanje.</sys:String>
+    
+
 </ResourceDictionary>

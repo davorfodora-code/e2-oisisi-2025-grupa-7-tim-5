@@ -47,9 +47,7 @@ namespace WpfClient
             TxtLastName.Text = AuthorDTO.Lastname;
 
             if (AuthorDTO.DateOfBirth != default)
-            {
                 DpDateOfBirth.SelectedDate = AuthorDTO.DateOfBirth.ToDateTime(new TimeOnly(0, 0));
-            }
 
             TxtPhoneNumber.Text = AuthorDTO.PhoneNumber;
             TxtEmail.Text = AuthorDTO.Email;
@@ -81,9 +79,6 @@ namespace WpfClient
                     _allBooksOriginal.Add(book);
                     _availableBooks.Add(book);
                 }
-
-                CmbAvailableBooks.ItemsSource = _availableBooks;
-                CmbAvailableBooks.DisplayMemberPath = "Name";
             }
             catch (Exception ex)
             {
@@ -96,48 +91,55 @@ namespace WpfClient
         {
             _authorBooks.Clear();
 
-            if (_originalAuthor.BookList != null && _originalAuthor.BookList.Any())
+            if (_originalAuthor.BookList == null || !_originalAuthor.BookList.Any()) return;
+
+            foreach (var book in _originalAuthor.BookList)
             {
-                foreach (var book in _originalAuthor.BookList)
+                var fullBook = _allBooksOriginal.FirstOrDefault(b => b.Isbn == book.Isbn);
+                if (fullBook != null)
                 {
-                    var fullBook = _allBooksOriginal.FirstOrDefault(b => b.Isbn == book.Isbn);
-                    if (fullBook != null)
-                    {
-                        _authorBooks.Add(fullBook);
-                        var availableBook = _availableBooks.FirstOrDefault(b => b.Isbn == fullBook.Isbn);
-                        if (availableBook != null)
-                            _availableBooks.Remove(availableBook);
-                    }
-                    else
-                    {
-                        var bookDto = new BookDTO
-                        {
-                            Isbn = book.Isbn,
-                            Name = book.Name
-                        };
-                        _authorBooks.Add(bookDto);
-                    }
+                    _authorBooks.Add(fullBook);
+                    var av = _availableBooks.FirstOrDefault(b => b.Isbn == fullBook.Isbn);
+                    if (av != null) _availableBooks.Remove(av);
+                }
+                else
+                {
+                    _authorBooks.Add(new BookDTO { Isbn = book.Isbn, Name = book.Name });
                 }
             }
         }
 
+        // ── BooksGrid selekcija — aktivira Ukloni dugme ─────────────
+
+        private void BooksGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnRemoveBookToolbar.IsEnabled = BooksGrid.SelectedItem != null;
+        }
+
+        // ── Dodaj knjigu — otvori SelectBookDialog ────────────────────
+
         private void BtnAddBook_Click(object sender, RoutedEventArgs e)
         {
-            var selectedBook = CmbAvailableBooks.SelectedItem as BookDTO;
+            var available = _availableBooks
+                .Where(b => !_authorBooks.Any(ab => ab.Isbn == b.Isbn))
+                .ToList();
 
-            if (selectedBook == null)
+            if (!available.Any())
             {
-                MessageBox.Show(L("Msg_SelectBookToAdd"), L("Dlg_WarnTitle"),
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(L("Msg_NoAvailableBooks"), L("Dlg_InfoTitle"),
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            if (_authorBooks.Any(b => b.Isbn == selectedBook.Isbn))
+            var dlg = new SelectBookDialog(available)
             {
-                MessageBox.Show(L("Msg_BookAlreadyAssigned"), L("Dlg_WarnTitle"),
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            if (dlg.ShowDialog() != true || dlg.SelectedBook == null) return;
+
+            var selectedBook = dlg.SelectedBook;
 
             if (selectedBook.Authors == null)
                 selectedBook.Authors = new System.Collections.Generic.List<AuthorDTO>();
@@ -153,91 +155,49 @@ namespace WpfClient
             }
 
             _authorBooks.Add(selectedBook);
-            _availableBooks.Remove(selectedBook);
-
-            CmbAvailableBooks.ItemsSource = null;
-            CmbAvailableBooks.ItemsSource = _availableBooks;
-            CmbAvailableBooks.SelectedItem = null;
-
-            MessageBox.Show($"'{selectedBook.Name}' {L("Msg_BookAddedToAuthor")}", L("Dlg_InfoTitle"),
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            var inAvailable = _availableBooks.FirstOrDefault(b => b.Isbn == selectedBook.Isbn);
+            if (inAvailable != null) _availableBooks.Remove(inAvailable);
         }
 
-        private void BtnRemoveBook_Click(object sender, RoutedEventArgs e)
+        // ── Ukloni selektovanu knjigu (toolbar dugme) ─────────────────
+
+        private void BtnRemoveBookToolbar_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var button = sender as Button;
-                var bookToRemove = button?.DataContext as BookDTO;
+            var bookToRemove = BooksGrid.SelectedItem as BookDTO;
+            if (bookToRemove == null) return;
 
-                if (bookToRemove == null) return;
+            var result = MessageBox.Show(
+                $"{L("Msg_ConfirmRemoveBook")} '{bookToRemove.Name}'?",
+                L("Dlg_ConfirmTitle"),
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
-                var result = MessageBox.Show(
-                    $"{L("Msg_ConfirmRemoveBook")} '{bookToRemove.Name}'?",
-                    L("Dlg_ConfirmTitle"),
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+            if (result != MessageBoxResult.Yes) return;
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    if (bookToRemove.Authors != null)
-                    {
-                        var authorToRemove = bookToRemove.Authors
-                            .FirstOrDefault(a => a.IdCard == AuthorDTO.IdCard);
-                        if (authorToRemove != null)
-                        {
-                            bookToRemove.Authors.Remove(authorToRemove);
-                        }
-                    }
+            bookToRemove.Authors?.RemoveAll(a => a.IdCard == AuthorDTO.IdCard);
 
-                    _authorBooks.Remove(bookToRemove);
-                    _availableBooks.Add(bookToRemove);
-
-                    CmbAvailableBooks.ItemsSource = null;
-                    CmbAvailableBooks.ItemsSource = _availableBooks;
-
-                    MessageBox.Show(L("Msg_BookRemovedFromAuthor"), L("Dlg_InfoTitle"),
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"{L("Msg_RemoveError")} {ex.Message}", L("Dlg_ErrorTitle"),
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            _authorBooks.Remove(bookToRemove);
+            _availableBooks.Add(bookToRemove);
+            BtnRemoveBookToolbar.IsEnabled = false;
         }
+
+        // ── Sačuvaj ───────────────────────────────────────────────────
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(TxtName.Text))
-                {
-                    MessageBox.Show(L("Msg_FirstNameRequired"), L("Dlg_ErrorTitle"),
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                { MessageBox.Show(L("Msg_FirstNameRequired"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
                 if (string.IsNullOrWhiteSpace(TxtLastName.Text))
-                {
-                    MessageBox.Show(L("Msg_LastNameRequired"), L("Dlg_ErrorTitle"),
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                { MessageBox.Show(L("Msg_LastNameRequired"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
                 if (!DpDateOfBirth.SelectedDate.HasValue)
-                {
-                    MessageBox.Show(L("Msg_DateOfBirthRequired"), L("Dlg_ErrorTitle"),
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                { MessageBox.Show(L("Msg_DateOfBirthRequired"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
                 if (!double.TryParse(TxtExperienceLength.Text, out double experience))
-                {
-                    MessageBox.Show(L("Msg_ExperienceMustBeNumber"), L("Dlg_ErrorTitle"),
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                { MessageBox.Show(L("Msg_ExperienceMustBeNumber"), L("Dlg_ErrorTitle"), MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
                 AuthorDTO.Name = TxtName.Text.Trim();
                 AuthorDTO.Lastname = TxtLastName.Text.Trim();
@@ -246,9 +206,7 @@ namespace WpfClient
                 AuthorDTO.Email = TxtEmail.Text.Trim();
                 AuthorDTO.ExperienceLength = experience;
 
-                if (AuthorDTO.Address == null)
-                    AuthorDTO.Address = new AddressDTO();
-
+                if (AuthorDTO.Address == null) AuthorDTO.Address = new AddressDTO();
                 AuthorDTO.Address.Street = TxtStreet.Text.Trim();
                 AuthorDTO.Address.Number = TxtNumber.Text.Trim();
                 AuthorDTO.Address.City = TxtCity.Text.Trim();
@@ -256,9 +214,7 @@ namespace WpfClient
                 AuthorDTO.Address.Country = TxtCountry.Text.Trim();
 
                 foreach (var book in _allBooksOriginal)
-                {
                     _bookController.EditBook(book);
-                }
 
                 AuthorDTO.BookList = _authorBooks.ToList();
 

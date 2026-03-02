@@ -1,4 +1,4 @@
-ISBN-B01|Prokleta avlija|Roman|1954|350|180|Id kartica,Milos,Markovic;AU-01-01,Jelena,Petrovic|1|Mirko
+ISBN-B01|Prokleta avlija|Roman|1954|350|180|Id kartica,Milos,Markovic|1|Mirko
 ISBN-B02|Dervis i smrt|Roman|1966|420|210|AU-02-02,Stefan,Jovanovic;ID-1-9999,Nikola,Nikolasevic;KK-11-22,Davor,Fodora|2|Milankovic
 ISBN-B03|Hazarski recnik|Misterija|1984|500|300|AU-03-03,Ana,Stojanovic;KK-11-22,Davor,Fodora|1|Mirko
 ISBN-B04|Seobe|Istorija|1929|380|200|KK-11-22,Davor,Fodora;AU-04-04,Marko,Popovic|2|Milankovic

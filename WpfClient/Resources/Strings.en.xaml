@@ -268,4 +268,12 @@
     <sys:String x:Key="WishlistAdd_Instruction">Select a book to add to the wishlist:</sys:String>
 
     <sys:String x:Key="Col_Publisher">Publisher</sys:String>
+
+    <sys:String x:Key="SelectAuthor_Title">Select Author</sys:String>
+    <sys:String x:Key="SelectBook_Title">Select Book</sys:String>
+    <sys:String x:Key="AuthorEdit_Btn_AddBook">Add Book</sys:String>
+    <sys:String x:Key="Tooltip_AddAuthor">Add author</sys:String>
+    <sys:String x:Key="Tooltip_RemoveAuthor">Remove author</sys:String>
+    <sys:String x:Key="Msg_ConfirmRemoveAuthor">Are you sure you want to remove author</sys:String>
+    <sys:String x:Key="Msg_NoAvailableAuthors">No authors available to add.</sys:String>
 </ResourceDictionary>
