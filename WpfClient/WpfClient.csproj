@@ -20,6 +20,7 @@
     <None Remove="Icons\multiple-users-silhouette.png" />
     <None Remove="Icons\open-book.png" />
     <None Remove="Icons\plus.png" />
+    <None Remove="Icons\publisher.png" />
     <None Remove="Icons\share.png" />
   </ItemGroup>
 
@@ -48,6 +49,7 @@
     <Resource Include="Icons\multiple-users-silhouette.png" />
     <Resource Include="Icons\open-book.png" />
     <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\publisher.png" />
     <Resource Include="Icons\share.png" />
   </ItemGroup>
 
