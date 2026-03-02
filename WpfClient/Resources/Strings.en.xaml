@@ -285,5 +285,6 @@
 <sys:String x:Key="WishlistAuthors_Title">Authors from Wishlist</sys:String>
 <sys:String x:Key="WishlistAuthors_HeaderPrefix">Authors from visitors Wishlist:</sys:String>
 <sys:String x:Key="WishlistAuthors_SearchLabel">Search:</sys:String>
+<sys:String x:Key="Btn_ShowWishlistAuthors">Authors from Wishlist</sys:String>
 
 </ResourceDictionary>

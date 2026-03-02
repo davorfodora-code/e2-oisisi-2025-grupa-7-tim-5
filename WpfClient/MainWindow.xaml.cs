@@ -436,35 +436,53 @@ namespace WpfClient
                 }
             }
         }
+        private List<AuthorDTO> GetWishlistAuthorsForVisitor(VisitorDTO visitor)
+        {
+            var wishlistBooks = GetWishlistBooksForVisitor(visitor);
+
+
+   
+            var idCards = wishlistBooks
+                .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
+                .Select(a => a?.IdCard)
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .Select(id => id.Trim())
+                .Distinct()
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+    
+            var allAuthors = _authorDAO.GetAllAuthors()
+                                       .Select(AuthorDTO.FromModel)
+                                       .Where(a => a != null)
+                                       .ToList();
+
+
+            return allAuthors
+                .Where(a => !string.IsNullOrWhiteSpace(a.IdCard) && idCards.Contains(a.IdCard.Trim()))
+                .ToList();
+        }
 
         private void BtnShowWishlistAuthors_Click(object sender, RoutedEventArgs e)
         {
-            var selectedVisitor = VisitorsGrid.SelectedItem as VisitorDTO;
-            if (selectedVisitor == null)
+            var visitor = VisitorsGrid.SelectedItem as VisitorDTO;
+            if (visitor == null)
             {
                 MsgWarn("Msg_SelectEntityFromTable");
                 return;
             }
+         
 
-            var allBooks = _bookDAO.GetAllBooks()
-                                   .Select(BookDTO.FromModel)
-                                   .Where(b => b != null)
-                                   .ToList();
+            var authors = GetWishlistAuthorsForVisitor(visitor);
 
-            var wishlistedBooks = allBooks
-                .Where(b => b.VisitorWishList != null &&
-                            b.VisitorWishList.Any(v => v.MembershipNumber == selectedVisitor.MembershipNumber))
-                .ToList();
-
-            var authors = wishlistedBooks
-                .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
-                .Where(a => a != null && !string.IsNullOrWhiteSpace(a.IdCard))
-                .GroupBy(a => a.IdCard)
-                .Select(g => g.First())
-                .ToList();
-
-            var win = new WishlistAuthorsDialog(selectedVisitor, authors) { Owner = this };
-            win.ShowDialog();
+            new WishlistAuthorsDialog(visitor, authors)
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            }.ShowDialog();
+        }
+        private void VisitorsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BtnShowWishlistAuthors.IsEnabled = VisitorsGrid.SelectedItem != null;
         }
         private void BtnShowAuthorsByPublisher_Click(object sender, RoutedEventArgs e)
         {
@@ -587,7 +605,23 @@ namespace WpfClient
             }
             else MsgWarn("Msg_SelectEntityFromTable");
         }
+        private List<BookDTO> GetWishlistBooksForVisitor(VisitorDTO visitor)
+        {
+            if (visitor == null) return new List<BookDTO>();
 
+            return visitor.Wishlist?.ToList() ?? new List<BookDTO>();
+        }
+        private List<AuthorDTO> GetAuthorsFromBooksDistinct(List<BookDTO> books)
+        {
+            if (books == null) return new List<AuthorDTO>();
+
+            return books
+                .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
+                .Where(a => a != null && !string.IsNullOrWhiteSpace(a.IdCard))
+                .GroupBy(a => a.IdCard)
+                .Select(g => g.First())
+                .ToList();
+        }
         private void LangSr_Click(object sender, RoutedEventArgs e)
         {
             LanguageService.SetLanguage("sr");

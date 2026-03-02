@@ -286,6 +286,6 @@
 <sys:String x:Key="WishlistAuthors_Title">Autori sa liste želja</sys:String>
 <sys:String x:Key="WishlistAuthors_HeaderPrefix">Autori sa liste želja posetioca:</sys:String>
 <sys:String x:Key="WishlistAuthors_SearchLabel">Pretraga:</sys:String>
-
+<sys:String x:Key="Btn_ShowWishlistAuthors">WishList autori</sys:String>
 
 </ResourceDictionary>
