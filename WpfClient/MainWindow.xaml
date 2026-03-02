@@ -372,6 +372,11 @@
                                 Height="30"
                                 Margin="10,0,0,0"
                                 Click="BtnShowPublisherBooks_Click"/>
+                            <Button Content="{DynamicResource Btn_ShowAuthors}"  
+                                Width="150" 
+                                 Height="30"
+                                Click="BtnShowAuthorsByPublisher_Click"
+                                IsEnabled="{Binding SelectedItem, ElementName=PublishersGrid}"/>
                         </StackPanel>
 
                         <DataGrid Grid.Row="1"

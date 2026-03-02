@@ -276,4 +276,10 @@
     <sys:String x:Key="Msg_ConfirmRemoveAuthor">Are you sure you want to remove author</sys:String>
     <sys:String x:Key="Msg_NoAvailableAuthors">No authors available to add.</sys:String>
 
+    <sys:String x:Key="PublisherAuthors_Title">Publisher Authors</sys:String>
+<sys:String x:Key="PublisherAuthors_HeaderPrefix">Authors of publisher:</sys:String>
+<sys:String x:Key="PublisherAuthors_SearchLabel">Search:</sys:String>
+<sys:String x:Key="Col_Phone">Phone</sys:String>
+<sys:String x:Key="Btn_ShowAuthors">Publisher Authors</sys:String>
+
 </ResourceDictionary>

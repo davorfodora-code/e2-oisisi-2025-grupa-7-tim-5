@@ -29,6 +29,7 @@ namespace WpfClient
         private ObservableCollection<PublisherDTO> _publishers;
         private List<PublisherDTO> _allPublishers = new();
         private VisitorDAO _visitorDAO;
+        private BookDAO _bookDAO = new BookDAO();
         private const int TAB_BOOKS = 0;
         private const int TAB_VISITORS = 1;
         private const int TAB_AUTHORS = 2;
@@ -434,7 +435,39 @@ namespace WpfClient
                 }
             }
         }
+        private void BtnShowAuthorsByPublisher_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var selectedPublisher = PublishersGrid.SelectedItem as PublisherDTO;
+                if (selectedPublisher == null)
+                {
+                    MsgWarn("Msg_SelectEntityFromTable");
+                    return;
+                }
 
+                var allBooks = _bookDAO.GetAllBooks()
+                                       .Select(BookDTO.FromModel)
+                                       .ToList();
+
+                var publisherBooks = allBooks
+                    .Where(b => b.Publisher != null && b.Publisher.Id == selectedPublisher.Id)
+                    .ToList();
+
+                var authors = publisherBooks
+                    .SelectMany(b => b.Authors ?? new List<AuthorDTO>())
+                    .GroupBy(a => a.IdCard)   
+                    .Select(g => g.First())
+                    .ToList();
+
+                var win = new PublisherAuthorsDialog(selectedPublisher, authors) { Owner = this };
+                win.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void TxtSearch_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter) BtnSearch_Click(sender, e);

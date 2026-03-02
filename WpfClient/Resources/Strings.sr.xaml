@@ -281,6 +281,7 @@
 <sys:String x:Key="PublisherAuthors_SearchLabel">Pretraga:</sys:String>
 
 <sys:String x:Key="Col_Phone">Telefon</sys:String>
+<sys:String x:Key="Btn_ShowAuthors">Autori izdavača</sys:String>
 
 
 </ResourceDictionary>
